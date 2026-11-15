@@ -19,7 +19,7 @@ const SRC = `https://stream.mux.com/${PLAYBACK_ID}.m3u8`;
 const POSTER = `https://image.mux.com/${PLAYBACK_ID}/thumbnail.webp?time=34&width=1280`;
 
 /** The Mux chapters track, printed by `scripts/mux-add-tracks.sh`. Unset, the local WebVTT chapters are used instead. */
-const MUX_CHAPTERS_TRACK: string | undefined = 'sMjYSqNbfn7ewhs3LlKLpGBsYKpf02LWBaQPK84MziEHum2MQD02VMBA';
+const MUX_CHAPTERS_TRACK: string | undefined = 'HV00Uz93HFl9Ljws00NUZFQ02vMfFG6BsKsiWVWdv00sF4vEaMxEdgwJOw';
 
 /**
  * What Mux Data reports with each view. The playback ID already ties views to the asset's environment, so no `envKey`.
