@@ -170,7 +170,10 @@ media-i18n {
 }
 
 .site-player {
-  scroll-margin: 2rem;
+  /* Never taller than the screen: on a phone held sideways the whole player fits in view. */
+  max-width: calc((100svh - 2rem) * 16 / 9);
+  margin-inline: auto;
+  scroll-margin: 1rem;
   border: 2px solid var(--paper);
   box-shadow: 8px 8px 0 var(--volt);
 }
@@ -179,9 +182,12 @@ media-i18n {
   aspect-ratio: 16 / 9;
 }
 
+/* Phones: the player runs edge to edge, every pixel goes to the picture. */
 @media (width < 40rem) {
   .site-player {
-    box-shadow: 5px 5px 0 var(--volt);
+    margin-inline: calc(-1 * clamp(1rem, 4vw, 3rem));
+    border-inline: 0;
+    box-shadow: none;
   }
 }
 

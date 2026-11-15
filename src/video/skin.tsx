@@ -9,6 +9,7 @@ import '../styles/video/scaffold.css';
 import './skin.css';
 import './drop/drop.css';
 import './garments/garments.css';
+import './drop/compact.css';
 import { Container as ContainerPrimitive, Poster as PosterPrimitive } from '@videojs/react';
 import type { ReactNode } from 'react';
 
@@ -18,6 +19,7 @@ import { VideoGestures } from './behaviors/gestures';
 import { VideoHotkeys } from './behaviors/hotkeys';
 import { VideoControls } from './controls';
 import { StartScreen } from './drop/start-screen';
+import { useLayout } from './drop/use-layout';
 import { ErrorDialog } from './shared/error-dialog';
 import { Indicators } from './shared/indicators';
 import { SeekIndicator } from './shared/seek-indicator';
@@ -44,20 +46,24 @@ export interface VideoSkinProps extends Omit<ContainerPrimitive.Props, 'children
  * Scaffold skin's behavior.
  */
 export function VideoSkin({ children, className, shop, renderPoster, ...props }: VideoSkinProps = {}) {
+  const [layout, measure] = useLayout();
+
   return (
     <ShopProvider shop={shop}>
       <ContainerPrimitive
+        ref={measure}
         className={cn('media-skin', 'media-container', 'media-video', className)}
         data-theme="scaffold"
         data-preset="video"
         data-skin="drop"
+        data-layout={layout}
         {...props}
       >
         {children}
         <Poster renderImage={renderPoster} />
         <StartScreen />
         <ErrorDialog />
-        <VideoControls />
+        <VideoControls layout={layout} />
         <LookTag />
         <ProductSheet />
 

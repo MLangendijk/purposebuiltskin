@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Drop — device simulator</title>
+    <style>
+      /* Dev-only: frames the showcase at real device viewports, scaled to fit this window. */
+      body { margin: 0; background: #1b1b1d; color: #f4f1ea; font: 13px/1.4 ui-monospace, Menlo, monospace; }
+      nav { display: flex; gap: 8px; flex-wrap: wrap; padding: 12px; }
+      nav a { padding: 6px 10px; border: 1px solid #f4f1ea55; color: inherit; text-decoration: none; }
+      nav a[aria-current] { background: #d4ff1f; color: #0b0b0c; }
+      .stage { display: grid; place-items: center; height: calc(100vh - 60px); }
+      .device { transform-origin: center; border: 10px solid #000; border-radius: 28px; overflow: hidden; background: #000; }
+      iframe { display: block; border: 0; }
+    </style>
+  </head>
+  <body>
+    <nav id="nav"></nav>
+    <div class="stage"><div class="device" id="device"><iframe id="frame" title="Device preview"></iframe></div></div>
+    <script>
+      // Viewport sizes in CSS pixels.
+      const DEVICES = {
+        'iphone-portrait': [393, 852],
+        'iphone-landscape': [852, 393],
+        'android-small-portrait': [360, 780],
+        'ipad-portrait': [820, 1180],
+        'ipad-landscape': [1180, 820],
+      };
+      const params = new URLSearchParams(location.search);
+      const name = DEVICES[params.get('device')] ? params.get('device') : 'iphone-portrait';
+      const [w, h] = DEVICES[name];
+      const page = params.get('page') ?? './index.html';
+
+      document.getElementById('nav').innerHTML = Object.keys(DEVICES)
+        .map((d) => `<a href="?device=${d}&page=${encodeURIComponent(page)}" ${d === name ? 'aria-current="page"' : ''}>${d} ${DEVICES[d].join('×')}</a>`)
+        .join('');
+
+      const frame = document.getElementById('frame');
+      frame.width = w;
+      frame.height = h;
+      frame.src = page;
+      const fit = () => {
+        const scale = Math.min(1, (innerWidth - 40) / (w + 20), (innerHeight - 100) / (h + 20));
+        document.getElementById('device').style.transform = `scale(${scale})`;
+      };
+      addEventListener('resize', fit);
+      fit();
+    </script>
+  </body>
+</html>

@@ -1,12 +1,14 @@
 /** @jsxImportSource react */
 
+import type { ReactNode } from 'react';
+
 import { GARMENT_LABEL } from '../garments/garments';
 import { BagMenu } from '../shop/bag-menu';
 import { useShop } from '../shop/shop-context';
 import { usePlaybackState } from '../shop/use-looks';
 
-/** Brand stamp, the drop ticker, and the bag. */
-export function TopBar() {
+/** Brand stamp, the drop ticker, and the bag. Compact players also park their settings here. */
+export function TopBar({ settings }: { settings?: ReactNode } = {}) {
   const { config } = useShop();
 
   return (
@@ -16,7 +18,10 @@ export function TopBar() {
         <span className="drop-stamp-drop">{config.drop}</span>
       </span>
       <Ticker />
-      <BagMenu />
+      <span className="drop-top-actions">
+        {settings}
+        <BagMenu />
+      </span>
     </>
   );
 }

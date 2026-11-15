@@ -45,6 +45,7 @@ Play and fullscreen keep their standard shapes, because no garment does those jo
 - **Abbreviations expanded**: `SS27` and the size systems (W = waist in inches, EU shoe sizes) (3.1.4).
 - **Motion.** Under reduced motion everything set off by interaction stops: tag swings, zipper pulls, tool swaps, the sliding tape, the ticker and the spinner (2.3.3). The ticker also pauses with the film (2.2.2).
 - **Text blocks** on the showcase stay within 65–72 characters at 1.6+ line height (1.4.8).
+- **Phones and tablets.** The skin measures its own box. Under 520px wide or 480px tall (phones either way up, tablets in portrait) it switches to a compact layout: play and the hangers in the middle, one bottom row of mute, garment strip, time and fullscreen, and a product sheet trimmed to name, price, sizes and button. `/devices.html` previews the showcase at iPhone, Android and iPad sizes in both orientations.
 - `prefers-contrast: more`, `prefers-reduced-transparency` and forced-colors modes are handled.
 - Keys: Space/K play, ←/→ seek 10s, ↑/↓ volume, M mute, C captions, F fullscreen, 0–9 jump.
 
@@ -81,7 +82,7 @@ Without `shop` it's a plain (loud) player.
 
 ```sh
 pnpm install
-pnpm dev        # showcase at /, workbench at /workbench.html
+pnpm dev        # showcase at /, workbench at /workbench.html, device simulator at /devices.html
 pnpm run build
 ```
 

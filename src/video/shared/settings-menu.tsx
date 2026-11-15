@@ -159,9 +159,9 @@ function CaptionsMenu() {
   );
 }
 
-export function SettingsMenu() {
+export function SettingsMenu({ side = 'top' }: { side?: 'top' | 'bottom' } = {}) {
   return (
-    <Menu.Root side="top" align="center">
+    <Menu.Root side={side} align={side === 'top' ? 'center' : 'end'}>
       <ButtonTooltip label={<TextPrimitive token={settingsText.key}>{settingsText.text}</TextPrimitive>}>
         <Menu.Trigger render={<Button />} className={'media-settings-button'}>
           <SettingsIcon className={'media-button-icon'} />
