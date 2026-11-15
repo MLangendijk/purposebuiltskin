@@ -20,8 +20,8 @@ HEIGHT=960
 # One row per chapter, in film order:
 # Mixkit clip id | start offset (s) | length (s) | crop centre x in the 1280x720 frame | chapter title | garment | look
 CHAPTERS=(
+  "24581|4|10|640|Shirting · Oxford Cotton Shirt|shirt|02"
   "33527|0|8|480|Dresses · Linen Maxi Dress|dress|05"
-  "52194|0|10|770|Tailoring · Single-Breasted Wool Blazer|tailoring|03"
   "14842|2|12|520|Skirts · Pleated Midi Skirt|skirt|04"
 )
 
