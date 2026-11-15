@@ -19,7 +19,7 @@ Regular (players at least 520 × 480):
 1. Top: wordmark (left), bag (right).
 2. Swing tag for the piece on screen (right, above the panel; drops to the bottom corner while the controls rest).
 3. Bottom panel: garment seek strip with its department rail, then one row: play, previous look, next look, mute,
-   size-run volume, tape-measure time; settings and fullscreen at the far end.
+   hairdryer volume, tape-measure time; settings and fullscreen at the far end.
 
 Compact (narrower or shorter, set by `useLayout`): settings joins the bag on top; play and the hangers sit in the
 centre; one bottom row of mute, the garment strip, time and fullscreen. The tag steps aside while the controls are up.
@@ -42,8 +42,11 @@ centre; one bottom row of mute, the garment strip, time and fullscreen. The tag 
 
 Play and fullscreen keep their standard shapes: no garment does those jobs better.
 
-The garment for each chapter comes from the chapter title's department (`Knitwear · …`), so chapters on Mux carry
-their materials with them.
+The strip follows the film's chapters, so any cut works (any number and length of chapters, intros and gaps). Each
+chapter's garment comes from its metadata (`garment` in Mux's Apple JSON chapters, see `use-pieces.ts`), else its
+title's department (`Knitwear · …`), else its look. A garment the skin doesn't draw is cut as a toile: calico, the
+pattern line traced ahead, basted behind, with a tracing wheel as the playhead. Looks are linked to chapters by id
+(chapter metadata `look`, or a WebVTT cue identifier); without chapters, the looks' own timings make them.
 
 ## Type
 
@@ -74,7 +77,7 @@ their materials with them.
 
 ## Motion
 
-Tokens `--drop-fast` 160ms and `--drop-slow` 420ms, both collapsed under reduced motion. The moving parts:
+Tokens `--atelier-fast` 160ms and `--atelier-slow` 420ms, both collapsed under reduced motion. The moving parts:
 
 - The tag swings on its cord when the piece changes.
 - The playhead tool swaps in when the garment changes, never on first load.
@@ -87,4 +90,4 @@ Tokens `--drop-fast` 160ms and `--drop-slow` 420ms, both collapsed under reduced
 - **Hiding:** keyboard focus keeps the controls on screen.
 - **Targets:** 44px minimum (48px on touch).
 - **Captions:** from Mux, raised clear of the tag and the panel.
-- **Copy:** all text goes through Video.js i18n (`drop.*` keys with English defaults).
+- **Copy:** all text goes through Video.js i18n (`atelier.*` keys with English defaults).
