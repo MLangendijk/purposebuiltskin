@@ -80,16 +80,16 @@ export function Site() {
               The vertical cut
             </h2>
             <p>
-              Cut for phones: 9:16, thirty seconds, a separate film on Mux, with three of the pieces in a new order and
-              at different lengths.
+              Cut for phones: 9:16, thirty seconds, a separate film on Mux. It opens on the oxford shirt, where the
+              playhead is a pearl button doing up the placket as the film plays, then the dress and the skirt.
             </p>
             <p>
               Nothing in the skin changes. Each chapter on Mux names its garment and its look, so the seek bar re-cuts
               itself around them, the hangers follow the new order, and every swing tag finds its product.
             </p>
             <ol className="site-vertical-chapters">
-              <li>Dress · 0:00</li>
-              <li>Blazer · 0:08</li>
+              <li>Shirt · 0:00</li>
+              <li>Dress · 0:10</li>
               <li>Skirt · 0:18</li>
             </ol>
           </div>

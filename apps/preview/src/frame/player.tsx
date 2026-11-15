@@ -36,12 +36,12 @@ export const LOOKBOOK: Film = {
 
 /**
  * The 30-second, 9:16 cut (built by `scripts/build-vertical.sh`): three of the looks, in a new order and at different
- * lengths. Same skin, same products; the chapters on Mux do the rest.
+ * lengths, leading with the shirt, whose playhead is a button doing up the placket. Same skin, same products; the chapters on Mux do the rest.
  */
 export const VERTICAL: Film = {
   title: 'The Spring Edit, vertical cut',
-  playbackId: '91Fo9UOqc21yNM9jJuaJ4022PbjkG7nZHSnHtCdR019nw',
-  chaptersTrack: 'I8qlQdoSOZ54Yi02HafnhR500014ssQ6szFo1VeQBkgUcBOPyKGKO9zDw',
+  playbackId: '97izt5Hi6CLzpkqHhI2Az00j9MHAE301jjvKz00IXpqi4s',
+  chaptersTrack: 'wg796Tv2irz3XJ6zm2A5nQW01OhjUW68LydxJqO95fXrECcsPh6LM00Q',
   posterTime: 3,
   shop: VERTICAL_CUT,
 };

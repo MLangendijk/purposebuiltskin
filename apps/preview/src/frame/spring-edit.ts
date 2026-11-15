@@ -110,7 +110,7 @@ export const DESCRIBED_VERSION: { time: string; text: string }[] = [
 
 /**
  * The vertical cut sells from the same collection, but its chapters on Mux say which pieces appear, when and in what
- * order: the dress, blazer and skirt. So these looks carry no timings of their own.
+ * order: the shirt, dress and skirt. So these looks carry no timings of their own.
  */
 export const VERTICAL_CUT: ShopConfig = {
   ...SPRING_EDIT,
