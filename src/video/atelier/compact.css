@@ -76,7 +76,33 @@
   height: calc(var(--u) * 8);
 }
 
-/* ---------------------------------------------------------------- Bottom: one row, the strip runs through it */
+/* ---------------------------------------------------------------- Top: sound and time, then settings and bag */
+
+/* Sound and time sit on their own surfaces at the top, like the bag. */
+.media-skin[data-skin="atelier"] .atelier-top-start {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 1.5);
+}
+
+.media-skin[data-skin="atelier"] .atelier-top-start .media-button {
+  border-color: var(--hairline);
+  background: var(--ivory);
+  box-shadow: var(--atelier-shadow);
+}
+
+.media-skin[data-skin="atelier"] .atelier-top-start .tape-measure {
+  box-shadow: var(--atelier-shadow);
+}
+
+/* The wordmark only where there's room beside sound, time, settings and bag. */
+@container media-root (width < 30rem) {
+  .media-skin[data-skin="atelier"][data-layout="compact"] .atelier-stamp {
+    display: none;
+  }
+}
+
+/* ---------------------------------------------------------------- Bottom: the garment strip and fullscreen */
 
 .media-skin[data-skin="atelier"][data-layout="compact"] {
   --garment-strip: calc(var(--u) * 5);
@@ -103,15 +129,15 @@
 }
 
 /* One reading on the tape; tap it to switch elapsed and remaining. */
-.media-skin[data-skin="atelier"] .atelier-row-compact .tape-measure :is(.media-time-current-value, .media-time-separator, .media-time-duration-value) {
+.media-skin[data-skin="atelier"][data-layout="compact"] .tape-measure :is(.media-time-current-value, .media-time-separator, .media-time-duration-value) {
   display: none;
 }
 
-.media-skin[data-skin="atelier"] .atelier-row-compact .tape-measure {
+.media-skin[data-skin="atelier"][data-layout="compact"] .tape-measure {
   padding-inline: calc(var(--u) * 3) calc(var(--u) * 1);
 }
 
-.media-skin[data-skin="atelier"] .atelier-row-compact .tape-measure .media-time-toggle {
+.media-skin[data-skin="atelier"][data-layout="compact"] .tape-measure .media-time-toggle {
   display: grid;
 }
 

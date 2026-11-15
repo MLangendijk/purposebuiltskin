@@ -16,8 +16,9 @@ import { LookSkip } from './shop/look-skip';
  * Atelier's control layouts. The Scaffold layout classes (`video-controls-*`) are kept for positioning and the idle hide.
  *
  * - regular: brand, ticker and bag on top; the garment strip with its department rail, then one row of controls.
- * - compact (phones, either way up): settings and bag on top; play and the hangers in the middle, where a thumb
- *   lands; a single bottom row of mute, the garment strip, time and fullscreen. The picture keeps most of the frame.
+ * - compact (phones, either way up): sound, time, settings and bag on top; play and the hangers in the middle, where a
+ *   thumb lands; the garment strip and fullscreen along the bottom, so the strip gets nearly the full width. The
+ *   picture keeps most of the frame.
  */
 export function VideoControls({ layout }: { layout: Layout }) {
   return (
@@ -64,7 +65,15 @@ function CompactControls() {
   return (
     <>
       <Controls.Group className="video-controls-top atelier-top">
-        <TopBar settings={<SettingsMenu side="bottom" />} />
+        <TopBar
+          start={
+            <>
+              <MuteButton />
+              <TapeMeasure />
+            </>
+          }
+          settings={<SettingsMenu side="bottom" />}
+        />
       </Controls.Group>
 
       <Controls.Group className="atelier-center" aria-label={t('atelier.playback', { default: 'Playback' })}>
@@ -75,9 +84,7 @@ function CompactControls() {
 
       <div className="video-controls-bottom video-controls-video-bottom atelier-bottom">
         <Controls.Group className="atelier-row atelier-row-compact" aria-label={t('atelier.playbackControls', { default: 'Playback controls' })}>
-          <MuteButton />
           <GarmentSeek />
-          <TapeMeasure />
           <FullscreenButton />
         </Controls.Group>
       </div>
