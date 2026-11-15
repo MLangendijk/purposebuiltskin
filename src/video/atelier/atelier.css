@@ -533,11 +533,17 @@
   bottom: calc(var(--u) * 46);
 }
 
+/* The seek preview, the settings menu and the bag open where the lifted tag hangs: it steps aside while they're up. */
+.media-skin[data-skin="atelier"]:has(.garment-slider:is([data-pointing], [data-dragging]), .media-menu-popup[data-open], .atelier-bag-popup[data-open]) .atelier-tag-anchor:not(:has(:focus-visible)) {
+  opacity: 0;
+  visibility: hidden;
+}
+
 .media-skin[data-skin="atelier"] .atelier-tag {
   position: relative;
   pointer-events: auto;
   display: block;
-  max-width: min(calc(var(--u) * 100), calc(100cqi - var(--u) * 8));
+  max-width: min(calc(var(--u) * 72), calc(100cqi - var(--u) * 8));
   padding: 0;
   border: 0;
   background: none;
@@ -569,6 +575,7 @@
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: stretch;
+  min-height: var(--atelier-control);
   clip-path: polygon(calc(var(--u) * 5) 0, 100% 0, 100% 100%, calc(var(--u) * 5) 100%, 0 50%);
   border-radius: 0 calc(var(--u) * 2) calc(var(--u) * 2) 0;
   background:
@@ -602,26 +609,26 @@
   display: grid;
   place-items: center;
   align-content: center;
-  gap: calc(var(--u) * 0.5);
-  padding: calc(var(--u) * 2.5) calc(var(--u) * 3) calc(var(--u) * 2.5) calc(var(--u) * 8);
+  padding: 0 calc(var(--u) * 2) 0 calc(var(--u) * 7);
   border-inline-end: 1px solid var(--hairline);
-  font-size: calc(var(--u) * 2.5);
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+}
+
+/* The tag itself says shop; its accessible name carries the word. */
+.media-skin[data-skin="atelier"] .atelier-tag-shop span {
+  display: none;
 }
 
 .media-skin[data-skin="atelier"] .atelier-tag-shop svg {
-  width: calc(var(--u) * 7);
-  height: calc(var(--u) * 7);
+  width: calc(var(--u) * 5);
+  height: calc(var(--u) * 5);
 }
 
 .media-skin[data-skin="atelier"] .atelier-tag-info {
   display: grid;
   align-content: center;
-  gap: calc(var(--u) * 0.75);
+  gap: calc(var(--u) * 0.5);
   min-width: 0;
-  padding: calc(var(--u) * 2.5) calc(var(--u) * 4);
+  padding: calc(var(--u) * 1.25) calc(var(--u) * 3);
 }
 
 .media-skin[data-skin="atelier"] .atelier-tag-look {
@@ -645,9 +652,9 @@
 .media-skin[data-skin="atelier"] .atelier-tag-name {
   overflow: hidden;
   font-family: var(--serif);
-  font-size: calc(var(--u) * 6);
+  font-size: calc(var(--u) * 4.5);
   font-weight: 500;
-  line-height: 1;
+  line-height: 1.05;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -655,9 +662,9 @@
 .media-skin[data-skin="atelier"] .atelier-tag-price {
   display: grid;
   place-items: center;
-  padding: 0 calc(var(--u) * 4);
+  padding: 0 calc(var(--u) * 3);
   background: var(--linen);
-  font-size: calc(var(--u) * 3.75);
+  font-size: calc(var(--u) * 3.25);
   font-weight: 500;
   font-variant-numeric: tabular-nums;
 }
@@ -1189,12 +1196,11 @@
 
 @container media-root (width < 40rem) {
   .media-skin[data-skin="atelier"] .atelier-tag-name {
-    font-size: calc(var(--u) * 5);
+    font-size: calc(var(--u) * 4);
   }
 
   .media-skin[data-skin="atelier"] .atelier-tag-price {
-    font-size: calc(var(--u) * 3.25);
-    padding-inline: calc(var(--u) * 3);
+    padding-inline: calc(var(--u) * 2.5);
   }
 
   .media-skin[data-skin="atelier"] .atelier-sheet {
@@ -1240,15 +1246,7 @@
   }
 
   .media-skin[data-skin="atelier"] .atelier-tag-info {
-    padding: calc(var(--u) * 2) calc(var(--u) * 3);
-  }
-
-  .media-skin[data-skin="atelier"] .atelier-tag-shop {
-    padding: calc(var(--u) * 2) calc(var(--u) * 2) calc(var(--u) * 2) calc(var(--u) * 7);
-  }
-
-  .media-skin[data-skin="atelier"] .atelier-tag-shop span {
-    display: none;
+    padding-inline: calc(var(--u) * 2.5);
   }
 }
 
