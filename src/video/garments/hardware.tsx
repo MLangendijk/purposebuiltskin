@@ -5,79 +5,65 @@ import type { ReactNode } from 'react';
 import type { Garment } from './garments';
 
 /*
- * The seek bar's playhead is the tool that finishes each garment as it moves: it does up the shirt's buttons, sews the
- * denim's seam, closes the zipper, threads the drawstring, laces the shoe, presses the pleats. Drawn on a 28×36 box
- * centred on the bar; the ink keyline keeps each one visible over light and dark materials alike.
+ * The seek bar's playhead is the tool that finishes each garment as it moves: it knits the rows, does up the buttons,
+ * sews along the chalk, presses the pleats, closes the zip. Drawn on a 28×36 box centred on the bar, in fine charcoal
+ * line with pearl, silver and soft-gold fills, so it reads on light and dark materials alike.
  */
 
-const INK = '#0b0b0c';
+const INK = '#2a2826';
+const PEARL = '#faf6ef';
+const SILVER = '#dcd8d1';
+const GOLD = '#c9ab72';
 
 const PARTS: Record<Garment, ReactNode> = {
-  // Four-hole shirt button, sewn on with blue thread.
+  // Knitting needle with a ball end, a loop of yarn still on it.
+  knit: (
+    <>
+      <path d="M2 24c3-3 6-3 8.5 0" fill="none" stroke="#b9a58a" strokeWidth="2" strokeLinecap="round" />
+      <path d="M14 33L14 9" stroke={INK} strokeWidth="5" strokeLinecap="round" />
+      <path d="M14 33L14 9" stroke={SILVER} strokeWidth="2.5" strokeLinecap="round" />
+      <circle cx="14" cy="6" r="4.5" fill={GOLD} stroke={INK} strokeWidth="1.5" />
+      <ellipse cx="14" cy="23" rx="5" ry="2.2" fill="none" stroke="#b9a58a" strokeWidth="1.75" />
+    </>
+  ),
+  // Four-hole pearl button, sewn on with blue thread.
   shirt: (
     <>
-      <circle cx="14" cy="18" r="11" fill="#f6f3ec" stroke={INK} strokeWidth="2" />
-      <circle cx="14" cy="18" r="7.5" fill="none" stroke="#cfc8b8" strokeWidth="1.5" />
-      <path d="M11 15l6 6M17 15l-6 6" stroke="#5f86b5" strokeWidth="1.5" />
-      <g fill="#4b5563">
-        <circle cx="11" cy="15" r="1.6" />
-        <circle cx="17" cy="15" r="1.6" />
-        <circle cx="11" cy="21" r="1.6" />
-        <circle cx="17" cy="21" r="1.6" />
+      <circle cx="14" cy="18" r="10.5" fill={PEARL} stroke={INK} strokeWidth="1.5" />
+      <circle cx="14" cy="18" r="7.5" fill="none" stroke="#d9d1c2" strokeWidth="1.25" />
+      <path d="M11.3 15.3l5.4 5.4M16.7 15.3l-5.4 5.4" stroke="#7d9cc2" strokeWidth="1.25" />
+      <g fill="#5d6470">
+        <circle cx="11.3" cy="15.3" r="1.4" />
+        <circle cx="16.7" cy="15.3" r="1.4" />
+        <circle cx="11.3" cy="20.7" r="1.4" />
+        <circle cx="16.7" cy="20.7" r="1.4" />
       </g>
     </>
   ),
-  // Sewing needle, trailing the orange topstitch thread it lays down.
-  denim: (
+  // Sewing needle, trailing the thread of the seam it has sewn.
+  tailoring: (
     <>
-      <path d="M1 30c4-1 7-3 9-6" stroke="#f0a043" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-      <path d="M11 3h6v25l-3 7-3-7z" fill="#d9dce1" stroke={INK} strokeWidth="2" strokeLinejoin="round" />
-      <rect x="12.75" y="5" width="2.5" height="6" rx="1.25" fill={INK} />
+      <path d="M1 27c4 0 7-2 10-5" fill="none" stroke="#8a7a66" strokeWidth="1.75" strokeLinecap="round" />
+      <path d="M11.5 3h5v24l-2.5 7-2.5-7z" fill={SILVER} stroke={INK} strokeWidth="1.5" strokeLinejoin="round" />
+      <rect x="13" y="5" width="2" height="6" rx="1" fill={INK} />
     </>
   ),
-  // Zip slider with a hanging pull tab.
-  leather: (
-    <>
-      <path d="M7 4h14l-2 9H9z" fill="#d9dce1" stroke={INK} strokeWidth="2" strokeLinejoin="round" />
-      <rect x="9" y="11" width="10" height="23" rx="3" fill="#c3c7ce" stroke={INK} strokeWidth="2" />
-      <rect x="12" y="25" width="4" height="5" rx="1.5" fill={INK} />
-      <path d="M11.5 15h5" stroke="#f1f2f4" strokeWidth="1.5" strokeLinecap="round" />
-    </>
-  ),
-  // Safety pin: how a drawstring is threaded through its channel.
-  knit: (
-    <>
-      <path d="M0 18h8" stroke="#f6f3ec" strokeWidth="4" strokeLinecap="round" />
-      <path d="M0 18h8" stroke={INK} strokeWidth="1" opacity="0.4" />
-      <path
-        d="M9 31V8a5 5 0 0 1 10 0v21"
-        fill="none"
-        stroke={INK}
-        strokeWidth="5"
-        strokeLinecap="round"
-      />
-      <path d="M9 31V8a5 5 0 0 1 10 0v21" fill="none" stroke="#d9dce1" strokeWidth="2.5" strokeLinecap="round" />
-      <circle cx="9" cy="32" r="3.5" fill="#d9dce1" stroke={INK} strokeWidth="2" />
-      <rect x="15" y="26" width="8" height="9" rx="2" fill="#c3c7ce" stroke={INK} strokeWidth="2" />
-    </>
-  ),
-  // Lace end with a clear plastic aglet.
-  footwear: (
-    <>
-      <path d="M14 0v16" stroke="#f6f3ec" strokeWidth="5" strokeLinecap="round" />
-      <path d="M14 0v16" stroke={INK} strokeWidth="1" strokeDasharray="2 2" opacity="0.35" />
-      <rect x="9.5" y="14" width="9" height="20" rx="4.5" fill="#cfd5dc" stroke={INK} strokeWidth="2" />
-      <path d="M12 18v12" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" />
-    </>
-  ),
-  // Iron, nose forward, pressing the pleats in behind it.
-  dress: (
+  // A pressing iron, nose forward, pleats setting behind it.
+  skirt: (
     <g transform="translate(28 0) scale(-1 1)">
-      <path d="M5 13h14a6 6 0 0 1 6 6v6H3l2-12z" fill="#f6f3ec" stroke={INK} strokeWidth="2" strokeLinejoin="round" />
-      <path d="M3 25h22v4H2.5z" fill="#d9dce1" stroke={INK} strokeWidth="2" strokeLinejoin="round" />
-      <path d="M9 13c0-5 2-7 7-7h3" fill="none" stroke={INK} strokeWidth="2.5" strokeLinecap="round" />
-      <circle cx="18" cy="18.5" r="2" fill="#ff3d8b" stroke={INK} strokeWidth="1.5" />
+      <path d="M5 14h13a6.5 6.5 0 0 1 6.5 6.5V26H3l2-12z" fill={PEARL} stroke={INK} strokeWidth="1.5" strokeLinejoin="round" />
+      <path d="M3 26h21.5v3.5H2.6z" fill={SILVER} stroke={INK} strokeWidth="1.5" strokeLinejoin="round" />
+      <path d="M9 14c0-5 2-7.5 7-7.5h3" fill="none" stroke={INK} strokeWidth="2" strokeLinecap="round" />
+      <circle cx="18" cy="19.5" r="1.8" fill={GOLD} />
     </g>
+  ),
+  // A fine zip pull in soft gold.
+  dress: (
+    <>
+      <path d="M9 4h10l-1.5 8h-7z" fill={GOLD} stroke={INK} strokeWidth="1.5" strokeLinejoin="round" />
+      <path d="M11.5 11.5h5l-.8 19a1.7 1.7 0 0 1-3.4 0z" fill={GOLD} stroke={INK} strokeWidth="1.5" strokeLinejoin="round" />
+      <circle cx="14" cy="26.5" r="1.4" fill={INK} />
+    </>
   ),
 };
 

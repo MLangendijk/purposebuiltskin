@@ -3,7 +3,7 @@ import { Video, VideoPlayer } from '@videojs/react/video';
 import { VideoSkin } from '@/video/skin';
 
 import type { PlaybackProps } from '../shell/params';
-import { DROP_004 } from './drop-004';
+import { SPRING_EDIT } from './spring-edit';
 
 // What the preview plays: a 42-second garment lookbook built by `scripts/build-media.sh` into `apps/preview/public/media`.
 const SRC = './media/lookbook.mp4';
@@ -13,7 +13,7 @@ const POSTER = './media/poster.jpg';
 export function Player({ media }: { media?: PlaybackProps }) {
   return (
     <VideoPlayer poster={POSTER}>
-      <VideoSkin shop={DROP_004}>
+      <VideoSkin shop={SPRING_EDIT}>
         <Video {...media} src={SRC} playsInline crossOrigin="">
           <track kind="chapters" label="Looks" srcLang="en" src="./media/chapters.vtt" default />
           <track kind="captions" label="English (sound)" srcLang="en" src="./media/captions.vtt" />

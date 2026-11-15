@@ -1,12 +1,12 @@
 import { GarmentIcon } from '@/video/garments/garment-icons';
 import { GARMENT_LABEL } from '@/video/garments/garments';
 
-import { DESCRIBED_VERSION, DROP_004 } from '../frame/drop-004';
 import { Player } from '../frame/player';
+import { DESCRIBED_VERSION, SPRING_EDIT } from '../frame/spring-edit';
 
 const KEYS: [string, string][] = [
   ['Space / K', 'Play or pause'],
-  ['← / →', 'Back or forward 10s'],
+  ['← / →', 'Back or forward 10 seconds'],
   ['↑ / ↓', 'Volume'],
   ['M', 'Mute'],
   ['F', 'Fullscreen'],
@@ -14,6 +14,9 @@ const KEYS: [string, string][] = [
   ['C', 'Captions on or off'],
   ['Esc', 'Close the product sheet, bag or menu'],
 ];
+
+/** A soft background per card, cycling through the collection's pastels. */
+const PASTELS = ['butter', 'powder', 'blush', 'lilac', 'sage'];
 
 const format = new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
 
@@ -34,60 +37,61 @@ export function Site() {
   return (
     <>
       <a className="site-skip" href="#player">
-        Skip to the player
+        Skip to the film
       </a>
 
       <header className="site-header">
-        <span className="site-logo">
-          NØ SIGNAL<sup>®</sup>
-        </span>
-        <span className="site-header-note">Drop · a shoppable fashion skin for Video.js v10</span>
+        <nav className="site-nav" aria-label="Sections">
+          <a href="#player">The film</a>
+          <a href="#pieces">The pieces</a>
+          <a href="#about">The skin</a>
+        </nav>
+        <span className="site-logo">{SPRING_EDIT.brand}</span>
         <a className="site-header-link" href="./workbench.html">
-          Workbench ↗
+          Workbench
         </a>
       </header>
 
       <main>
         <section className="site-hero" aria-labelledby="hero-title">
           <p className="site-kicker">
-            <span className="site-sticker">{DROP_004.drop}</span>
-            <abbr className="site-sticker site-sticker-paper" title={DROP_004.seasonName}>
-              {DROP_004.season}
-            </abbr>
+            <abbr title={SPRING_EDIT.seasonName}>{SPRING_EDIT.season}</abbr> · {SPRING_EDIT.drop}
           </p>
           <h1 id="hero-title" className="site-title">
-            Shop the <em>film</em>.
+            Shop the <em>film</em>
           </h1>
           <p className="site-lede">
-            Six pieces, forty-two seconds. Watch the seek bar turn into each garment, then hit the swing tag to shop
-            it without leaving the film.
+            Five pieces, forty seconds. Watch the seek bar turn into each garment as it plays, then open the swing tag
+            to choose your size without leaving the film.
           </p>
           <div className="site-player" id="player">
             <Player />
           </div>
           <p className="site-player-note">
-            No dialogue: the soundtrack is captioned (Scissors → Captions, or press C).{' '}
+            There is no dialogue; the music is captioned (Scissors, then Captions, or press C).{' '}
             <a href="#described">Read the described version</a>.
           </p>
         </section>
 
-        <section className="site-looks" aria-labelledby="looks-title">
+        <section className="site-looks" id="pieces" aria-labelledby="looks-title">
           <h2 id="looks-title" className="site-h2">
-            The looks
+            The pieces
           </h2>
           <ol className="site-look-grid">
-            {DROP_004.looks.map((look) => (
-              <li key={look.id} className="site-look">
+            {SPRING_EDIT.looks.map((look, i) => (
+              <li key={look.id} className="site-look" data-pastel={PASTELS[i % PASTELS.length]}>
                 <img className="site-look-image" src={look.image} alt="" loading="lazy" width="360" height="480" />
                 <div className="site-look-body">
                   <span className="site-look-id">
                     <GarmentIcon garment={look.garment} />
-                    {GARMENT_LABEL[look.garment]} · {look.id}
+                    {GARMENT_LABEL[look.garment]}
                   </span>
                   <h3 className="site-look-name">{look.name}</h3>
-                  <span className="site-look-price">{format.format(look.price)}</span>
+                  <span className="site-look-price">
+                    {look.color} · {format.format(look.price)}
+                  </span>
                   <button type="button" className="site-look-watch" onClick={() => watchLook(look.start)}>
-                    Watch look {look.id} <span aria-hidden="true">→</span>
+                    Watch in the film
                   </button>
                 </div>
               </li>
@@ -104,56 +108,53 @@ export function Site() {
               <li key={scene.time}>
                 <span className="site-described-time">{scene.time}</span>
                 <p>
-                  <strong>{DROP_004.looks[i]?.name}.</strong> {scene.text}
+                  <strong>{SPRING_EDIT.looks[i]?.name}.</strong> {scene.text}
                 </p>
               </li>
             ))}
           </ol>
           <p className="site-described-sound">
-            Sound: an upbeat hip-hop instrumental throughout, with no vocals, fading out over the last three seconds.
+            Sound: a hazy, mellow instrumental throughout, with no vocals, fading out over the last three seconds.
           </p>
         </section>
 
-        <section className="site-about" aria-labelledby="about-title">
+        <section className="site-about" id="about" aria-labelledby="about-title">
           <h2 id="about-title" className="site-h2">
-            Controls cut from the clothes
+            Atelier, a skin cut from the cloth
           </h2>
           <div className="site-about-grid">
             <article>
               <h3>The seek bar is the wardrobe</h3>
               <p>
-                Each chapter of the bar is cut from the garment on screen: a button placket for the shirt, selvedge
-                denim with orange double stitching, a zipper for the leather jacket, a drawstring through rib knit, laces
-                for the sneakers, printed pleats for the dress. Whatever has played is finished: buttoned, zipped,
-                laced. The playhead is the tool doing the work: a button doing up the shirt, a needle sewing the seam,
-                the zip pull, a safety pin threading the drawstring, the aglet lacing the shoe, an iron pressing the
-                pleats.
+                Each chapter is a swatch of the garment on screen, and what has played is finished: the jumper knitted,
+                the shirt buttoned, the blazer seam sewn along its chalk line, the skirt's pleats pressed, the dress
+                zipped. The playhead is the tool doing the work: a knitting needle, a button, a needle and thread, an
+                iron, a fine gold zip pull.
               </p>
             </article>
             <article>
-              <h3>Every control has a job in the wardrobe</h3>
+              <h3>Every control has a job in the atelier</h3>
               <p>
-                Mute is a zipper: open lets the sound out, zipped shuts it in. Volume is a size run, so turning it up is
-                going up a size. Time is a tailor's tape measure, and replay rewinds it to zero. Pause pins the moment.
-                Hangers move you along the rail to the next look, scissors open the alterations. Prices hang on kraft
-                swing tags, and fabric and care sit on a label like the one inside a collar.
+                Volume is a size run, so turning it up is going up a size. Time is a tailor's tape measure that pulls
+                out as the film plays, and replay rewinds it. Mute zips the sound shut. Pause pins the moment. Hangers
+                move along the rail to the next piece, and scissors open the alterations.
               </p>
             </article>
             <article>
               <h3>Shop without leaving</h3>
               <p>
-                The swing tag stays up while the controls hide. Tap it and a sheet slides in, pauses the film, takes your
-                size (W30 for jeans, EU 42 for sneakers), and picks playback back up when it closes. Skip buttons jump
-                piece to piece like flipping a lookbook.
+                An ivory swing tag follows the piece on screen and stays while the controls rest. Open it and a sheet
+                slides in, pauses the film, shows fabric and care, takes your size, and resumes playback when it
+                closes.
               </p>
             </article>
             <article>
-              <h3>Legible and accessible</h3>
+              <h3>Quiet, legible, accessible</h3>
               <p>
-                Every control is a real button, slider or radio with a label, set on solid fills with a black keyline,
-                so it holds over a white sneaker or a black leather jacket. Focus is a black, volt and black ring.
-                Targets are 40–44px, the layout follows the player's own width, motion stops under reduced motion,
-                and high-contrast and forced-colors modes are covered.
+                Ivory and linen surfaces with warm charcoal type and pastel accents, at 7:1 contrast or better. Controls
+                float on soft panels so they hold over bright and dark footage. Every control is a labelled button,
+                slider or radio, at least 44px, with a visible focus ring. Phones get a compact layout, and motion rests
+                under reduced motion.
               </p>
             </article>
           </div>
@@ -176,12 +177,12 @@ export function Site() {
 
       <footer className="site-footer">
         <p>
-          Drop is a skin for the <a href="https://videojs.org">Video.js v10</a> player, licensed Apache-2.0. NØ SIGNAL is a
-          fictional label and the shop is a demo: nothing is sold or charged.
+          Atelier is a skin for the <a href="https://videojs.org">Video.js v10</a> player, licensed Apache-2.0.{' '}
+          {SPRING_EDIT.brand} is a fictional house and the shop is a demo: nothing is sold or charged.
         </p>
         <p>
-          Footage and music from <a href="https://mixkit.co">Mixkit</a> under the Mixkit License. Type: Archivo and Space
-          Mono (SIL OFL).
+          Footage and music from <a href="https://mixkit.co">Mixkit</a> under the Mixkit License. Type: Cormorant
+          Garamond and Jost (SIL Open Font License).
         </p>
       </footer>
     </>

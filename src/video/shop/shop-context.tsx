@@ -25,8 +25,8 @@ export function ShopProvider({ shop = EMPTY, children }: { shop?: ShopConfig | u
 
   const config = useMemo(
     () => ({
-      brand: 'NØ SIGNAL',
-      drop: 'Drop 004',
+      brand: 'Maison Marelle',
+      drop: 'The Spring Edit',
       season: 'SS27',
       seasonName: 'Spring/Summer 2027',
       currency: 'EUR',

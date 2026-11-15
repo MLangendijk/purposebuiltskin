@@ -1,51 +1,56 @@
 /*
- * DROP — a shoppable fashion skin. This file styles the chrome around the garments: buttons, top bar, bag, swing tag,
- * product sheet, start screen. Garment materials live in ../garments/garments.css.
+ * ATELIER — the boutique chrome around the garments: buttons, top bar, bag, swing tag, product sheet, start screen.
+ * Garment materials live in ../garments/garments.css; the phone layout in ./compact.css.
  *
  * Visual rules
- * - Three inks: ink (near black), paper (warm white), volt (acid yellow-green). Hot pink is reserved for scarcity.
- * - Every control is a sticker: a solid fill with a 2px ink keyline and a hard offset shadow. Solid fills keep text and
- *   icons legible over any frame; the keyline separates them from bright footage, the fill from dark footage.
- * - Type: Archivo pushed to its narrowest, heaviest cut for display; Space Mono for anything that counts.
- * - Hard corners only. Motion is snappy and physical (slap, tick), and turns off with reduced motion.
+ * - Ivory and linen surfaces, warm charcoal type, pastels (blush, sage, powder, butter, lilac) only as fills behind
+ *   charcoal, never as text. Every pair clears 7:1.
+ * - Controls float on soft ivory surfaces with a hairline and a low, diffuse shadow, so they read over bright and dark
+ *   footage without boxing the picture in.
+ * - Cormorant Garamond for names and headlines; Jost, tracked out in small capitals, for everything functional.
+ * - Rounded, quiet, unhurried: gentle fades and lifts, all of which stop under reduced motion.
  *
- * These rules are unlayered on purpose: they sit on top of the Scaffold skin's layered base, which keeps providing
- * behavior (state-driven icon swaps, popup positioning, idle hiding).
+ * Rules are unlayered on purpose: they sit on top of the Scaffold skin's layered base, which keeps providing behavior
+ * (state-driven icon swaps, popup positioning, idle hiding).
  */
 
 .media-skin[data-skin="drop"] {
-  --drop-ink: #0b0b0c;
-  --drop-paper: #f4f1ea;
-  --drop-volt: #d4ff1f;
-  --drop-hot: #ff7fb2;
-  --drop-dim: rgb(244 241 234 / 0.72);
+  --ivory: #fbf8f3;
+  --linen: #f3ede4;
+  --ink: #2a2826;
+  --taupe: #4f4a45;
+  --hairline: rgb(42 40 38 / 0.22);
+  --blush: #ebd3cc;
+  --sage: #d3decf;
+  --powder: #d4e0ec;
+  --butter: #f2e8c9;
+  --lilac: #e4dcec;
+  --gold: #c9ab72;
 
   --u: var(--media-spacing);
   --drop-control: calc(var(--u) * 11);
-  --drop-line: 2px;
-  --drop-lift: calc(var(--u) * 0.75);
-  --drop-shadow: var(--drop-lift) var(--drop-lift) 0 0 var(--drop-ink);
-  --drop-display: "Archivo Variable", "Archivo", "Arial Narrow", "Helvetica Neue", sans-serif;
-  --drop-mono: "Space Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-  --drop-ease: cubic-bezier(0.2, 0.9, 0.25, 1.2);
-  --drop-fast: 120ms;
-  --drop-slap: 260ms;
+  --drop-radius: calc(var(--u) * 4);
+  --drop-shadow: 0 6px 24px rgb(42 40 38 / 0.18), 0 1px 3px rgb(42 40 38 / 0.12);
+  --serif: "Cormorant Garamond", "Cormorant", Garamond, "Times New Roman", serif;
+  --sans: "Jost Variable", "Jost", "Futura", "Avenir Next", "Helvetica Neue", sans-serif;
+  --drop-ease: cubic-bezier(0.22, 0.8, 0.3, 1);
+  --drop-fast: 160ms;
+  --drop-slow: 420ms;
 
   /* Video.js tokens the base skin reads. */
-  --media-foreground: var(--drop-paper);
-  --media-accent: var(--drop-volt);
-  --media-accent-foreground: var(--drop-ink);
-  --media-ring: var(--drop-volt);
-  --media-popover: var(--drop-ink);
-  --media-popover-foreground: var(--drop-paper);
-  --media-button-highlight: var(--drop-volt);
-  --media-font-family: var(--drop-display);
+  --media-foreground: var(--ink);
+  --media-accent: var(--ink);
+  --media-accent-foreground: var(--ivory);
+  --media-ring: var(--ink);
+  --media-popover: var(--ivory);
+  --media-popover-foreground: var(--ink);
+  --media-button-highlight: var(--linen);
+  --media-font-family: var(--sans);
 
-  font-family: var(--drop-display);
-  font-stretch: 85%;
-  font-weight: 600;
-  word-spacing: 0.18em;
-  background: var(--drop-ink);
+  font-family: var(--sans);
+  font-weight: 400;
+  color: var(--ink);
+  background: #1c1b1a;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -55,156 +60,40 @@
   }
 }
 
-/* Focus: ink | volt | ink rings, so it shows over white, black, and volt alike. */
+/* Small capitals, tracked out: the voice of every label. */
+.media-skin[data-skin="drop"] :is(.drop-label, .drop-eyebrow, .drop-start-kicker, .drop-sizes-legend, .drop-bag-label) {
+  font-family: var(--sans);
+  font-size: calc(var(--u) * 2.75);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Focus: ivory, charcoal, ivory rings, so it shows over any frame and any fill. */
 .media-skin[data-skin="drop"] :is(button, [role="button"], [role="slider"], input, [tabindex]):focus-visible,
 .media-skin[data-skin="drop"] .media-button:focus-visible {
-  outline: var(--drop-line) solid var(--drop-ink);
-  outline-offset: 5px;
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
   box-shadow:
-    0 0 0 2px var(--drop-ink),
-    0 0 0 5px var(--drop-volt);
+    0 0 0 2px var(--ivory),
+    0 0 0 6px var(--ivory);
 }
 
 .media-skin[data-skin="drop"]:focus-visible {
-  outline: 3px solid var(--drop-volt);
-  outline-offset: -3px;
+  outline: 3px solid var(--ivory);
+  outline-offset: -5px;
+  box-shadow: inset 0 0 0 5px var(--ink);
 }
 
-/* ---------------------------------------------------------------- Shared sticker pieces */
-
-.media-skin[data-skin="drop"] .drop-sticker {
-  display: inline-flex;
-  align-items: center;
-  gap: calc(var(--u) * 1);
-  padding: calc(var(--u) * 0.75) calc(var(--u) * 2);
-  border: var(--drop-line) solid var(--drop-ink);
-  box-shadow: var(--drop-shadow);
-  font-family: var(--drop-mono);
-  font-size: calc(var(--u) * 2.75);
-  font-weight: 700;
-  font-stretch: normal;
-  letter-spacing: 0.06em;
-  line-height: 1.2;
-  text-transform: uppercase;
-  white-space: nowrap;
+.media-skin[data-skin="drop"] abbr[title] {
+  text-decoration: underline dotted;
+  text-underline-offset: 0.2em;
+  cursor: help;
 }
 
-.media-skin[data-skin="drop"] .drop-sticker-volt {
-  background: var(--drop-volt);
-  color: var(--drop-ink);
-}
+/* ---------------------------------------------------------------- State-change motion */
 
-.media-skin[data-skin="drop"] .drop-sticker-ink {
-  background: var(--drop-ink);
-  color: var(--drop-paper);
-  border-color: var(--drop-paper);
-}
-
-.media-skin[data-skin="drop"] .drop-sticker-paper {
-  background: var(--drop-paper);
-  color: var(--drop-ink);
-}
-
-.media-skin[data-skin="drop"] .drop-sticker-hot {
-  background: var(--drop-hot);
-  color: var(--drop-ink);
-}
-
-.media-skin[data-skin="drop"] .drop-eyebrow {
-  margin: 0;
-  font-family: var(--drop-mono);
-  font-size: calc(var(--u) * 2.75);
-  font-weight: 400;
-  font-stretch: normal;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--drop-dim);
-}
-
-/* ---------------------------------------------------------------- Buttons */
-
-.media-skin[data-skin="drop"] .media-button,
-.media-skin[data-skin="drop"] .drop-icon-button,
-.media-skin[data-skin="drop"] .drop-bag-button {
-  width: var(--drop-control);
-  height: var(--drop-control);
-  display: inline-grid;
-  place-items: center;
-  padding: 0;
-  margin: 0;
-  border: var(--drop-line) solid var(--drop-ink);
-  border-radius: 0;
-  background: var(--drop-ink);
-  color: var(--drop-paper);
-  cursor: pointer;
-  touch-action: manipulation;
-  transition:
-    background-color var(--drop-fast) linear,
-    color var(--drop-fast) linear,
-    translate var(--drop-fast) var(--drop-ease),
-    box-shadow var(--drop-fast) var(--drop-ease);
-}
-
-.media-skin[data-skin="drop"] :is(.media-button, .drop-icon-button, .drop-bag-button) svg {
-  width: calc(var(--u) * 5.5);
-  height: calc(var(--u) * 5.5);
-  grid-area: 1 / 1;
-}
-
-@media (hover: hover) {
-  .media-skin[data-skin="drop"] :is(.media-button, .drop-icon-button, .drop-bag-button):hover {
-    background: var(--drop-volt);
-    color: var(--drop-ink);
-    box-shadow: var(--drop-shadow);
-    translate: calc(var(--drop-lift) * -0.5) calc(var(--drop-lift) * -0.5);
-  }
-}
-
-.media-skin[data-skin="drop"] :is(.media-button, .drop-icon-button, .drop-bag-button):active {
-  translate: 0 0;
-  box-shadow: none;
-}
-
-.media-skin[data-skin="drop"] :is(.media-button, .drop-bag-button)[aria-expanded="true"] {
-  background: var(--drop-volt);
-  color: var(--drop-ink);
-}
-
-.media-skin[data-skin="drop"] .media-button[aria-disabled="true"] {
-  opacity: 1;
-  color: rgb(244 241 234 / 0.35);
-  cursor: not-allowed;
-}
-
-@media (hover: hover) {
-  .media-skin[data-skin="drop"] .media-button[aria-disabled="true"]:hover {
-    background: var(--drop-ink);
-    color: rgb(244 241 234 / 0.35);
-    box-shadow: none;
-    translate: 0 0;
-  }
-}
-
-/* The play button is the loudest tag on the bar. */
-.media-skin[data-skin="drop"] .drop-play {
-  width: calc(var(--drop-control) * 1.25);
-  background: var(--drop-volt);
-  color: var(--drop-ink);
-  box-shadow: var(--drop-shadow);
-}
-
-@media (hover: hover) {
-  .media-skin[data-skin="drop"] .drop-play:hover {
-    background: var(--drop-paper);
-  }
-}
-
-.media-skin[data-skin="drop"] .media-button-icon-base {
-  width: calc(var(--u) * 5.5);
-  height: calc(var(--u) * 5.5);
-}
-
-/* State changes act out the garment: muting zips the sound shut, unmuting unzips it. */
+/* Muting zips the sound shut, unmuting opens it. */
 .media-skin[data-skin="drop"] :is(.icon-zip-pull, .icon-teeth, .icon-spin) {
   transform-box: fill-box;
 }
@@ -220,7 +109,7 @@
 
 .media-skin[data-skin="drop"] .icon-spin {
   transform-origin: center;
-  animation: icon-spin 1.4s linear infinite;
+  animation: icon-spin 1.8s linear infinite;
 }
 
 @keyframes icon-zip {
@@ -241,53 +130,114 @@
   }
 }
 
+/* ---------------------------------------------------------------- Buttons */
+
+.media-skin[data-skin="drop"] .media-button,
+.media-skin[data-skin="drop"] .drop-icon-button,
+.media-skin[data-skin="drop"] .drop-bag-button {
+  width: var(--drop-control);
+  height: var(--drop-control);
+  display: inline-grid;
+  place-items: center;
+  padding: 0;
+  margin: 0;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition:
+    background-color var(--drop-fast) ease,
+    color var(--drop-fast) ease,
+    border-color var(--drop-fast) ease;
+}
+
+.media-skin[data-skin="drop"] :is(.media-button, .drop-icon-button, .drop-bag-button) svg {
+  width: calc(var(--u) * 5.5);
+  height: calc(var(--u) * 5.5);
+  grid-area: 1 / 1;
+}
+
+@media (hover: hover) {
+  .media-skin[data-skin="drop"] :is(.media-button, .drop-icon-button, .drop-bag-button):hover {
+    background: var(--linen);
+    border-color: var(--hairline);
+  }
+}
+
+.media-skin[data-skin="drop"] :is(.media-button, .drop-bag-button)[aria-expanded="true"] {
+  background: var(--linen);
+  border-color: var(--hairline);
+}
+
+.media-skin[data-skin="drop"] .media-button[aria-disabled="true"] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+@media (hover: hover) {
+  .media-skin[data-skin="drop"] .media-button[aria-disabled="true"]:hover {
+    background: transparent;
+    border-color: transparent;
+  }
+}
+
+/* Play is the one filled button: charcoal, the quiet anchor of the bar. */
+.media-skin[data-skin="drop"] .drop-play {
+  background: var(--ink);
+  color: var(--ivory);
+}
+
+@media (hover: hover) {
+  .media-skin[data-skin="drop"] .drop-play:hover {
+    background: var(--taupe);
+    border-color: var(--taupe);
+  }
+}
+
+.media-skin[data-skin="drop"] .media-button-icon-base {
+  width: calc(var(--u) * 5);
+  height: calc(var(--u) * 5);
+}
+
 /* ---------------------------------------------------------------- Scrim and layout */
 
 .media-skin[data-skin="drop"] .drop-scrim {
   background-image:
-    linear-gradient(to bottom, rgb(11 11 12 / 0.55), transparent 22%),
-    linear-gradient(to top, rgb(11 11 12 / 0.75), rgb(11 11 12 / 0.25) 30%, transparent 48%);
+    linear-gradient(to bottom, rgb(28 27 26 / 0.28), transparent 22%),
+    linear-gradient(to top, rgb(28 27 26 / 0.35), transparent 40%);
 }
 
 .media-skin[data-skin="drop"] .drop-top {
   justify-content: flex-start;
   align-items: center;
   gap: calc(var(--u) * 3);
-  padding: calc(var(--u) * 3);
+  padding: calc(var(--u) * 4);
 }
 
 .media-skin[data-skin="drop"] .drop-bottom {
-  gap: calc(var(--u) * 2.5);
-  padding: calc(var(--u) * 3);
-  padding-top: 0;
+  gap: calc(var(--u) * 1.5);
+  margin: 0 calc(var(--u) * 4) calc(var(--u) * 4);
+  padding: calc(var(--u) * 2) calc(var(--u) * 3);
+  border: 1px solid var(--hairline);
+  border-radius: var(--drop-radius);
+  background: var(--ivory);
+  box-shadow: var(--drop-shadow);
 }
 
 .media-skin[data-skin="drop"] :is(.drop-top, .drop-bottom) {
   transition:
-    opacity var(--drop-fast) linear,
-    translate var(--drop-slap) var(--drop-ease);
+    opacity var(--drop-slow) ease,
+    translate var(--drop-slow) var(--drop-ease);
 }
 
 .media-skin[data-skin="drop"] .video-controls-content:not([data-visible]) .drop-bottom {
-  translate: 0 calc(var(--u) * 3);
+  translate: 0 calc(var(--u) * 2);
 }
 
 .media-skin[data-skin="drop"] .video-controls-content:not([data-visible]) .drop-top {
-  translate: 0 calc(var(--u) * -3);
-}
-
-.media-skin[data-skin="drop"] .drop-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: calc(var(--u) * 2);
-}
-
-.media-skin[data-skin="drop"] .drop-group {
-  display: flex;
-  align-items: center;
-  gap: calc(var(--u) * 1.5);
-  min-width: 0;
+  translate: 0 calc(var(--u) * -2);
 }
 
 /*
@@ -301,88 +251,53 @@
 }
 
 .media-skin[data-skin="drop"]:has(.video-controls-content :focus-visible) .drop-tag-anchor {
-  bottom: calc(var(--u) * 42);
+  bottom: calc(var(--u) * 46);
+}
+
+.media-skin[data-skin="drop"] .drop-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--u) * 2);
+}
+
+.media-skin[data-skin="drop"] .drop-group {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 1);
+  min-width: 0;
 }
 
 /* ---------------------------------------------------------------- Top bar */
 
 .media-skin[data-skin="drop"] .drop-stamp {
   display: inline-flex;
-  flex-shrink: 0;
-  align-items: stretch;
-  rotate: -2deg;
+  align-items: center;
+  height: var(--drop-control);
+  padding: 0 calc(var(--u) * 5);
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background: var(--ivory);
   box-shadow: var(--drop-shadow);
-  border: var(--drop-line) solid var(--drop-ink);
-  text-transform: uppercase;
-  line-height: 1;
-}
-
-.media-skin[data-skin="drop"] .drop-stamp-brand {
-  padding: calc(var(--u) * 1.5) calc(var(--u) * 2.5);
-  background: var(--drop-ink);
-  color: var(--drop-paper);
-  font-size: calc(var(--u) * 4.5);
-  font-weight: 900;
-  font-stretch: 62%;
-  letter-spacing: 0.01em;
-}
-
-.media-skin[data-skin="drop"] .drop-stamp-drop {
-  display: grid;
-  place-items: center;
-  padding: 0 calc(var(--u) * 2);
-  background: var(--drop-volt);
-  color: var(--drop-ink);
-  font-family: var(--drop-mono);
-  font-size: calc(var(--u) * 2.75);
-  font-weight: 700;
-  font-stretch: normal;
-}
-
-.media-skin[data-skin="drop"] .drop-ticker {
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
-  border-block: var(--drop-line) solid var(--drop-ink);
-  background: var(--drop-volt);
-  color: var(--drop-ink);
-  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
-}
-
-.media-skin[data-skin="drop"] .drop-ticker-track {
-  display: flex;
-  width: max-content;
-  animation: drop-ticker 22s linear infinite;
-}
-
-.media-skin[data-skin="drop"] .drop-ticker-line {
-  display: flex;
-  flex-shrink: 0;
-}
-
-.media-skin[data-skin="drop"] .drop-ticker-line > span {
-  padding: calc(var(--u) * 1) 0 calc(var(--u) * 1) calc(var(--u) * 3);
-  font-family: var(--drop-mono);
-  font-size: calc(var(--u) * 2.75);
-  font-weight: 700;
-  font-stretch: normal;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: calc(var(--u) * 5);
+  font-weight: 500;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
+  line-height: 1;
   white-space: nowrap;
 }
 
-.media-skin[data-skin="drop"] .drop-ticker-star {
-  padding-inline-start: calc(var(--u) * 3);
+.media-skin[data-skin="drop"] .drop-top-actions {
+  display: flex;
+  gap: calc(var(--u) * 2);
+  margin-inline-start: auto;
 }
 
-.media-skin[data-skin="drop"] .drop-ticker[data-paused] .drop-ticker-track {
-  animation-play-state: paused;
-}
-
-@keyframes drop-ticker {
-  to {
-    transform: translateX(-50%);
-  }
+.media-skin[data-skin="drop"] .drop-top-actions .media-button {
+  border-color: var(--hairline);
+  background: var(--ivory);
+  box-shadow: var(--drop-shadow);
 }
 
 /* ---------------------------------------------------------------- Bag */
@@ -392,47 +307,44 @@
   display: inline-flex;
   flex-shrink: 0;
   gap: calc(var(--u) * 2);
-  margin-inline-start: auto;
-  padding: 0 calc(var(--u) * 2.5);
-  border-color: var(--drop-ink);
+  padding: 0 calc(var(--u) * 4);
+  border-color: var(--hairline);
+  background: var(--ivory);
   box-shadow: var(--drop-shadow);
-  background: var(--drop-paper);
-  color: var(--drop-ink);
-  font-family: var(--drop-mono);
-  font-size: calc(var(--u) * 3);
-  font-weight: 700;
-  font-stretch: normal;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
 }
 
 .media-skin[data-skin="drop"] .drop-bag-count {
-  min-width: calc(var(--u) * 5.5);
-  padding: calc(var(--u) * 0.25) calc(var(--u) * 1);
-  background: var(--drop-hot);
-  color: var(--drop-ink);
-  text-align: center;
+  display: inline-grid;
+  place-items: center;
+  min-width: calc(var(--u) * 6);
+  height: calc(var(--u) * 6);
+  padding: 0 calc(var(--u) * 1.5);
+  border-radius: 999px;
+  background: var(--blush);
+  color: var(--ink);
+  font-size: calc(var(--u) * 3);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
 }
 
 .media-skin[data-skin="drop"] .drop-bag-count[data-empty] {
-  background: transparent;
-  outline: var(--drop-line) solid currentColor;
-  outline-offset: -2px;
+  background: var(--linen);
 }
 
 .media-skin[data-skin="drop"] .drop-bag-popup {
   z-index: 45;
-  width: min(calc(var(--u) * 84), calc(100cqi - var(--u) * 6));
+  width: min(calc(var(--u) * 92), calc(100cqi - var(--u) * 8));
   max-height: var(--media-popover-available-height, calc(var(--u) * 80));
   overflow: auto;
-  padding: calc(var(--u) * 4);
+  padding: calc(var(--u) * 5);
   display: grid;
-  gap: calc(var(--u) * 3);
-  margin-block-start: calc(var(--u) * 2.5);
-  border: var(--drop-line) solid var(--drop-volt);
-  background: var(--drop-ink);
-  color: var(--drop-paper);
-  box-shadow: calc(var(--u) * 1.5) calc(var(--u) * 1.5) 0 0 var(--drop-volt);
+  gap: calc(var(--u) * 4);
+  margin-block-start: calc(var(--u) * 2);
+  border: 1px solid var(--hairline);
+  border-radius: var(--drop-radius);
+  background: var(--ivory);
+  color: var(--ink);
+  box-shadow: var(--drop-shadow);
 }
 
 .media-skin[data-skin="drop"] .drop-bag-popup:not([data-open]) {
@@ -441,25 +353,21 @@
 
 .media-skin[data-skin="drop"] .drop-bag-title {
   margin: 0;
+  font-family: var(--serif);
   font-size: calc(var(--u) * 7);
-  font-weight: 900;
-  font-stretch: 62%;
-  line-height: 0.9;
-  text-transform: uppercase;
+  font-weight: 500;
+  line-height: 1;
 }
 
 .media-skin[data-skin="drop"] .drop-bag-title span {
-  color: var(--drop-volt);
+  color: var(--taupe);
 }
 
 .media-skin[data-skin="drop"] .drop-bag-empty {
   margin: 0;
-  font-family: var(--drop-mono);
-  font-size: calc(var(--u) * 3);
-  font-weight: 400;
-  font-stretch: normal;
-  line-height: 1.5;
-  color: var(--drop-dim);
+  font-size: calc(var(--u) * 3.5);
+  line-height: 1.6;
+  color: var(--taupe);
 }
 
 .media-skin[data-skin="drop"] .drop-bag-list {
@@ -467,50 +375,48 @@
   padding: 0;
   list-style: none;
   display: grid;
-  border-top: 1px dashed rgb(244 241 234 / 0.3);
+  border-top: 1px solid var(--hairline);
 }
 
 .media-skin[data-skin="drop"] .drop-bag-item {
   display: grid;
   grid-template-columns: auto 1fr auto auto;
   align-items: center;
-  gap: calc(var(--u) * 2.5);
-  padding-block: calc(var(--u) * 2);
-  border-bottom: 1px dashed rgb(244 241 234 / 0.3);
+  gap: calc(var(--u) * 3);
+  padding-block: calc(var(--u) * 3);
+  border-bottom: 1px solid var(--hairline);
 }
 
 .media-skin[data-skin="drop"] .drop-bag-item-icon {
-  width: calc(var(--u) * 7);
-  height: calc(var(--u) * 7);
-  padding: calc(var(--u) * 1);
-  background: var(--drop-volt);
-  color: var(--drop-ink);
+  width: calc(var(--u) * 10);
+  height: calc(var(--u) * 10);
+  padding: calc(var(--u) * 2);
+  border-radius: 999px;
+  background: var(--linen);
 }
 
 .media-skin[data-skin="drop"] .drop-bag-item-name {
   display: grid;
-  font-size: calc(var(--u) * 3.75);
-  font-weight: 800;
-  font-stretch: 75%;
-  line-height: 1.1;
-  text-transform: uppercase;
+  gap: calc(var(--u) * 0.5);
+  font-family: var(--serif);
+  font-size: calc(var(--u) * 4.5);
+  font-weight: 500;
+  line-height: 1.15;
 }
 
 .media-skin[data-skin="drop"] :is(.drop-bag-item-size, .drop-bag-item-price, .drop-bag-total) {
-  font-family: var(--drop-mono);
-  font-size: calc(var(--u) * 3);
-  font-weight: 400;
-  font-stretch: normal;
-  text-transform: uppercase;
+  font-family: var(--sans);
+  font-size: calc(var(--u) * 3.25);
+  font-variant-numeric: tabular-nums;
 }
 
 .media-skin[data-skin="drop"] .drop-bag-item-size {
-  color: var(--drop-dim);
+  color: var(--taupe);
+  letter-spacing: 0.06em;
 }
 
 .media-skin[data-skin="drop"] .drop-icon-button-sm {
-  --drop-control: calc(var(--u) * 11);
-  border-color: rgb(244 241 234 / 0.3);
+  border-color: var(--hairline);
 }
 
 .media-skin[data-skin="drop"] .drop-icon-button-sm svg {
@@ -522,17 +428,14 @@
   margin: 0;
   display: flex;
   justify-content: space-between;
-  font-weight: 700;
-  font-size: calc(var(--u) * 3.5);
+  font-size: calc(var(--u) * 3.75);
+  font-weight: 500;
 }
 
 .media-skin[data-skin="drop"] .drop-bag-notice {
   margin: 0;
-  font-family: var(--drop-mono);
-  font-size: calc(var(--u) * 2.75);
-  font-weight: 400;
-  font-stretch: normal;
-  color: var(--drop-volt);
+  font-size: calc(var(--u) * 3.25);
+  color: var(--taupe);
 }
 
 .media-skin[data-skin="drop"] .drop-bag-notice:empty {
@@ -546,119 +449,116 @@
 /* ---------------------------------------------------------------- Tooltips and menus */
 
 .media-skin[data-skin="drop"] .media-tooltip-popup {
-  padding: calc(var(--u) * 1) calc(var(--u) * 2);
-  border: var(--drop-line) solid var(--drop-ink);
-  background: var(--drop-volt);
-  color: var(--drop-ink);
+  padding: calc(var(--u) * 1.5) calc(var(--u) * 3);
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--ivory);
   box-shadow: var(--drop-shadow);
-  font-family: var(--drop-mono);
+  font-family: var(--sans);
   font-size: calc(var(--u) * 2.75);
-  font-weight: 700;
-  font-stretch: normal;
-  letter-spacing: 0.04em;
+  font-weight: 500;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  --media-tooltip-side-offset: calc(var(--u) * 13);
+  --media-tooltip-side-offset: calc(var(--u) * 14);
 }
 
 .media-skin[data-skin="drop"] .media-tooltip-shortcut {
-  background: var(--drop-ink);
-  color: var(--drop-volt);
+  border-radius: 4px;
+  background: rgb(251 248 243 / 0.18);
+  color: var(--ivory);
   padding-inline: calc(var(--u) * 1);
 }
 
 .media-skin[data-skin="drop"] .media-menu-popup {
-  border: var(--drop-line) solid var(--drop-volt);
-  background: var(--drop-ink);
-  color: var(--drop-paper);
-  box-shadow: calc(var(--u) * 1.5) calc(var(--u) * 1.5) 0 0 var(--drop-volt);
-  font-family: var(--drop-mono);
-  font-size: calc(var(--u) * 3);
-  font-weight: 700;
-  font-stretch: normal;
-  text-transform: uppercase;
-  --media-popover-side-offset: calc(var(--u) * 13);
+  border: 1px solid var(--hairline);
+  border-radius: var(--drop-radius);
+  background: var(--ivory);
+  color: var(--ink);
+  box-shadow: var(--drop-shadow);
+  font-family: var(--sans);
+  font-size: calc(var(--u) * 3.25);
+  --media-popover-side-offset: calc(var(--u) * 14);
 }
 
 .media-skin[data-skin="drop"] .media-menu-content {
-  background: var(--drop-ink);
+  background: var(--ivory);
 }
 
 .media-skin[data-skin="drop"] :is(.media-menu-item, .media-menu-back-item, .media-menu-radio-item) {
   min-height: calc(var(--u) * 11);
+  border: 0;
+  border-radius: calc(var(--u) * 2.5);
   background: transparent;
   color: inherit;
   font: inherit;
-  text-transform: uppercase;
-  border: 0;
+  letter-spacing: 0.04em;
 }
 
 .media-skin[data-skin="drop"] :is(.media-menu-item, .media-menu-back-item, .media-menu-radio-item)[data-highlighted] {
-  background: var(--drop-volt);
-  color: var(--drop-ink);
+  background: var(--linen);
+  color: var(--ink);
 }
 
 .media-skin[data-skin="drop"] :is(.media-menu-item, .media-menu-back-item, .media-menu-radio-item):focus-visible {
-  outline: var(--drop-line) solid var(--drop-volt);
+  outline: 2px solid var(--ink);
   outline-offset: -2px;
   box-shadow: none;
 }
 
 .media-skin[data-skin="drop"] :is(.media-menu-hint, .media-menu-trigger-icon, .media-menu-radio-icon) {
   opacity: 1;
+  color: var(--taupe);
 }
 
 .media-skin[data-skin="drop"] .media-menu-badge {
-  background: var(--drop-hot);
-  color: var(--drop-ink);
+  border-radius: 999px;
+  background: var(--blush);
+  color: var(--ink);
 }
 
-/* ---------------------------------------------------------------- Look tag: a kraft swing tag on a string */
+/* ---------------------------------------------------------------- Look tag: a swing tag on a silk cord */
 
 .media-skin[data-skin="drop"] .drop-tag-anchor {
   position: absolute;
   z-index: 32;
-  inset-inline-end: calc(var(--u) * 3);
-  bottom: calc(var(--u) * 4);
+  inset-inline-end: calc(var(--u) * 4);
+  bottom: calc(var(--u) * 5);
   pointer-events: none;
   transition:
-    bottom var(--drop-slap) var(--drop-ease),
-    opacity var(--drop-fast) linear;
+    bottom var(--drop-slow) var(--drop-ease),
+    opacity var(--drop-fast) ease;
 }
 
-/* Lift the tag clear of the control bar while it is up. */
+/* Lift the tag clear of the control panel while it is up. */
 .media-skin[data-skin="drop"][data-controls-visible] .drop-tag-anchor {
-  bottom: calc(var(--u) * 42);
+  bottom: calc(var(--u) * 46);
 }
 
 .media-skin[data-skin="drop"] .drop-tag {
-  --kraft: #d6bc8a;
   position: relative;
   pointer-events: auto;
   display: block;
-  max-width: min(calc(var(--u) * 100), calc(100cqi - var(--u) * 6));
+  max-width: min(calc(var(--u) * 100), calc(100cqi - var(--u) * 8));
   padding: 0;
   border: 0;
   background: none;
-  color: var(--drop-ink);
+  color: var(--ink);
   font: inherit;
   text-align: start;
   cursor: pointer;
   touch-action: manipulation;
-  /* The keyline and hard shadow follow the tag's cut shape, which a border can't. */
-  filter: drop-shadow(2px 0 0 var(--drop-ink)) drop-shadow(-2px 0 0 var(--drop-ink))
-    drop-shadow(0 2px 0 var(--drop-ink)) drop-shadow(0 -2px 0 var(--drop-ink))
-    drop-shadow(var(--drop-lift) var(--drop-lift) 0 var(--drop-ink));
+  filter: drop-shadow(0 6px 14px rgb(42 40 38 / 0.22));
 }
 
-/* The string, looping up from the eyelet. */
+/* The cord, looping up from the eyelet. */
 .media-skin[data-skin="drop"] .drop-tag::before {
   content: "";
   position: absolute;
-  left: calc(var(--u) * 3);
+  left: calc(var(--u) * 3.5);
   bottom: 50%;
   width: calc(var(--u) * 6);
   height: calc(var(--u) * 9);
-  border: 3px solid var(--drop-volt);
+  border: 1.5px solid var(--gold);
   border-right-color: transparent;
   border-bottom-color: transparent;
   border-radius: 100% 0 0 0;
@@ -671,33 +571,28 @@
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: stretch;
   clip-path: polygon(calc(var(--u) * 5) 0, 100% 0, 100% 100%, calc(var(--u) * 5) 100%, 0 50%);
+  border-radius: 0 calc(var(--u) * 2) calc(var(--u) * 2) 0;
   background:
-    radial-gradient(circle calc(var(--u) * 1.5) at calc(var(--u) * 4) 50%, var(--drop-ink) 55%, #a8895a 60% 82%, transparent 86%),
-    repeating-linear-gradient(100deg, rgb(255 255 255 / 0.1) 0 1px, transparent 1px 5px),
-    var(--kraft);
+    radial-gradient(circle calc(var(--u) * 1.4) at calc(var(--u) * 4) 50%, transparent 52%, var(--gold) 58% 80%, transparent 84%),
+    var(--ivory);
   rotate: -2deg;
   transform-origin: calc(var(--u) * 4) 50%;
-  animation: drop-swing 600ms var(--drop-ease) both;
+  animation: drop-swing 900ms var(--drop-ease) both;
   transition:
-    rotate var(--drop-fast) var(--drop-ease),
-    translate var(--drop-fast) var(--drop-ease);
+    rotate var(--drop-slow) var(--drop-ease),
+    translate var(--drop-fast) ease;
 }
 
 @media (hover: hover) {
   .media-skin[data-skin="drop"] .drop-tag:hover .drop-tag-face {
     rotate: 0deg;
-    translate: calc(var(--drop-lift) * -0.5) calc(var(--drop-lift) * -0.5);
   }
 }
 
-.media-skin[data-skin="drop"] .drop-tag:active .drop-tag-face {
-  translate: 0 0;
-}
-
 .media-skin[data-skin="drop"] .drop-tag:focus-visible {
-  outline: 3px solid var(--drop-volt);
+  outline: 2px solid var(--ink);
   outline-offset: 6px;
-  box-shadow: none;
+  box-shadow: 0 0 0 4px var(--ivory);
 }
 
 .media-skin[data-skin="drop"] .drop-tag:focus-visible .drop-tag-face {
@@ -709,13 +604,11 @@
   place-items: center;
   align-content: center;
   gap: calc(var(--u) * 0.5);
-  padding: calc(var(--u) * 2) calc(var(--u) * 3) calc(var(--u) * 2) calc(var(--u) * 8);
-  border-inline-end: var(--drop-line) dashed rgb(11 11 12 / 0.55);
-  font-family: var(--drop-mono);
+  padding: calc(var(--u) * 2.5) calc(var(--u) * 3) calc(var(--u) * 2.5) calc(var(--u) * 8);
+  border-inline-end: 1px solid var(--hairline);
   font-size: calc(var(--u) * 2.5);
-  font-weight: 700;
-  font-stretch: normal;
-  letter-spacing: 0.08em;
+  font-weight: 500;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
@@ -727,62 +620,61 @@
 .media-skin[data-skin="drop"] .drop-tag-info {
   display: grid;
   align-content: center;
-  gap: calc(var(--u) * 0.5);
+  gap: calc(var(--u) * 0.75);
   min-width: 0;
-  padding: calc(var(--u) * 2) calc(var(--u) * 3);
+  padding: calc(var(--u) * 2.5) calc(var(--u) * 4);
 }
 
 .media-skin[data-skin="drop"] .drop-tag-look {
   display: flex;
   align-items: center;
   gap: calc(var(--u) * 2);
-  font-family: var(--drop-mono);
+  color: var(--taupe);
   font-size: calc(var(--u) * 2.5);
-  font-weight: 700;
-  font-stretch: normal;
-  letter-spacing: 0.08em;
+  font-weight: 500;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
 .media-skin[data-skin="drop"] .drop-tag-low {
-  padding: 0 calc(var(--u) * 1);
-  background: var(--drop-hot);
+  padding: calc(var(--u) * 0.25) calc(var(--u) * 1.5);
+  border-radius: 999px;
+  background: var(--blush);
+  color: var(--ink);
 }
 
 .media-skin[data-skin="drop"] .drop-tag-name {
   overflow: hidden;
-  font-size: calc(var(--u) * 5.5);
-  font-weight: 900;
-  font-stretch: 62%;
-  line-height: 0.95;
+  font-family: var(--serif);
+  font-size: calc(var(--u) * 6);
+  font-weight: 500;
+  line-height: 1;
   text-overflow: ellipsis;
-  text-transform: uppercase;
   white-space: nowrap;
 }
 
 .media-skin[data-skin="drop"] .drop-tag-price {
   display: grid;
   place-items: center;
-  padding: 0 calc(var(--u) * 3);
-  background: var(--drop-paper);
-  font-family: var(--drop-mono);
-  font-size: calc(var(--u) * 4);
-  font-weight: 700;
-  font-stretch: normal;
+  padding: 0 calc(var(--u) * 4);
+  background: var(--linen);
+  font-size: calc(var(--u) * 3.75);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
 }
 
-/* The tag swings on its string when a new piece comes on. */
+/* The tag swings gently on its cord when a new piece comes on. */
 @keyframes drop-swing {
   0% {
     opacity: 0;
-    rotate: -24deg;
+    rotate: -14deg;
   }
-  45% {
+  50% {
     opacity: 1;
-    rotate: 6deg;
+    rotate: 3deg;
   }
-  75% {
-    rotate: -4deg;
+  80% {
+    rotate: -3deg;
   }
 }
 
@@ -792,8 +684,8 @@
   position: absolute;
   inset: 0;
   z-index: 48;
-  background: rgb(11 11 12 / 0.6);
-  transition: opacity var(--drop-fast) linear;
+  background: rgb(28 27 26 / 0.45);
+  transition: opacity var(--drop-fast) ease;
 }
 
 .media-skin[data-skin="drop"] .drop-sheet-backdrop:not([data-open]) {
@@ -803,18 +695,19 @@
 .media-skin[data-skin="drop"] .drop-sheet {
   position: absolute;
   z-index: 50;
-  inset-block: calc(var(--u) * 3);
-  inset-inline-end: calc(var(--u) * 3);
-  width: min(calc(var(--u) * 170), calc(100% - var(--u) * 6));
+  inset-block: calc(var(--u) * 4);
+  inset-inline-end: calc(var(--u) * 4);
+  width: min(calc(var(--u) * 170), calc(100% - var(--u) * 8));
   display: grid;
   grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
   overflow: hidden;
-  border: var(--drop-line) solid var(--drop-ink);
-  background: var(--drop-ink);
-  color: var(--drop-paper);
-  box-shadow: calc(var(--u) * 2) calc(var(--u) * 2) 0 0 var(--drop-volt);
+  border: 1px solid var(--hairline);
+  border-radius: var(--drop-radius);
+  background: var(--ivory);
+  color: var(--ink);
+  box-shadow: var(--drop-shadow);
   outline: none;
-  animation: drop-sheet-in var(--drop-slap) var(--drop-ease) both;
+  animation: drop-sheet-in var(--drop-slow) var(--drop-ease) both;
 }
 
 .media-skin[data-skin="drop"] .drop-sheet:not([data-open]) {
@@ -822,13 +715,13 @@
 }
 
 .media-skin[data-skin="drop"] .drop-sheet:focus-visible {
-  outline: 3px solid var(--drop-volt);
-  outline-offset: -3px;
+  outline: 2px solid var(--ink);
+  outline-offset: -4px;
 }
 
 @keyframes drop-sheet-in {
   from {
-    translate: calc(var(--u) * 12) 0;
+    translate: calc(var(--u) * 6) 0;
     opacity: 0;
   }
 }
@@ -836,8 +729,7 @@
 .media-skin[data-skin="drop"] .drop-sheet-media {
   position: relative;
   min-height: 0;
-  background: var(--drop-paper);
-  border-inline-end: var(--drop-line) solid var(--drop-volt);
+  background: var(--linen);
 }
 
 .media-skin[data-skin="drop"] .drop-sheet-image {
@@ -851,21 +743,27 @@
   position: absolute;
   top: calc(var(--u) * 3);
   inset-inline-start: calc(var(--u) * 3);
-  rotate: -3deg;
-  font-size: calc(var(--u) * 3.5);
+  padding: calc(var(--u) * 1) calc(var(--u) * 3);
+  border-radius: 999px;
+  background: var(--ivory);
+  color: var(--ink);
+  font-size: calc(var(--u) * 2.75);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .media-skin[data-skin="drop"] .drop-sheet-look-of {
-  font-weight: 400;
+  color: var(--taupe);
 }
 
 .media-skin[data-skin="drop"] .drop-sheet-body {
   display: flex;
   flex-direction: column;
-  gap: calc(var(--u) * 3);
+  gap: calc(var(--u) * 3.5);
   min-height: 0;
   overflow-y: auto;
-  padding: calc(var(--u) * 4);
+  padding: calc(var(--u) * 6);
 }
 
 .media-skin[data-skin="drop"] .drop-sheet-head {
@@ -875,19 +773,34 @@
   gap: calc(var(--u) * 3);
 }
 
+.media-skin[data-skin="drop"] .drop-eyebrow {
+  margin: 0;
+  color: var(--taupe);
+}
+
+.media-skin[data-skin="drop"] .drop-sheet-dept {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 2);
+}
+
+.media-skin[data-skin="drop"] .drop-sheet-dept svg {
+  width: calc(var(--u) * 5.5);
+  height: calc(var(--u) * 5.5);
+  color: var(--ink);
+}
+
 .media-skin[data-skin="drop"] .drop-sheet-close {
   flex-shrink: 0;
-  border-color: rgb(244 241 234 / 0.35);
+  border-color: var(--hairline);
 }
 
 .media-skin[data-skin="drop"] .drop-sheet-title {
   margin: 0;
-  font-size: clamp(calc(var(--u) * 7), 6cqi, calc(var(--u) * 13));
-  font-weight: 900;
-  font-stretch: 62%;
-  line-height: 0.88;
-  letter-spacing: -0.005em;
-  text-transform: uppercase;
+  font-family: var(--serif);
+  font-size: clamp(calc(var(--u) * 8), 5cqi, calc(var(--u) * 12));
+  font-weight: 500;
+  line-height: 1.02;
   text-wrap: balance;
 }
 
@@ -896,24 +809,47 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: calc(var(--u) * 2) calc(var(--u) * 3);
-  font-family: var(--drop-mono);
-  font-size: calc(var(--u) * 3);
-  font-weight: 400;
-  font-stretch: normal;
-  text-transform: uppercase;
-  color: var(--drop-dim);
+  gap: calc(var(--u) * 2) calc(var(--u) * 4);
+  color: var(--taupe);
+  font-size: calc(var(--u) * 3.5);
+  letter-spacing: 0.04em;
 }
 
 .media-skin[data-skin="drop"] .drop-sheet-price {
-  color: var(--drop-volt);
-  font-size: calc(var(--u) * 5);
-  font-weight: 700;
+  color: var(--ink);
+  font-size: calc(var(--u) * 4.5);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
 }
 
-.media-skin[data-skin="drop"] .drop-sheet-meta .drop-sticker {
-  box-shadow: none;
+.media-skin[data-skin="drop"] .drop-badge {
+  padding: calc(var(--u) * 0.5) calc(var(--u) * 2.5);
+  border-radius: 999px;
+  background: var(--blush);
+  color: var(--ink);
   font-size: calc(var(--u) * 2.5);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Fabric and care, set like the woven label inside a collar. */
+.media-skin[data-skin="drop"] .drop-sheet-care {
+  display: grid;
+  gap: calc(var(--u) * 0.75);
+  margin: 0;
+  padding: calc(var(--u) * 3) calc(var(--u) * 4);
+  border-radius: calc(var(--u) * 2);
+  outline: 1px dashed var(--hairline);
+  outline-offset: -4px;
+  background: var(--linen);
+  color: var(--ink);
+  font-size: calc(var(--u) * 3);
+  letter-spacing: 0.06em;
+}
+
+.media-skin[data-skin="drop"] .drop-sheet-care span:first-child {
+  font-weight: 500;
 }
 
 .media-skin[data-skin="drop"] .drop-sizes {
@@ -927,33 +863,22 @@
 .media-skin[data-skin="drop"] .drop-sizes-legend {
   padding: 0;
   margin-bottom: calc(var(--u) * 2);
-  font-family: var(--drop-mono);
-  font-size: calc(var(--u) * 2.75);
-  font-weight: 700;
-  font-stretch: normal;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--drop-dim);
+  color: var(--taupe);
 }
 
 .media-skin[data-skin="drop"] .drop-sizes-guide {
   font-weight: 400;
-  letter-spacing: 0.04em;
-}
-
-.media-skin[data-skin="drop"] abbr[title] {
-  text-decoration: underline dotted;
-  text-underline-offset: 0.2em;
-  cursor: help;
+  letter-spacing: 0.06em;
+  text-transform: none;
 }
 
 .media-skin[data-skin="drop"] .drop-sizes-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(calc(var(--u) * 11), 1fr));
-  gap: calc(var(--u) * 1.5);
+  grid-template-columns: repeat(auto-fill, minmax(calc(var(--u) * 12), 1fr));
+  gap: calc(var(--u) * 2);
 }
 
-/* Size chips are real radio buttons, styled as woven size labels. */
+/* Sizes are real radio buttons, drawn as rounded chips. */
 .media-skin[data-skin="drop"] .drop-size {
   position: relative;
   display: grid;
@@ -971,26 +896,27 @@
   display: grid;
   place-items: center;
   min-height: calc(var(--u) * 11);
-  border: var(--drop-line) solid rgb(244 241 234 / 0.4);
-  font-family: var(--drop-mono);
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
   font-size: calc(var(--u) * 3.25);
-  font-weight: 700;
-  font-stretch: normal;
+  font-weight: 500;
+  letter-spacing: 0.06em;
   transition:
-    background-color var(--drop-fast) linear,
-    color var(--drop-fast) linear;
+    background-color var(--drop-fast) ease,
+    color var(--drop-fast) ease,
+    border-color var(--drop-fast) ease;
 }
 
 @media (hover: hover) {
   .media-skin[data-skin="drop"] .drop-size:hover span {
-    border-color: var(--drop-paper);
+    border-color: var(--ink);
   }
 }
 
 .media-skin[data-skin="drop"] .drop-size input:checked + span {
-  border-color: var(--drop-volt);
-  background: var(--drop-volt);
-  color: var(--drop-ink);
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--ivory);
 }
 
 .media-skin[data-skin="drop"] .drop-size input:focus-visible {
@@ -999,7 +925,7 @@
 }
 
 .media-skin[data-skin="drop"] .drop-size input:focus-visible + span {
-  outline: var(--drop-line) solid var(--drop-paper);
+  outline: 2px solid var(--ink);
   outline-offset: 3px;
 }
 
@@ -1010,136 +936,67 @@
   gap: calc(var(--u) * 3);
   min-height: calc(var(--u) * 12);
   margin-top: auto;
-  padding: 0 calc(var(--u) * 4);
-  border: var(--drop-line) solid var(--drop-ink);
-  background: var(--drop-volt);
-  color: var(--drop-ink);
-  box-shadow: var(--drop-lift) var(--drop-lift) 0 0 var(--drop-paper);
-  font-family: var(--drop-display);
-  font-size: calc(var(--u) * 5.5);
-  font-weight: 900;
-  font-stretch: 62%;
+  padding: 0 calc(var(--u) * 6);
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--ivory);
+  font-family: var(--sans);
+  font-size: calc(var(--u) * 3.25);
+  font-weight: 500;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   cursor: pointer;
   touch-action: manipulation;
   transition:
-    translate var(--drop-fast) var(--drop-ease),
-    box-shadow var(--drop-fast) var(--drop-ease),
-    background-color var(--drop-fast) linear;
+    background-color var(--drop-fast) ease,
+    color var(--drop-fast) ease;
 }
 
 .media-skin[data-skin="drop"] .drop-cta svg {
-  width: calc(var(--u) * 6);
-  height: calc(var(--u) * 6);
+  width: calc(var(--u) * 5);
+  height: calc(var(--u) * 5);
   flex-shrink: 0;
 }
 
 @media (hover: hover) {
   .media-skin[data-skin="drop"] .drop-cta:hover {
-    translate: calc(var(--drop-lift) * -0.5) calc(var(--drop-lift) * -0.5);
-    box-shadow: calc(var(--drop-lift) * 1.5) calc(var(--drop-lift) * 1.5) 0 0 var(--drop-paper);
+    background: var(--taupe);
+    border-color: var(--taupe);
   }
 }
 
-.media-skin[data-skin="drop"] .drop-cta:active {
-  translate: 0 0;
-  box-shadow: none;
-}
-
 .media-skin[data-skin="drop"] .drop-cta-price {
-  font-family: var(--drop-mono);
-  font-size: calc(var(--u) * 3.75);
-  font-weight: 700;
-  font-stretch: normal;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
 }
 
 .media-skin[data-skin="drop"] .drop-cta-done {
   justify-content: flex-start;
-  background: var(--drop-paper);
+  background: var(--sage);
+  border-color: var(--sage);
+  color: var(--ink);
+}
+
+@media (hover: hover) {
+  .media-skin[data-skin="drop"] .drop-cta-done:hover {
+    background: var(--linen);
+    border-color: var(--hairline);
+  }
 }
 
 .media-skin[data-skin="drop"] .drop-bag-popup .drop-cta {
   margin-top: 0;
 }
 
-/* Fabric and care, printed like the woven label inside a collar. */
-.media-skin[data-skin="drop"] .drop-sheet-care {
-  display: grid;
-  gap: calc(var(--u) * 0.5);
-  margin: 0;
-  padding: calc(var(--u) * 2) calc(var(--u) * 3) calc(var(--u) * 2) calc(var(--u) * 5);
-  outline: 1px dashed rgb(11 11 12 / 0.45);
-  outline-offset: -5px;
-  background:
-    linear-gradient(90deg, #d9d1bf, #e6dfcf) 0 0 / calc(var(--u) * 2) 100% no-repeat,
-    repeating-linear-gradient(0deg, rgb(11 11 12 / 0.04) 0 1px, transparent 1px 2px),
-    var(--drop-paper);
-  color: var(--drop-ink);
-  font-family: var(--drop-mono);
-  font-size: calc(var(--u) * 2.75);
-  font-weight: 400;
-  font-stretch: normal;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.media-skin[data-skin="drop"] .drop-sheet-care span:first-child {
-  font-weight: 700;
-}
-
-.media-skin[data-skin="drop"] .drop-sheet-dept {
-  display: flex;
-  align-items: center;
-  gap: calc(var(--u) * 1.5);
-}
-
-.media-skin[data-skin="drop"] .drop-sheet-dept svg {
-  width: calc(var(--u) * 5);
-  height: calc(var(--u) * 5);
-  color: var(--drop-volt);
-}
-
 .media-skin[data-skin="drop"] .drop-sheet-note {
   margin: 0;
-  font-family: var(--drop-mono);
-  font-size: calc(var(--u) * 2.75);
-  font-weight: 400;
-  font-stretch: normal;
-  text-transform: uppercase;
-  color: var(--drop-dim);
-}
-
-/* ---------------------------------------------------------------- Start screen */
-
-/* The rack: every piece in the drop, by department. */
-.media-skin[data-skin="drop"] .drop-start-rack {
-  display: flex;
-  flex-wrap: wrap;
-  gap: calc(var(--u) * 1.5);
-  padding: 0;
-  list-style: none;
-}
-
-.media-skin[data-skin="drop"] .drop-start-rack li {
-  display: flex;
-  align-items: center;
-  gap: calc(var(--u) * 1.5);
-  padding: calc(var(--u) * 1) calc(var(--u) * 2.5) calc(var(--u) * 1) calc(var(--u) * 1.5);
-  border: var(--drop-line) solid var(--drop-ink);
-  background: var(--drop-paper);
-  color: var(--drop-ink);
-  font-family: var(--drop-mono);
-  font-size: calc(var(--u) * 2.75);
-  font-weight: 700;
-  font-stretch: normal;
+  color: var(--taupe);
+  font-size: calc(var(--u) * 3);
   letter-spacing: 0.06em;
-  text-transform: uppercase;
 }
 
-.media-skin[data-skin="drop"] .drop-start-rack svg {
-  width: calc(var(--u) * 5);
-  height: calc(var(--u) * 5);
-}
+/* ---------------------------------------------------------------- Start screen: the cover */
 
 .media-skin[data-skin="drop"] .drop-start {
   position: absolute;
@@ -1148,132 +1005,174 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  align-items: flex-start;
-  gap: calc(var(--u) * 3);
+  /* The cover sits on the right, leaving the poster's subject in view. */
+  align-items: flex-end;
   padding: calc(var(--u) * 6);
-  background:
-    linear-gradient(to top, rgb(11 11 12 / 0.9), rgb(11 11 12 / 0.35) 55%, rgb(11 11 12 / 0.1)),
-    linear-gradient(to right, rgb(11 11 12 / 0.55), transparent 70%);
+  background: linear-gradient(to left, rgb(28 27 26 / 0.25), transparent 60%);
 }
 
-.media-skin[data-skin="drop"] .drop-start > * {
+/* The cover copy sits on a solid ivory card, so it reads at 7:1 whatever the frame behind it. */
+.media-skin[data-skin="drop"] .drop-start-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(var(--u) * 3);
+  max-width: min(calc(var(--u) * 130), 100%);
+  padding: calc(var(--u) * 7) calc(var(--u) * 8);
+  border: 1px solid var(--hairline);
+  border-radius: calc(var(--u) * 5);
+  background: var(--ivory);
+  box-shadow: var(--drop-shadow);
+}
+
+.media-skin[data-skin="drop"] .drop-start-card > * {
   margin: 0;
 }
 
 .media-skin[data-skin="drop"] .drop-start-kicker {
-  display: flex;
-  gap: calc(var(--u) * 2);
-  rotate: -2deg;
+  color: var(--taupe);
 }
 
 .media-skin[data-skin="drop"] .drop-start-title {
-  display: flex;
-  align-items: baseline;
-  gap: 0.06em;
-  color: var(--drop-paper);
-  font-size: clamp(calc(var(--u) * 14), 19cqi, calc(var(--u) * 60));
-  font-weight: 900;
-  font-stretch: 62%;
-  line-height: 0.78;
+  max-width: 16ch;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: clamp(calc(var(--u) * 10), 7cqi, calc(var(--u) * 20));
+  font-style: italic;
+  font-weight: 500;
+  line-height: 0.95;
   letter-spacing: -0.01em;
+}
+
+.media-skin[data-skin="drop"] .drop-start-rack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--u) * 2);
+  padding: 0;
+  list-style: none;
+}
+
+.media-skin[data-skin="drop"] .drop-start-rack li {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 1.5);
+  padding: calc(var(--u) * 1) calc(var(--u) * 3) calc(var(--u) * 1) calc(var(--u) * 2);
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background: var(--ivory);
+  color: var(--ink);
+  font-size: calc(var(--u) * 2.75);
+  font-weight: 500;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
-.media-skin[data-skin="drop"] .drop-start-number {
-  color: var(--drop-volt);
-  -webkit-text-stroke: 0.025em var(--drop-ink);
-  paint-order: stroke fill;
+.media-skin[data-skin="drop"] .drop-start-rack li:nth-child(5n + 1) {
+  background: var(--butter);
+}
+
+.media-skin[data-skin="drop"] .drop-start-rack li:nth-child(5n + 2) {
+  background: var(--powder);
+}
+
+.media-skin[data-skin="drop"] .drop-start-rack li:nth-child(5n + 3) {
+  background: var(--blush);
+}
+
+.media-skin[data-skin="drop"] .drop-start-rack li:nth-child(5n + 4) {
+  background: var(--lilac);
+}
+
+.media-skin[data-skin="drop"] .drop-start-rack li:nth-child(5n + 5) {
+  background: var(--sage);
+}
+
+.media-skin[data-skin="drop"] .drop-start-rack svg {
+  width: calc(var(--u) * 5);
+  height: calc(var(--u) * 5);
 }
 
 .media-skin[data-skin="drop"] .drop-start-sub {
-  font-family: var(--drop-mono);
-  font-size: calc(var(--u) * 3.25);
-  font-weight: 700;
-  font-stretch: normal;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--drop-paper);
+  color: var(--taupe);
+  font-size: calc(var(--u) * 3.5);
+  letter-spacing: 0.04em;
 }
 
 .media-skin[data-skin="drop"] .drop-start-play.media-button {
   width: auto;
-  height: calc(var(--u) * 14);
+  height: calc(var(--u) * 13);
   display: inline-flex;
   gap: calc(var(--u) * 3);
-  padding: 0 calc(var(--u) * 6) 0 calc(var(--u) * 5);
-  background: var(--drop-volt);
-  color: var(--drop-ink);
-  box-shadow: calc(var(--drop-lift) * 1.5) calc(var(--drop-lift) * 1.5) 0 0 var(--drop-paper);
-  font-size: calc(var(--u) * 7);
-  font-weight: 900;
-  font-stretch: 62%;
+  margin-top: calc(var(--u) * 2);
+  padding: 0 calc(var(--u) * 7) 0 calc(var(--u) * 6);
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--ivory);
+  font-size: calc(var(--u) * 3.25);
+  font-weight: 500;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
 .media-skin[data-skin="drop"] .drop-start-play svg {
-  width: calc(var(--u) * 7);
-  height: calc(var(--u) * 7);
+  width: calc(var(--u) * 5);
+  height: calc(var(--u) * 5);
 }
 
 @media (hover: hover) {
   .media-skin[data-skin="drop"] .drop-start-play.media-button:hover {
-    background: var(--drop-paper);
-    box-shadow: calc(var(--drop-lift) * 2) calc(var(--drop-lift) * 2) 0 0 var(--drop-volt);
+    background: var(--taupe);
+    border-color: var(--taupe);
   }
 }
 
 /* ---------------------------------------------------------------- Feedback: indicators, buffering, error */
 
 .media-skin[data-skin="drop"] .media-indicator {
-  padding: calc(var(--u) * 1.5) calc(var(--u) * 3);
-  border: var(--drop-line) solid var(--drop-ink);
-  background: var(--drop-volt);
-  color: var(--drop-ink);
+  padding: calc(var(--u) * 2) calc(var(--u) * 4);
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background: var(--ivory);
+  color: var(--ink);
   box-shadow: var(--drop-shadow);
-  font-family: var(--drop-mono);
   font-size: calc(var(--u) * 3);
-  font-weight: 700;
-  font-stretch: normal;
-  text-transform: uppercase;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
 }
 
 .media-skin[data-skin="drop"] .media-buffering-indicator-spinner-icon {
-  width: calc(var(--u) * 12);
-  height: calc(var(--u) * 12);
-  padding: calc(var(--u) * 2.5);
-  border: var(--drop-line) solid var(--drop-ink);
-  background: var(--drop-volt);
-  color: var(--drop-ink);
+  width: calc(var(--u) * 14);
+  height: calc(var(--u) * 14);
+  padding: calc(var(--u) * 3);
+  border-radius: 999px;
+  background: var(--ivory);
+  color: var(--ink);
   box-shadow: var(--drop-shadow);
 }
 
 .media-skin[data-skin="drop"] .media-dialog-popup {
-  border: var(--drop-line) solid var(--drop-volt);
-  background: var(--drop-ink);
-  box-shadow: calc(var(--u) * 1.5) calc(var(--u) * 1.5) 0 0 var(--drop-volt);
+  border: 1px solid var(--hairline);
+  border-radius: var(--drop-radius);
+  background: var(--ivory);
+  color: var(--ink);
+  box-shadow: var(--drop-shadow);
 }
 
 .media-skin[data-skin="drop"] .media-dialog-title {
-  font-size: calc(var(--u) * 8);
-  font-weight: 900;
-  font-stretch: 62%;
-  text-transform: uppercase;
-}
-
-.media-skin[data-skin="drop"] .media-dialog-description {
-  font-family: var(--drop-mono);
-  font-weight: 400;
-  font-stretch: normal;
+  font-family: var(--serif);
+  font-size: calc(var(--u) * 7);
+  font-weight: 500;
 }
 
 .media-skin[data-skin="drop"] .media-dialog-close.media-button {
   width: auto;
-  padding-inline: calc(var(--u) * 4);
-  background: var(--drop-volt);
-  color: var(--drop-ink);
-  font-family: var(--drop-mono);
-  font-weight: 700;
-  font-stretch: normal;
+  padding-inline: calc(var(--u) * 5);
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--ivory);
+  font-weight: 500;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
@@ -1290,26 +1189,13 @@
 }
 
 @container media-root (width < 40rem) {
-  .media-skin[data-skin="drop"] .drop-ticker {
-    display: none;
-  }
-
-  .media-skin[data-skin="drop"] .drop-bag-button {
-    margin-inline-start: auto;
-  }
-
-  .media-skin[data-skin="drop"][data-controls-visible] .drop-tag-anchor,
-  .media-skin[data-skin="drop"]:has(.video-controls-content :focus-visible) .drop-tag-anchor {
-    bottom: calc(var(--u) * 38);
-  }
-
   .media-skin[data-skin="drop"] .drop-tag-name {
-    font-size: calc(var(--u) * 4.5);
+    font-size: calc(var(--u) * 5);
   }
 
   .media-skin[data-skin="drop"] .drop-tag-price {
     font-size: calc(var(--u) * 3.25);
-    padding-inline: calc(var(--u) * 2);
+    padding-inline: calc(var(--u) * 3);
   }
 
   .media-skin[data-skin="drop"] .drop-sheet {
@@ -1317,6 +1203,7 @@
     width: 100%;
     grid-template-columns: 1fr;
     border: 0;
+    border-radius: 0;
     box-shadow: none;
   }
 
@@ -1325,7 +1212,15 @@
   }
 
   .media-skin[data-skin="drop"] .drop-start {
-    padding: calc(var(--u) * 4);
+    padding: calc(var(--u) * 3);
+  }
+
+  .media-skin[data-skin="drop"] .drop-start-card {
+    padding: calc(var(--u) * 5);
+  }
+
+  .media-skin[data-skin="drop"] .drop-start-rack {
+    max-width: none;
   }
 }
 
@@ -1335,63 +1230,26 @@
   }
 
   .media-skin[data-skin="drop"] .drop-skip,
-  .media-skin[data-skin="drop"] .drop-bag-label,
-  .media-skin[data-skin="drop"] .drop-stamp-drop {
+  .media-skin[data-skin="drop"] .drop-bag-label {
     display: none;
   }
 
-  .media-skin[data-skin="drop"] .drop-group {
-    gap: calc(var(--u) * 1);
-  }
-
-  .media-skin[data-skin="drop"] .drop-top,
-  .media-skin[data-skin="drop"] .drop-bottom {
-    padding: calc(var(--u) * 2);
-  }
-
-  .media-skin[data-skin="drop"] .drop-bottom {
-    padding-top: 0;
-  }
-
-  .media-skin[data-skin="drop"] .drop-stamp-brand {
-    font-size: calc(var(--u) * 3.5);
-  }
-
-  .media-skin[data-skin="drop"] .tape-measure {
-    padding-inline: calc(var(--u) * 3.5) calc(var(--u) * 2);
-  }
-
-  /* No room for the tag between the top bar and the controls: it steps aside while they're up. */
-  .media-skin[data-skin="drop"]:has(.video-controls-content :focus-visible) .drop-tag-anchor,
-  .media-skin[data-skin="drop"][data-controls-visible] .drop-tag-anchor {
-    opacity: 0;
-    visibility: hidden;
-  }
-
-  .media-skin[data-skin="drop"] .drop-tag-anchor {
-    inset-inline-end: calc(var(--u) * 2);
-    bottom: calc(var(--u) * 2);
+  .media-skin[data-skin="drop"] .drop-stamp {
+    padding-inline: calc(var(--u) * 3.5);
+    font-size: calc(var(--u) * 4);
+    letter-spacing: 0.04em;
   }
 
   .media-skin[data-skin="drop"] .drop-tag-info {
-    padding: calc(var(--u) * 1.5) calc(var(--u) * 2);
+    padding: calc(var(--u) * 2) calc(var(--u) * 3);
   }
 
   .media-skin[data-skin="drop"] .drop-tag-shop {
-    padding: calc(var(--u) * 1.5) calc(var(--u) * 2) calc(var(--u) * 1.5) calc(var(--u) * 7);
+    padding: calc(var(--u) * 2) calc(var(--u) * 2) calc(var(--u) * 2) calc(var(--u) * 7);
   }
 
   .media-skin[data-skin="drop"] .drop-tag-shop span {
     display: none;
-  }
-
-  .media-skin[data-skin="drop"] :is(.drop-start-sub, .drop-start-rack) {
-    display: none;
-  }
-
-  .media-skin[data-skin="drop"] .drop-start-play.media-button {
-    height: calc(var(--u) * 12);
-    font-size: calc(var(--u) * 5.5);
   }
 }
 
@@ -1400,19 +1258,15 @@
 @media (prefers-reduced-motion: reduce) {
   .media-skin[data-skin="drop"] {
     --drop-fast: 0ms;
-    --drop-slap: 0ms;
+    --drop-slow: 0ms;
   }
 
-  .media-skin[data-skin="drop"] :is(.drop-ticker-track, .icon-zip-pull, .icon-teeth) {
+  .media-skin[data-skin="drop"] :is(.drop-tag-face, .drop-sheet, .icon-zip-pull, .icon-teeth) {
     animation: none;
   }
 
-  /* The stitch ring holds still; its broken line still reads as "in progress". */
+  /* The broken stitch ring still reads as "in progress" while it holds still. */
   .media-skin[data-skin="drop"] .icon-spin {
-    animation: none;
-  }
-
-  .media-skin[data-skin="drop"] :is(.drop-tag-face, .drop-sheet) {
     animation: none;
   }
 
@@ -1423,21 +1277,22 @@
 
 @media (prefers-contrast: more) {
   .media-skin[data-skin="drop"] {
-    --drop-dim: var(--drop-paper);
+    --hairline: var(--ink);
+    --taupe: var(--ink);
   }
 
   .media-skin[data-skin="drop"] .drop-scrim {
-    background-image: linear-gradient(to top, rgb(11 11 12 / 0.9), transparent 55%);
-  }
-
-  .media-skin[data-skin="drop"] :is(.media-button, .size-volume, .garment-seek) {
-    border-color: var(--drop-paper);
+    background-image: linear-gradient(to top, rgb(28 27 26 / 0.7), transparent 55%);
   }
 }
 
 @media (prefers-reduced-transparency: reduce) {
   .media-skin[data-skin="drop"] .drop-sheet-backdrop {
-    background: var(--drop-ink);
+    background: #1c1b1a;
+  }
+
+  .media-skin[data-skin="drop"] .drop-start {
+    background: rgb(28 27 26 / 0.6);
   }
 }
 
@@ -1450,13 +1305,13 @@
     box-shadow: none;
   }
 
-  .media-skin[data-skin="drop"] :is(.drop-tag-shop, .drop-bag-count, .drop-tag-low) {
+  .media-skin[data-skin="drop"] :is(.drop-tag-price, .drop-bag-count, .drop-tag-low, .drop-badge) {
     forced-color-adjust: none;
     background: Highlight;
     color: HighlightText;
   }
 
-  .media-skin[data-skin="drop"] :is(.drop-sheet, .drop-bag-popup, .media-menu-popup) {
+  .media-skin[data-skin="drop"] :is(.drop-sheet, .drop-bag-popup, .media-menu-popup, .drop-bottom) {
     border-color: CanvasText;
     box-shadow: none;
   }

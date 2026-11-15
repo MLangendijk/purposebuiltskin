@@ -56,7 +56,7 @@ function SheetBody({ look }: { look: Look }) {
     <>
       <div className="drop-sheet-media">
         {look.image && <img className="drop-sheet-image" src={look.image} alt="" />}
-        <span className="drop-sticker drop-sticker-volt drop-sheet-look" aria-hidden="true">
+        <span className="drop-sheet-look" aria-hidden="true">
           Look {look.id}
           <span className="drop-sheet-look-of">/{String(config.looks.length).padStart(2, '0')}</span>
         </span>
@@ -77,7 +77,7 @@ function SheetBody({ look }: { look: Look }) {
         <Dialog.Description className="drop-sheet-meta">
           {look.color && <span>{look.color}</span>}
           <span className="drop-sheet-price">{formatPrice(look.price)}</span>
-          {look.lowStock && <span className="drop-sticker drop-sticker-hot">Low stock</span>}
+          {look.lowStock && <span className="drop-badge">Low stock</span>}
         </Dialog.Description>
 
         {(look.fabric || look.care) && (

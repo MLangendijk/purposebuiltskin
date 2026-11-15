@@ -2,9 +2,9 @@
 
 'use client';
 
-import '@fontsource-variable/archivo/wdth.css';
-import '@fontsource/space-mono/400.css';
-import '@fontsource/space-mono/700.css';
+import '@fontsource-variable/jost/wght.css';
+import '@fontsource/cormorant-garamond/500.css';
+import '@fontsource/cormorant-garamond/500-italic.css';
 import '../styles/video/scaffold.css';
 import './skin.css';
 import './drop/drop.css';

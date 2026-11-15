@@ -4,11 +4,9 @@
  * the top bar shrinks to the bag. Width-based extras (stamp, ticker, rail) still follow the container queries.
  */
 
-/* A light, even dim instead of tall gradients, so the frame stays readable behind the controls. */
+/* A light, even veil instead of tall gradients, so the frame stays readable behind the controls. */
 .media-skin[data-skin="drop"][data-layout="compact"] .drop-scrim {
-  background-image:
-    linear-gradient(to top, rgb(11 11 12 / 0.6), transparent 40%),
-    linear-gradient(rgb(11 11 12 / 0.3), rgb(11 11 12 / 0.3));
+  background-image: linear-gradient(rgb(28 27 26 / 0.22), rgb(28 27 26 / 0.22));
 }
 
 .media-skin[data-skin="drop"][data-layout="compact"] .drop-top {
@@ -17,7 +15,9 @@
 
 .media-skin[data-skin="drop"][data-layout="compact"] .drop-bottom {
   gap: calc(var(--u) * 1);
-  padding: 0 calc(var(--u) * 2) calc(var(--u) * 2);
+  margin: 0 calc(var(--u) * 2) calc(var(--u) * 2);
+  padding: calc(var(--u) * 0.5) calc(var(--u) * 1.5);
+  border-radius: 999px;
 }
 
 .media-skin[data-skin="drop"][data-layout="compact"] .drop-group {
@@ -55,7 +55,15 @@
 .media-skin[data-skin="drop"] .drop-center .media-button {
   width: calc(var(--u) * 12);
   height: calc(var(--u) * 12);
+  border-color: var(--hairline);
+  background: var(--ivory);
   box-shadow: var(--drop-shadow);
+}
+
+.media-skin[data-skin="drop"] .drop-center .drop-play-center {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--ivory);
 }
 
 .media-skin[data-skin="drop"] .drop-center .drop-play-center {
@@ -84,8 +92,6 @@
   padding: 0 calc(var(--u) * 2);
   height: var(--drop-control);
   align-content: center;
-  border: 0;
-  box-shadow: none;
 }
 
 .media-skin[data-skin="drop"] .drop-row-compact .garment-slider {
@@ -103,6 +109,7 @@
 
 .media-skin[data-skin="drop"] .drop-row-compact .tape-measure {
   padding-inline: calc(var(--u) * 3) calc(var(--u) * 1);
+  border-radius: 999px;
 }
 
 .media-skin[data-skin="drop"] .drop-row-compact .tape-measure .media-time-toggle {
@@ -139,8 +146,12 @@
 }
 
 .media-skin[data-skin="drop"][data-layout="compact"] .drop-start {
+  padding: calc(var(--u) * 3);
+}
+
+.media-skin[data-skin="drop"][data-layout="compact"] .drop-start-card {
   gap: calc(var(--u) * 2);
-  padding: calc(var(--u) * 4);
+  padding: calc(var(--u) * 4) calc(var(--u) * 5);
 }
 
 .media-skin[data-skin="drop"][data-layout="compact"] :is(.drop-start-rack, .drop-start-sub) {

@@ -38,9 +38,9 @@ export interface BagItem {
 /** The shop the skin sells from. Everything except `looks` has a default. */
 export interface ShopConfig {
   looks: Look[];
-  /** Label name, shown on the start screen and ticker. */
+  /** House name, shown as the wordmark. */
   brand?: string;
-  /** Drop name, such as `Drop 004`. */
+  /** Collection name, such as `The Spring Edit`. */
   drop?: string;
   /** Season line, such as `SS27`. */
   season?: string;

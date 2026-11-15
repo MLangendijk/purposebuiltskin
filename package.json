@@ -14,8 +14,8 @@
     "deploy:cloudflare": "pnpm run build && pnpm dlx wrangler@4 pages deploy dist --project-name drop"
   },
   "dependencies": {
-    "@fontsource-variable/archivo": "^5.3.0",
-    "@fontsource/space-mono": "^5.3.0",
+    "@fontsource-variable/jost": "^5.3.0",
+    "@fontsource/cormorant-garamond": "^5.3.0",
     "@videojs/core": "10.4.0",
     "@videojs/react": "10.4.0",
     "cn": "^0.4.0",

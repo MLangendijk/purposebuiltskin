@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Builds the demo media for the showcase: a 42-second garment lookbook cut from Mixkit clips, plus its poster,
+# Builds the demo media for the showcase: a 40-second garment lookbook cut from Mixkit clips, plus its poster,
 # product shots, thumbnail storyboard, and chapter track.
 #
 # Usage: scripts/build-media.sh [work-dir]
@@ -11,17 +11,16 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 OUT="$ROOT/apps/preview/public/media"
 WORK="${1:-$(mktemp -d)}"
 
-CLIP_SECONDS=7
-MUSIC_ID=738
+CLIP_SECONDS=8
+MUSIC_ID=132 # "Hazy After Hours"
 
-# One row per look: Mixkit clip id | start offset (s) | speed factor | product-shot crop x | chapter title
+# One row per look: Mixkit clip id | start offset (s) | speed factor | product-shot crop (w:h:x:y, 3:4) | chapter title
 LOOKS=(
-  "24581|4|1.00|370|Shirting · Oxford Button-Down"
-  "15721|2|1.00|370|Denim · Straight Selvedge Jean"
-  "1385|0|1.02|620|Leather · Studded Biker"
-  "47498|2|1.00|400|Knit · Heavyweight Hoodie"
-  "14766|2|1.00|370|Footwear · Court Low Sneaker"
-  "805|4|1.00|400|Dresses · Print Blazer Dress"
+  "33167|1|1.00|540:720:370:0|Knitwear · Cable-Knit Cashmere Jumper"
+  "24581|4|1.00|540:720:370:0|Shirting · Oxford Cotton Shirt"
+  "52194|2|1.00|420:560:560:160|Tailoring · Single-Breasted Wool Blazer"
+  "14842|3|1.00|540:720:250:0|Skirts · Pleated Midi Skirt"
+  "33527|0|1.00|540:720:210:0|Dresses · Linen Maxi Dress"
 )
 
 log() { printf '\033[1m›\033[0m %s\n' "$*"; }
@@ -64,16 +63,16 @@ build_video() {
     -c:v libx264 -preset slow -crf 24 -pix_fmt yuv420p -movflags +faststart -c:a aac -b:a 128k "$OUT/lookbook.mp4"
 }
 
-# A 3:4 product shot from the middle of each look, and the poster from the first.
+# A 3:4 product shot from the middle of each look, and the poster from the closing dress.
 build_stills() {
   log "Cutting poster and product shots"
-  ffmpeg -v error -y -ss 3.5 -i "$OUT/lookbook.mp4" -frames:v 1 -q:v 3 "$OUT/poster.jpg"
+  ffmpeg -v error -y -ss 34 -i "$OUT/lookbook.mp4" -frames:v 1 -q:v 3 "$OUT/poster.jpg"
 
   for i in "${!LOOKS[@]}"; do
-    local at=$((i * CLIP_SECONDS + CLIP_SECONDS / 2)) x
-    x="$(field "${LOOKS[$i]}" 4)"
+    local at=$((i * CLIP_SECONDS + CLIP_SECONDS / 2)) crop
+    crop="$(field "${LOOKS[$i]}" 4)"
     ffmpeg -v error -y -ss "$at" -i "$OUT/lookbook.mp4" -frames:v 1 \
-      -vf "crop=540:720:$x:0,scale=360:480" -q:v 4 "$OUT/look-0$((i + 1)).jpg"
+      -vf "crop=$crop,scale=360:480" -q:v 4 "$OUT/look-0$((i + 1)).jpg"
   done
 }
 

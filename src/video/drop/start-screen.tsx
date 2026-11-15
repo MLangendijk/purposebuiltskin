@@ -8,7 +8,7 @@ import { useShop } from '../shop/shop-context';
 import { usePlaybackState } from '../shop/use-looks';
 import { PlayButton } from './buttons';
 
-/** The drop announcement over the poster until playback starts: the headline, and the rack of pieces in the film. */
+/** The cover over the poster until playback starts: house, collection, the pieces in the film, and play. */
 export function StartScreen() {
   const { config, formatPrice } = useShop();
   const playback = usePlaybackState();
@@ -27,7 +27,6 @@ export function StartScreen() {
   if (started) return null;
 
   const from = config.looks.length ? Math.min(...config.looks.map((look) => look.price)) : 0;
-  const [word, number] = splitDrop(config.drop);
 
   return (
     <div
@@ -35,18 +34,13 @@ export function StartScreen() {
       onFocus={(event) => (focusHome.current = event.currentTarget.closest('.media-container'))}
       onBlur={() => (focusHome.current = null)}
     >
+      <div className="drop-start-card">
       <p className="drop-start-kicker">
-        <span className="drop-sticker drop-sticker-ink">{config.brand}®</span>
-        <abbr className="drop-sticker drop-sticker-paper" title={config.seasonName}>
-          {config.season}
-        </abbr>
+        {config.brand} · <abbr title={config.seasonName}>{config.season}</abbr>
       </p>
-      <p className="drop-start-title">
-        <span className="drop-start-word">{word}</span>
-        {number && <span className="drop-start-number">{number}</span>}
-      </p>
+      <p className="drop-start-title">{config.drop}</p>
       {config.looks.length > 0 && (
-        <ul className="drop-start-rack" aria-label="Pieces in this drop">
+        <ul className="drop-start-rack" aria-label="Pieces in this film">
           {config.looks.map((look) => (
             <li key={look.id}>
               <GarmentIcon garment={look.garment} />
@@ -56,15 +50,10 @@ export function StartScreen() {
         </ul>
       )}
       <p className="drop-start-sub">
-        {config.looks.length} pieces · Shop every look{from ? ` · From ${formatPrice(from)}` : ''}
+        {config.looks.length} pieces, shoppable as you watch{from ? ` · from ${formatPrice(from)}` : ''}
       </p>
-      <PlayButton className="drop-start-play" label="Watch the drop" tooltip={false} />
+      <PlayButton className="drop-start-play" label="Watch the film" tooltip={false} />
+      </div>
     </div>
   );
-}
-
-/** `Drop 004` → `['Drop', '004']`, so the number can be set big. */
-function splitDrop(drop: string): [string, string | undefined] {
-  const match = drop.match(/^(.*?)\s*(\d+)$/);
-  return match ? [match[1]!, match[2]] : [drop, undefined];
 }
