@@ -67,9 +67,15 @@ const PARTS: Record<Garment, ReactNode> = {
   ),
 };
 
-export function Hardware({ garment }: { garment: Garment }) {
+export function Hardware({ garment, swapped = false }: { garment: Garment; swapped?: boolean }) {
   return (
-    <svg className="garment-hardware" viewBox="0 0 28 36" aria-hidden="true" focusable="false">
+    <svg
+      className="garment-hardware"
+      data-swapped={swapped ? '' : undefined}
+      viewBox="0 0 28 36"
+      aria-hidden="true"
+      focusable="false"
+    >
       {PARTS[garment]}
     </svg>
   );

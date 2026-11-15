@@ -231,3 +231,13 @@
   min-height: calc(var(--u) * 11);
   font-size: calc(var(--u) * 5);
 }
+
+/* Captions: above the swing tag at rest; above the slim bottom row when the controls are up (the tag steps aside). */
+.media-skin[data-skin="drop"][data-layout="compact"] {
+  --media-caption-track-y: calc(var(--u) * -17);
+}
+
+.media-skin[data-skin="drop"][data-layout="compact"][data-controls-visible],
+.media-skin[data-skin="drop"][data-layout="compact"]:has(.video-controls-content :focus-visible) {
+  --media-caption-track-y: calc(var(--u) * -15);
+}

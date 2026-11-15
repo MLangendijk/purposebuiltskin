@@ -2,13 +2,14 @@
 
 import { selectTextTrack, selectTime } from '@videojs/core/dom';
 import { Slider as SliderPrimitive, TimeSlider, usePlayer } from '@videojs/react';
-import type { CSSProperties } from 'react';
+import { type CSSProperties, useEffect, useRef } from 'react';
 
 import { useShop } from '../shop/shop-context';
 import type { Look } from '../shop/types';
 import { GarmentIcon } from './garment-icons';
-import { GARMENT_LABEL, type Garment, garmentFromTitle } from './garments';
+import { type Garment, garmentFromTitle } from './garments';
 import { Hardware } from './hardware';
+import { useGarmentLabel } from './use-garment-label';
 
 /** One piece of the strip: where it runs and which garment it's cut from. */
 interface Piece {
@@ -32,6 +33,12 @@ export function GarmentSeek() {
   const current = pieces.find((piece) => time >= piece.start && time < piece.end) ?? pieces.at(-1);
   const garment: Garment = current?.garment ?? 'shirt';
   const { config } = useShop();
+  // The tool only swaps in with motion when the garment changes, never on first load.
+  const previous = useRef(garment);
+  const swapped = previous.current !== garment;
+  useEffect(() => {
+    previous.current = garment;
+  }, [garment]);
 
   return (
     <div className="garment-seek" data-garment={garment}>
@@ -57,7 +64,7 @@ export function GarmentSeek() {
         />
 
         <TimeSlider.Thumb className="media-time-slider-thumb garment-thumb">
-          <Hardware key={garment} garment={garment} />
+          <Hardware key={garment} garment={garment} swapped={swapped} />
         </TimeSlider.Thumb>
 
         <TimeSlider.Preview className="media-time-slider-preview garment-preview">
@@ -78,6 +85,7 @@ export function GarmentSeek() {
 /** The department signs under the strip: an icon and name per piece, the current one underlined. */
 function GarmentRail({ pieces, current }: { pieces: Piece[]; current: Piece | undefined }) {
   const duration = usePlayer(selectTime)?.duration ?? 0;
+  const department = useGarmentLabel();
   if (!duration || !pieces.length) return null;
 
   return (
@@ -95,7 +103,7 @@ function GarmentRail({ pieces, current }: { pieces: Piece[]; current: Piece | un
           }
         >
           <GarmentIcon garment={piece.garment} />
-          <span className="garment-rail-label">{GARMENT_LABEL[piece.garment]}</span>
+          <span className="garment-rail-label">{department(piece.garment)}</span>
         </span>
       ))}
     </div>

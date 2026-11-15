@@ -1,9 +1,10 @@
 /** @jsxImportSource react */
 
+import { useTranslator } from '@videojs/react';
 import { useEffect, useRef } from 'react';
 
 import { GarmentIcon } from '../garments/garment-icons';
-import { GARMENT_LABEL } from '../garments/garments';
+import { useGarmentLabel } from '../garments/use-garment-label';
 import { useShop } from '../shop/shop-context';
 import { usePlaybackState } from '../shop/use-looks';
 import { PlayButton } from './buttons';
@@ -12,6 +13,8 @@ import { PlayButton } from './buttons';
 export function StartScreen() {
   const { config, formatPrice } = useShop();
   const playback = usePlaybackState();
+  const t = useTranslator();
+  const department = useGarmentLabel();
   const started = playback?.started ?? false;
   // The container, remembered while the start button has focus, so focus can follow the shopper into the controls.
   const focusHome = useRef<HTMLElement | null>(null);
@@ -40,19 +43,20 @@ export function StartScreen() {
       </p>
       <p className="drop-start-title">{config.drop}</p>
       {config.looks.length > 0 && (
-        <ul className="drop-start-rack" aria-label="Pieces in this film">
+        <ul className="drop-start-rack" aria-label={t('drop.piecesInFilm', { default: 'Pieces in this film' })}>
           {config.looks.map((look) => (
             <li key={look.id}>
               <GarmentIcon garment={look.garment} />
-              {GARMENT_LABEL[look.garment]}
+              {department(look.garment)}
             </li>
           ))}
         </ul>
       )}
       <p className="drop-start-sub">
-        {config.looks.length} pieces, shoppable as you watch{from ? ` · from ${formatPrice(from)}` : ''}
+        {t('drop.piecesShoppable', { count: config.looks.length, default: '{count} pieces, shoppable as you watch' })}
+        {from ? ` · ${t('drop.fromPrice', { price: formatPrice(from), default: 'from {price}' })}` : ''}
       </p>
-      <PlayButton className="drop-start-play" label="Watch the film" tooltip={false} />
+      <PlayButton className="drop-start-play" label={t('drop.watchFilm', { default: 'Watch the film' })} tooltip={false} />
       </div>
     </div>
   );

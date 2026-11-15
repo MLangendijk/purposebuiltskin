@@ -70,7 +70,7 @@ for file in chapters.json captions.vtt; do
 done
 
 chapters_id="$(ensure_track chapters "{\"url\":\"$RAW/chapters.json\",\"type\":\"text\",\"text_type\":\"chapters\",\"language_code\":\"en\",\"name\":\"Looks\"}")"
-captions_id="$(ensure_track subtitles "{\"url\":\"$RAW/captions.vtt\",\"type\":\"text\",\"text_type\":\"subtitles\",\"language_code\":\"en\",\"name\":\"English (sound)\",\"closed_captions\":true}")"
+captions_id="$(ensure_track subtitles "{\"url\":\"$RAW/captions.vtt\",\"type\":\"text\",\"text_type\":\"subtitles\",\"language_code\":\"en\",\"name\":\"English (sound)\",\"closed_captions\":false}")"
 
 log "Chapters served at https://stream.mux.com/$PLAYBACK_ID/chapters/$chapters_id.json"
 echo "chapters track: $chapters_id"

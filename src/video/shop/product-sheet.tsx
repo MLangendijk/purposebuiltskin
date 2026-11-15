@@ -1,11 +1,11 @@
 /** @jsxImportSource react */
 
-import { Dialog } from '@videojs/react';
+import { Dialog, useTranslator } from '@videojs/react';
 import { useEffect, useRef, useState } from 'react';
 
 import { CheckIcon, CloseIcon } from '../drop/icons';
 import { GarmentIcon } from '../garments/garment-icons';
-import { GARMENT_LABEL } from '../garments/garments';
+import { useGarmentLabel } from '../garments/use-garment-label';
 import { useShop } from './shop-context';
 import type { Look } from './types';
 import { usePlaybackState } from './use-looks';
@@ -48,6 +48,8 @@ export function ProductSheet() {
 
 function SheetBody({ look }: { look: Look }) {
   const { config, formatPrice, addToBag, setOpenLook } = useShop();
+  const t = useTranslator();
+  const department = useGarmentLabel();
   const [size, setSize] = useState(look.sizes[Math.floor((look.sizes.length - 1) / 2)] ?? '');
   const [added, setAdded] = useState(false);
   const position = config.looks.indexOf(look) + 1;
@@ -57,7 +59,7 @@ function SheetBody({ look }: { look: Look }) {
       <div className="drop-sheet-media">
         {look.image && <img className="drop-sheet-image" src={look.image} alt="" />}
         <span className="drop-sheet-look" aria-hidden="true">
-          Look {look.id}
+          {t('drop.lookNumber', { id: look.id, default: 'Look {id}' })}
           <span className="drop-sheet-look-of">/{String(config.looks.length).padStart(2, '0')}</span>
         </span>
       </div>
@@ -66,9 +68,10 @@ function SheetBody({ look }: { look: Look }) {
         <div className="drop-sheet-head">
           <p className="drop-eyebrow drop-sheet-dept">
             <GarmentIcon garment={look.garment} />
-            {GARMENT_LABEL[look.garment]} · Look {position} of {config.looks.length}
+            {department(look.garment)} ·{' '}
+            {t('drop.lookPosition', { position, total: config.looks.length, default: 'Look {position} of {total}' })}
           </p>
-          <Dialog.Close className="drop-icon-button drop-sheet-close" aria-label="Close and keep watching">
+          <Dialog.Close className="drop-icon-button drop-sheet-close" aria-label={t('drop.closeSheet', { default: 'Close and keep watching' })}>
             <CloseIcon />
           </Dialog.Close>
         </div>
@@ -77,7 +80,7 @@ function SheetBody({ look }: { look: Look }) {
         <Dialog.Description className="drop-sheet-meta">
           {look.color && <span>{look.color}</span>}
           <span className="drop-sheet-price">{formatPrice(look.price)}</span>
-          {look.lowStock && <span className="drop-badge">Low stock</span>}
+          {look.lowStock && <span className="drop-badge">{t('drop.lowStock', { default: 'Low stock' })}</span>}
         </Dialog.Description>
 
         {(look.fabric || look.care) && (
@@ -89,7 +92,8 @@ function SheetBody({ look }: { look: Look }) {
 
         <fieldset className="drop-sizes">
           <legend className="drop-sizes-legend">
-            Size{look.sizeGuide && <span className="drop-sizes-guide"> · {look.sizeGuide}</span>}
+            {t('drop.size', { default: 'Size' })}
+            {look.sizeGuide && <span className="drop-sizes-guide"> · {look.sizeGuide}</span>}
           </legend>
           <div className="drop-sizes-grid">
             {look.sizes.map((value) => (
@@ -113,7 +117,7 @@ function SheetBody({ look }: { look: Look }) {
         {added ? (
           <button type="button" className="drop-cta drop-cta-done" onClick={() => setOpenLook(null)}>
             <CheckIcon />
-            <span>In the bag — keep watching</span>
+            <span>{t('drop.inBag', { default: 'In the bag — keep watching' })}</span>
           </button>
         ) : (
           <button
@@ -124,12 +128,14 @@ function SheetBody({ look }: { look: Look }) {
               setAdded(true);
             }}
           >
-            <span>Add to bag</span>
+            <span>{t('drop.addToBag', { default: 'Add to bag' })}</span>
             <span className="drop-cta-price">{formatPrice(look.price)}</span>
           </button>
         )}
         <p className="drop-sheet-note" role="status">
-          {added ? `Added ${look.name}, size ${size}, to your bag.` : 'Free returns · Ships in 48h'}
+          {added
+            ? t('drop.added', { name: look.name, size, default: 'Added {name}, size {size}, to your bag.' })
+            : t('drop.serviceNote', { default: 'Free returns · Ships in 48h' })}
         </p>
       </div>
     </>

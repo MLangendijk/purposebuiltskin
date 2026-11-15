@@ -200,8 +200,11 @@
   height: 100%;
   overflow: visible;
   filter: drop-shadow(0 2px 3px rgb(42 40 38 / 0.3));
-  animation: garment-swap var(--drop-slow) var(--drop-ease);
   transition: scale var(--drop-fast) ease;
+}
+
+.media-skin[data-skin="drop"] .garment-hardware[data-swapped] {
+  animation: garment-swap var(--drop-slow) var(--drop-ease);
 }
 
 .media-skin[data-skin="drop"] .garment-slider:is([data-pointing], [data-dragging]) .garment-hardware {
@@ -209,9 +212,8 @@
 }
 
 .media-skin[data-skin="drop"] .garment-thumb:focus-visible {
-  outline: 2px solid var(--ink);
-  outline-offset: 2px;
-  box-shadow: 0 0 0 6px var(--ivory);
+  outline: var(--drop-focus-outline);
+  box-shadow: var(--drop-focus-ring);
 }
 
 @keyframes garment-swap {
@@ -327,31 +329,30 @@
   align-items: center;
   width: var(--size-run);
   height: 100%;
-  margin-inline: calc(var(--u) * 1) calc(var(--u) * 2);
+  /* The chips sit a tenth to the right (see below), so leave them room before the next control. */
+  margin-inline: calc(var(--u) * 1) calc(var(--size-run) / 10 + var(--u) * 2);
   cursor: pointer;
   touch-action: none;
 }
 
+/*
+ * Each chip is centred on its volume step (XS at 20% ... XL at 100%), so the slider's round-to-nearest-step lands on
+ * the chip that was clicked. That shifts the run a tenth to the right; the sliver before XS is "silent".
+ */
 .media-skin[data-skin="drop"] .size-track {
   position: relative;
   width: 100%;
   height: calc(var(--u) * 6.5);
 }
 
-.media-skin[data-skin="drop"] .size-fill {
+.media-skin[data-skin="drop"] .size-run {
   position: absolute;
   inset-block: 0;
-  inset-inline-start: 0;
-  width: var(--media-slider-fill, 0%);
-  overflow: hidden;
-}
-
-.media-skin[data-skin="drop"] .size-run {
+  left: 10%;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 3px;
-  width: var(--size-run);
-  height: 100%;
+  width: 100%;
 }
 
 .media-skin[data-skin="drop"] .size-run span {
@@ -363,47 +364,43 @@
   font-size: calc(var(--u) * 2.5);
   font-weight: 500;
   letter-spacing: 0.04em;
+  transition:
+    background-color var(--drop-fast) ease,
+    color var(--drop-fast) ease;
 }
 
-.media-skin[data-skin="drop"] .size-fill .size-run span {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: var(--ivory);
+.media-skin[data-skin="drop"] .size-run span[data-on] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-text);
 }
 
-/* Muted: the run stays, but every size reads as sold out. */
-.media-skin[data-skin="drop"] .size-volume:has([data-muted]) .size-fill .size-run span {
-  border-color: var(--hairline);
-  background: transparent;
-  color: var(--taupe);
+/* Muted: no size is lit, and every size reads as sold out. */
+.media-skin[data-skin="drop"] .size-volume:has([data-muted]) .size-run span {
   text-decoration: line-through;
 }
 
-/* A 44px grab area around a slim marker. */
+/*
+ * The sizes themselves show the level, so the thumb is an invisible handle; the whole 44px-tall run is the pointer
+ * target, and keyboard focus rings the run.
+ */
 .media-skin[data-skin="drop"] .size-thumb {
   position: absolute;
   left: var(--media-slider-fill, 0%);
-  width: calc(var(--u) * 11);
-  height: calc(var(--u) * 11);
-  translate: -50% 0;
-  display: grid;
-  place-items: center;
-  border-radius: 999px;
-}
-
-.media-skin[data-skin="drop"] .size-thumb::before {
-  content: "";
-  width: 3px;
-  height: calc(var(--u) * 8);
-  border-radius: 2px;
-  background: var(--gold);
-  box-shadow: 0 0 0 1px var(--ink);
+  width: 1px;
+  height: 100%;
+  opacity: 0;
 }
 
 .media-skin[data-skin="drop"] .size-thumb:focus-visible {
-  outline: 2px solid var(--ink);
-  outline-offset: 0;
-  box-shadow: 0 0 0 4px var(--ivory);
+  outline: none;
+  box-shadow: none;
+}
+
+.media-skin[data-skin="drop"] .size-slider:has(.size-thumb:focus-visible) .size-run {
+  border-radius: 999px;
+  outline: var(--drop-focus-outline);
+  box-shadow: var(--drop-focus-ring);
 }
 
 @media (pointer: coarse) {
@@ -475,9 +472,9 @@
 }
 
 .media-skin[data-skin="drop"] .tape-measure .media-time-toggle:focus-visible {
-  outline: 2px solid var(--ink);
-  outline-offset: 2px;
-  box-shadow: none;
+  border-radius: calc(var(--u) * 2);
+  outline: var(--drop-focus-outline);
+  box-shadow: var(--drop-focus-ring);
 }
 
 /* ---------------------------------------------------------------- Narrow players */

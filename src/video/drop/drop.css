@@ -27,25 +27,35 @@
   --lilac: #e4dcec;
   --gold: #c9ab72;
 
+  /* The public Video.js properties still theme the skin: accent, its text colour, type and corner radius. */
+  --accent: var(--media-accent-color, var(--ink));
+  --accent-text: var(--media-accent-text-color, var(--ivory));
+
   --u: var(--media-spacing);
   --drop-control: calc(var(--u) * 11);
-  --drop-radius: calc(var(--u) * 4);
+  --drop-radius: var(--media-border-radius, calc(var(--u) * 4));
   --drop-shadow: 0 6px 24px rgb(42 40 38 / 0.18), 0 1px 3px rgb(42 40 38 / 0.12);
   --serif: "Cormorant Garamond", "Cormorant", Garamond, "Times New Roman", serif;
-  --sans: "Jost Variable", "Jost", "Futura", "Avenir Next", "Helvetica Neue", sans-serif;
+  --sans: var(--media-font-family, "Jost Variable", "Jost", "Futura", "Avenir Next", "Helvetica Neue", sans-serif);
   --drop-ease: cubic-bezier(0.22, 0.8, 0.3, 1);
+  /*
+   * One focus ring for every focusable part: ivory, a 3px charcoal band, ivory. The charcoal reads on the ivory panel,
+   * the ivory halo on dark footage. The transparent outline turns into a real one in forced-colors mode.
+   */
+  --drop-focus-ring: 0 0 0 2px var(--ivory), 0 0 0 5px var(--ink), 0 0 0 8px var(--ivory);
+  --drop-focus-ring-inset: inset 0 0 0 3px var(--ink), inset 0 0 0 5px var(--ivory);
+  --drop-focus-outline: 3px solid transparent;
   --drop-fast: 160ms;
   --drop-slow: 420ms;
 
   /* Video.js tokens the base skin reads. */
   --media-foreground: var(--ink);
-  --media-accent: var(--ink);
-  --media-accent-foreground: var(--ivory);
+  --media-accent: var(--accent);
+  --media-accent-foreground: var(--accent-text);
   --media-ring: var(--ink);
   --media-popover: var(--ivory);
   --media-popover-foreground: var(--ink);
   --media-button-highlight: var(--linen);
-  --media-font-family: var(--sans);
 
   font-family: var(--sans);
   font-weight: 400;
@@ -69,20 +79,16 @@
   text-transform: uppercase;
 }
 
-/* Focus: ivory, charcoal, ivory rings, so it shows over any frame and any fill. */
-.media-skin[data-skin="drop"] :is(button, [role="button"], [role="slider"], input, [tabindex]):focus-visible,
+/* Focus: the shared ring, on every button, link, slider and field. */
+.media-skin[data-skin="drop"] :is(button, a, [role="button"], [role="slider"], input, [tabindex]):focus-visible,
 .media-skin[data-skin="drop"] .media-button:focus-visible {
-  outline: 2px solid var(--ink);
-  outline-offset: 2px;
-  box-shadow:
-    0 0 0 2px var(--ivory),
-    0 0 0 6px var(--ivory);
+  outline: var(--drop-focus-outline);
+  box-shadow: var(--drop-focus-ring);
 }
 
 .media-skin[data-skin="drop"]:focus-visible {
-  outline: 3px solid var(--ivory);
-  outline-offset: -5px;
-  box-shadow: inset 0 0 0 5px var(--ink);
+  outline: var(--drop-focus-outline);
+  box-shadow: inset 0 0 0 3px var(--ivory), inset 0 0 0 6px var(--ink);
 }
 
 .media-skin[data-skin="drop"] abbr[title] {
@@ -185,8 +191,8 @@
 
 /* Play is the one filled button: charcoal, the quiet anchor of the bar. */
 .media-skin[data-skin="drop"] .drop-play {
-  background: var(--ink);
-  color: var(--ivory);
+  background: var(--accent);
+  color: var(--accent-text);
 }
 
 @media (hover: hover) {
@@ -210,6 +216,8 @@
 }
 
 .media-skin[data-skin="drop"] .drop-top {
+  /* The base skin reverses this row for right-to-left; plain row already mirrors with the text direction. */
+  flex-direction: row;
   justify-content: flex-start;
   align-items: center;
   gap: calc(var(--u) * 3);
@@ -266,6 +274,22 @@
   align-items: center;
   gap: calc(var(--u) * 1);
   min-width: 0;
+}
+
+/* Captions ride above the swing tag while the controls rest, and above the control panel while it is up. */
+.media-skin[data-skin="drop"] {
+  --media-caption-track-y: calc(var(--u) * -24);
+}
+
+.media-skin[data-skin="drop"][data-controls-visible],
+.media-skin[data-skin="drop"]:has(.video-controls-content :focus-visible) {
+  --media-caption-track-y: calc(var(--u) * -40);
+}
+
+.media-skin[data-skin="drop"] video::cue {
+  background: rgb(28 27 26 / 0.85);
+  color: var(--ivory);
+  font-family: var(--sans);
 }
 
 /* ---------------------------------------------------------------- Top bar */
@@ -500,9 +524,9 @@
 }
 
 .media-skin[data-skin="drop"] :is(.media-menu-item, .media-menu-back-item, .media-menu-radio-item):focus-visible {
-  outline: 2px solid var(--ink);
-  outline-offset: -2px;
-  box-shadow: none;
+  outline: var(--drop-focus-outline);
+  outline-offset: -3px;
+  box-shadow: var(--drop-focus-ring-inset);
 }
 
 .media-skin[data-skin="drop"] :is(.media-menu-hint, .media-menu-trigger-icon, .media-menu-radio-icon) {
@@ -590,9 +614,9 @@
 }
 
 .media-skin[data-skin="drop"] .drop-tag:focus-visible {
-  outline: 2px solid var(--ink);
-  outline-offset: 6px;
-  box-shadow: 0 0 0 4px var(--ivory);
+  border-radius: calc(var(--u) * 2);
+  outline: var(--drop-focus-outline);
+  box-shadow: var(--drop-focus-ring);
 }
 
 .media-skin[data-skin="drop"] .drop-tag:focus-visible .drop-tag-face {
@@ -715,8 +739,8 @@
 }
 
 .media-skin[data-skin="drop"] .drop-sheet:focus-visible {
-  outline: 2px solid var(--ink);
-  outline-offset: -4px;
+  outline: var(--drop-focus-outline);
+  box-shadow: var(--drop-focus-ring-inset);
 }
 
 @keyframes drop-sheet-in {
@@ -914,9 +938,9 @@
 }
 
 .media-skin[data-skin="drop"] .drop-size input:checked + span {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: var(--ivory);
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-text);
 }
 
 .media-skin[data-skin="drop"] .drop-size input:focus-visible {
@@ -925,8 +949,8 @@
 }
 
 .media-skin[data-skin="drop"] .drop-size input:focus-visible + span {
-  outline: 2px solid var(--ink);
-  outline-offset: 3px;
+  outline: var(--drop-focus-outline);
+  box-shadow: var(--drop-focus-ring);
 }
 
 .media-skin[data-skin="drop"] .drop-cta {
@@ -937,10 +961,10 @@
   min-height: calc(var(--u) * 12);
   margin-top: auto;
   padding: 0 calc(var(--u) * 6);
-  border: 1px solid var(--ink);
+  border: 1px solid var(--accent);
   border-radius: 999px;
-  background: var(--ink);
-  color: var(--ivory);
+  background: var(--accent);
+  color: var(--accent-text);
   font-family: var(--sans);
   font-size: calc(var(--u) * 3.25);
   font-weight: 500;
@@ -1105,9 +1129,9 @@
   gap: calc(var(--u) * 3);
   margin-top: calc(var(--u) * 2);
   padding: 0 calc(var(--u) * 7) 0 calc(var(--u) * 6);
-  border-color: var(--ink);
-  background: var(--ink);
-  color: var(--ivory);
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-text);
   font-size: calc(var(--u) * 3.25);
   font-weight: 500;
   letter-spacing: 0.16em;
