@@ -1188,6 +1188,11 @@
   letter-spacing: 0.06em;
 }
 
+/* Each step of a scrub seeks, so the spinner would flicker under the preview; it waits until the shopper lets go. */
+.media-skin[data-skin="atelier"]:has(.garment-slider[data-dragging]) .media-buffering-indicator {
+  opacity: 0;
+}
+
 .media-skin[data-skin="atelier"] .media-buffering-indicator-spinner-icon {
   width: calc(var(--u) * 14);
   height: calc(var(--u) * 14);

@@ -59,6 +59,12 @@
   pointer-events: auto;
 }
 
+/* Scrubbing: play and the hangers step aside for the preview, as in any player, and come back on release. */
+.media-skin[data-skin="atelier"]:has(.garment-slider:is([data-dragging], [data-pointing])) .atelier-center {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .media-skin[data-skin="atelier"] .atelier-center .media-button {
   width: calc(var(--u) * 12);
   height: calc(var(--u) * 12);
