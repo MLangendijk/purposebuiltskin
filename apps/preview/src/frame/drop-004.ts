@@ -10,6 +10,7 @@ export const DROP_004: ShopConfig = {
   brand: 'NØ SIGNAL',
   drop: 'Drop 004',
   season: 'SS27',
+  seasonName: 'Spring/Summer 2027',
   currency: 'EUR',
   locale: 'en-IE',
   looks: [
@@ -26,6 +27,7 @@ export const DROP_004: ShopConfig = {
       price: 89,
       image: media('look-01.jpg'),
       sizes: ['XS', 'S', 'M', 'L', 'XL'],
+      sizeGuide: 'Extra small to extra large',
     },
     {
       id: '02',
@@ -40,6 +42,7 @@ export const DROP_004: ShopConfig = {
       price: 149,
       image: media('look-02.jpg'),
       sizes: ['W26', 'W28', 'W30', 'W32', 'W34'],
+      sizeGuide: 'W = waist in inches',
     },
     {
       id: '03',
@@ -54,6 +57,7 @@ export const DROP_004: ShopConfig = {
       price: 420,
       image: media('look-03.jpg'),
       sizes: ['XS', 'S', 'M', 'L'],
+      sizeGuide: 'Extra small to large',
       lowStock: true,
     },
     {
@@ -69,6 +73,7 @@ export const DROP_004: ShopConfig = {
       price: 110,
       image: media('look-04.jpg'),
       sizes: ['XS', 'S', 'M', 'L', 'XL'],
+      sizeGuide: 'Extra small to extra large',
     },
     {
       id: '05',
@@ -83,6 +88,7 @@ export const DROP_004: ShopConfig = {
       price: 130,
       image: media('look-05.jpg'),
       sizes: ['EU 38', 'EU 39', 'EU 40', 'EU 41', 'EU 42', 'EU 43'],
+      sizeGuide: 'European shoe sizes',
     },
     {
       id: '06',
@@ -97,6 +103,32 @@ export const DROP_004: ShopConfig = {
       price: 195,
       image: media('look-06.jpg'),
       sizes: ['XS', 'S', 'M', 'L'],
+      sizeGuide: 'Extra small to large',
     },
   ],
 };
+
+/**
+ * The described version of the film: what each look shows, for anyone who can't see it. There is no dialogue; the
+ * soundtrack is captioned in `captions.vtt`.
+ */
+export const DESCRIBED_VERSION: { time: string; text: string }[] = [
+  { time: '0:00', text: 'Close-up: a man does up the buttons of a powder-blue oxford shirt, working down the placket.' },
+  {
+    time: '0:07',
+    text: 'From behind, a woman walks down a country road in mid-wash straight jeans and a green flannel shirt, a phone in her back pocket.',
+  },
+  {
+    time: '0:14',
+    text: 'Extreme close-up of a black studded leather biker jacket painted with grey graffiti, its silver zipper catching the light.',
+  },
+  {
+    time: '0:21',
+    text: 'On a rooftop, a woman in an oversized heather-grey hoodie pulls the hood up, then lowers it and stretches her arms overhead.',
+  },
+  { time: '0:28', text: 'Crouched on asphalt, someone ties the laces of white leather sneakers.' },
+  {
+    time: '0:35',
+    text: 'In a boutique lined with clothing racks, a woman stands and poses in a black-and-ivory print blazer dress.',
+  },
+];

@@ -28,6 +28,7 @@ export function ShopProvider({ shop = EMPTY, children }: { shop?: ShopConfig | u
       brand: 'NØ SIGNAL',
       drop: 'Drop 004',
       season: 'SS27',
+      seasonName: 'Spring/Summer 2027',
       currency: 'EUR',
       locale: 'en-IE',
       ...shop,

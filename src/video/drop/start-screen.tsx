@@ -37,7 +37,9 @@ export function StartScreen() {
     >
       <p className="drop-start-kicker">
         <span className="drop-sticker drop-sticker-ink">{config.brand}®</span>
-        <span className="drop-sticker drop-sticker-paper">{config.season}</span>
+        <abbr className="drop-sticker drop-sticker-paper" title={config.seasonName}>
+          {config.season}
+        </abbr>
       </p>
       <p className="drop-start-title">
         <span className="drop-start-word">{word}</span>

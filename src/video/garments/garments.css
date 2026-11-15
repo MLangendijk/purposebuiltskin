@@ -211,7 +211,7 @@
 /* ---------------------------------------------------------------- Playhead hardware */
 
 .media-skin[data-skin="drop"] .garment-thumb {
-  width: calc(var(--u) * 8.5);
+  width: calc(var(--u) * 11);
   height: calc(var(--u) * 11);
   display: grid;
   place-items: center;
@@ -389,8 +389,8 @@
 .media-skin[data-skin="drop"] .size-run span {
   display: grid;
   place-items: center;
-  border: 1px solid rgb(244 241 234 / 0.3);
-  color: rgb(244 241 234 / 0.55);
+  border: 1px solid rgb(244 241 234 / 0.45);
+  color: rgb(244 241 234 / 0.72);
   font-family: var(--drop-mono);
   font-size: calc(var(--u) * 2.5);
   font-weight: 700;
@@ -405,18 +405,27 @@
 
 /* Muted: the run stays, but every size reads as sold out. */
 .media-skin[data-skin="drop"] .size-volume:has([data-muted]) .size-fill .size-run span {
-  border-color: rgb(244 241 234 / 0.3);
+  border-color: rgb(244 241 234 / 0.45);
   background: transparent;
-  color: rgb(244 241 234 / 0.55);
+  color: rgb(244 241 234 / 0.72);
   text-decoration: line-through;
 }
 
+/* A 44px grab area around a slim marker. */
 .media-skin[data-skin="drop"] .size-thumb {
   position: absolute;
   left: var(--media-slider-fill, 0%);
+  width: calc(var(--u) * 11);
+  height: calc(var(--u) * 11);
+  translate: -50% 0;
+  display: grid;
+  place-items: center;
+}
+
+.media-skin[data-skin="drop"] .size-thumb::before {
+  content: "";
   width: calc(var(--u) * 1);
   height: calc(var(--u) * 8);
-  translate: -50% 0;
   background: var(--drop-paper);
   outline: 1px solid var(--drop-ink);
 }
@@ -439,7 +448,7 @@
 
 .media-skin[data-skin="drop"] .tape-measure {
   --tick: var(--drop-ink);
-  height: calc(var(--drop-control) - var(--u) * 1);
+  height: var(--drop-control);
   padding-inline: calc(var(--u) * 4) calc(var(--u) * 3);
   gap: calc(var(--u) * 1.5);
   border: var(--drop-line) solid var(--drop-ink);
@@ -468,7 +477,20 @@
 
 .media-skin[data-skin="drop"] .tape-measure :is(.media-time-separator, .media-time-duration-value) {
   opacity: 1;
-  color: rgb(11 11 12 / 0.65);
+  color: rgb(11 11 12 / 0.8);
+}
+
+.media-skin[data-skin="drop"] .tape-measure .media-time-toggle {
+  display: grid;
+  place-items: center;
+  min-width: calc(var(--u) * 11);
+  height: 100%;
+}
+
+@container media-root (width >= 20rem) {
+  .media-skin[data-skin="drop"] .tape-measure .media-time-toggle {
+    display: none;
+  }
 }
 
 .media-skin[data-skin="drop"] .tape-measure .media-time-toggle:focus-visible {

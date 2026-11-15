@@ -24,6 +24,8 @@ export interface Look {
   /** Product shot, ideally a 3:4 crop. */
   image?: string;
   sizes: string[];
+  /** What the sizes mean, shown with the size picker, such as `Waist in inches`. */
+  sizeGuide?: string;
   /** Flags a look as nearly gone. */
   lowStock?: boolean;
 }
@@ -42,6 +44,8 @@ export interface ShopConfig {
   drop?: string;
   /** Season line, such as `SS27`. */
   season?: string;
+  /** The season written out, used to expand the abbreviation, such as `Spring/Summer 2027`. */
+  seasonName?: string;
   /** ISO currency code for prices. */
   currency?: string;
   /** Locale for prices. */

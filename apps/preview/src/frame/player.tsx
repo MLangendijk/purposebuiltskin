@@ -16,6 +16,7 @@ export function Player({ media }: { media?: PlaybackProps }) {
       <VideoSkin shop={DROP_004}>
         <Video {...media} src={SRC} playsInline crossOrigin="">
           <track kind="chapters" label="Looks" srcLang="en" src="./media/chapters.vtt" default />
+          <track kind="captions" label="English (sound)" srcLang="en" src="./media/captions.vtt" />
           <track kind="metadata" label="thumbnails" src="./media/storyboard.vtt" default />
         </Video>
       </VideoSkin>

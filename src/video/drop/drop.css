@@ -17,11 +17,11 @@
   --drop-ink: #0b0b0c;
   --drop-paper: #f4f1ea;
   --drop-volt: #d4ff1f;
-  --drop-hot: #ff3d8b;
-  --drop-dim: rgb(244 241 234 / 0.62);
+  --drop-hot: #ff7fb2;
+  --drop-dim: rgb(244 241 234 / 0.72);
 
   --u: var(--media-spacing);
-  --drop-control: calc(var(--u) * 10);
+  --drop-control: calc(var(--u) * 11);
   --drop-line: 2px;
   --drop-lift: calc(var(--u) * 0.75);
   --drop-shadow: var(--drop-lift) var(--drop-lift) 0 0 var(--drop-ink);
@@ -51,7 +51,7 @@
 
 @media (pointer: coarse) {
   .media-skin[data-skin="drop"] {
-    --drop-control: calc(var(--u) * 11);
+    --drop-control: calc(var(--u) * 12);
   }
 }
 
@@ -290,6 +290,20 @@
   min-width: 0;
 }
 
+/*
+ * Keyboard focus keeps the controls on screen (WCAG 2.4.12, focus not obscured): the idle hide never takes away the
+ * control you are on. The swing tag moves clear of them as it does when they are shown by the pointer.
+ */
+.media-skin[data-skin="drop"] .video-controls-content:has(:focus-visible) :is(.video-controls-bottom, .video-controls-top) {
+  opacity: 1;
+  pointer-events: auto;
+  translate: none;
+}
+
+.media-skin[data-skin="drop"]:has(.video-controls-content :focus-visible) .drop-tag-anchor {
+  bottom: calc(var(--u) * 42);
+}
+
 /* ---------------------------------------------------------------- Top bar */
 
 .media-skin[data-skin="drop"] .drop-stamp {
@@ -495,7 +509,7 @@
 }
 
 .media-skin[data-skin="drop"] .drop-icon-button-sm {
-  --drop-control: calc(var(--u) * 8);
+  --drop-control: calc(var(--u) * 11);
   border-color: rgb(244 241 234 / 0.3);
 }
 
@@ -570,7 +584,7 @@
 }
 
 .media-skin[data-skin="drop"] :is(.media-menu-item, .media-menu-back-item, .media-menu-radio-item) {
-  min-height: calc(var(--u) * 10);
+  min-height: calc(var(--u) * 11);
   background: transparent;
   color: inherit;
   font: inherit;
@@ -842,7 +856,7 @@
 }
 
 .media-skin[data-skin="drop"] .drop-sheet-look-of {
-  opacity: 0.55;
+  font-weight: 400;
 }
 
 .media-skin[data-skin="drop"] .drop-sheet-body {
@@ -920,6 +934,17 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--drop-dim);
+}
+
+.media-skin[data-skin="drop"] .drop-sizes-guide {
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+
+.media-skin[data-skin="drop"] abbr[title] {
+  text-decoration: underline dotted;
+  text-underline-offset: 0.2em;
+  cursor: help;
 }
 
 .media-skin[data-skin="drop"] .drop-sizes-grid {
@@ -1273,7 +1298,8 @@
     margin-inline-start: auto;
   }
 
-  .media-skin[data-skin="drop"][data-controls-visible] .drop-tag-anchor {
+  .media-skin[data-skin="drop"][data-controls-visible] .drop-tag-anchor,
+  .media-skin[data-skin="drop"]:has(.video-controls-content :focus-visible) .drop-tag-anchor {
     bottom: calc(var(--u) * 38);
   }
 
@@ -1305,7 +1331,7 @@
 
 @container media-root (width < 30rem) {
   .media-skin[data-skin="drop"] :is(.video-controls-content, .drop-tag-anchor, .drop-start) {
-    --drop-control: calc(var(--u) * 10);
+    --drop-control: calc(var(--u) * 11);
   }
 
   .media-skin[data-skin="drop"] .drop-skip,
@@ -1336,6 +1362,7 @@
   }
 
   /* No room for the tag between the top bar and the controls: it steps aside while they're up. */
+  .media-skin[data-skin="drop"]:has(.video-controls-content :focus-visible) .drop-tag-anchor,
   .media-skin[data-skin="drop"][data-controls-visible] .drop-tag-anchor {
     opacity: 0;
     visibility: hidden;
@@ -1380,9 +1407,9 @@
     animation: none;
   }
 
-  /* The spinner slows to a gentle turn rather than stopping, so loading still reads as loading. */
+  /* The stitch ring holds still; its broken line still reads as "in progress". */
   .media-skin[data-skin="drop"] .icon-spin {
-    animation-duration: 4s;
+    animation: none;
   }
 
   .media-skin[data-skin="drop"] :is(.drop-tag-face, .drop-sheet) {

@@ -3,7 +3,7 @@
   --ink: #0b0b0c;
   --paper: #f4f1ea;
   --volt: #d4ff1f;
-  --hot: #ff3d8b;
+  --hot: #ff7fb2;
   --dim: rgb(244 241 234 / 0.66);
   --display: "Archivo Variable", "Archivo", "Arial Narrow", sans-serif;
   --mono: "Space Mono", ui-monospace, Menlo, monospace;
@@ -88,8 +88,11 @@ media-i18n {
 }
 
 .site-header-link {
+  display: inline-grid;
+  place-items: center;
+  min-height: 2.75rem;
   margin-left: auto;
-  padding: 0.5rem 0.75rem;
+  padding: 0.5rem 0.9rem;
   border: 2px solid var(--paper);
   font-family: var(--mono);
   font-size: 0.75rem;
@@ -180,6 +183,74 @@ media-i18n {
   .site-player {
     box-shadow: 5px 5px 0 var(--volt);
   }
+}
+
+abbr[title] {
+  text-decoration: underline dotted;
+  text-underline-offset: 0.2em;
+  cursor: help;
+}
+
+.site-player-note {
+  max-width: 65ch;
+  margin: 1.5rem 0 0;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--dim);
+}
+
+.site-player-note a {
+  color: var(--volt);
+}
+
+/* ---------------------------------------------------------------- Described version */
+
+.site-described {
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 3rem clamp(1rem, 4vw, 3rem);
+}
+
+.site-described-list {
+  display: grid;
+  gap: 1.25rem;
+  max-width: 70ch;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-described-list li {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  gap: 1rem;
+  align-items: baseline;
+}
+
+.site-described-time {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--volt);
+}
+
+.site-described-list p,
+.site-described-sound {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--dim);
+}
+
+.site-described-list strong {
+  color: var(--paper);
+}
+
+.site-described-sound {
+  max-width: 70ch;
+  margin-top: 1.5rem;
 }
 
 /* ---------------------------------------------------------------- Looks */
@@ -318,6 +389,7 @@ media-i18n {
 }
 
 .site-about p {
+  max-width: 65ch;
   margin: 0;
   font-family: var(--mono);
   font-size: 0.9rem;
@@ -378,7 +450,8 @@ kbd {
 }
 
 .site-footer p {
-  margin: 0 0 0.5rem;
+  max-width: 72ch;
+  margin: 0 0 1rem;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,7 +1,7 @@
 import { GarmentIcon } from '@/video/garments/garment-icons';
 import { GARMENT_LABEL } from '@/video/garments/garments';
 
-import { DROP_004 } from '../frame/drop-004';
+import { DESCRIBED_VERSION, DROP_004 } from '../frame/drop-004';
 import { Player } from '../frame/player';
 
 const KEYS: [string, string][] = [
@@ -11,6 +11,7 @@ const KEYS: [string, string][] = [
   ['M', 'Mute'],
   ['F', 'Fullscreen'],
   ['0–9', 'Jump to 0–90%'],
+  ['C', 'Captions on or off'],
   ['Esc', 'Close the product sheet, bag or menu'],
 ];
 
@@ -50,7 +51,9 @@ export function Site() {
         <section className="site-hero" aria-labelledby="hero-title">
           <p className="site-kicker">
             <span className="site-sticker">{DROP_004.drop}</span>
-            <span className="site-sticker site-sticker-paper">{DROP_004.season}</span>
+            <abbr className="site-sticker site-sticker-paper" title={DROP_004.seasonName}>
+              {DROP_004.season}
+            </abbr>
           </p>
           <h1 id="hero-title" className="site-title">
             Shop the <em>film</em>.
@@ -62,6 +65,10 @@ export function Site() {
           <div className="site-player" id="player">
             <Player />
           </div>
+          <p className="site-player-note">
+            No dialogue: the soundtrack is captioned (Scissors → Captions, or press C).{' '}
+            <a href="#described">Read the described version</a>.
+          </p>
         </section>
 
         <section className="site-looks" aria-labelledby="looks-title">
@@ -86,6 +93,25 @@ export function Site() {
               </li>
             ))}
           </ol>
+        </section>
+
+        <section className="site-described" id="described" aria-labelledby="described-title">
+          <h2 id="described-title" className="site-h2">
+            Described version
+          </h2>
+          <ol className="site-described-list">
+            {DESCRIBED_VERSION.map((scene, i) => (
+              <li key={scene.time}>
+                <span className="site-described-time">{scene.time}</span>
+                <p>
+                  <strong>{DROP_004.looks[i]?.name}.</strong> {scene.text}
+                </p>
+              </li>
+            ))}
+          </ol>
+          <p className="site-described-sound">
+            Sound: an upbeat hip-hop instrumental throughout, with no vocals, fading out over the last three seconds.
+          </p>
         </section>
 
         <section className="site-about" aria-labelledby="about-title">

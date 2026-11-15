@@ -35,15 +35,20 @@ Play and fullscreen keep their standard shapes, because no garment does those jo
 - **Inks and type.** Black, warm white and acid volt, with hot pink kept for scarcity. Archivo at its narrowest for display, Space Mono for anything that counts.
 - **Legible over anything.** Controls are solid fills with a black keyline, so they read over a white sneaker or a black leather jacket alike.
 
-## Accessibility
+## Accessibility (WCAG 2.2 AAA target)
 
-- Every control is a native button, slider or radio with a label. The source order follows the visual order.
-- Focus shows as a black, volt and black ring that reads on any frame.
-- Controls are 40px (44px on touch screens).
-- The layout responds to the player's own width (container queries), from 320px up to fullscreen.
-- Escape closes the product sheet, bag and settings menu, and focus returns to the control that opened them.
+- **Contrast 7:1** for all text, including dimmed labels, over solid fills only, so footage never sits behind type (1.4.6). Checked with a script over every visible text node.
+- **Targets of 44×44px or larger** for every control, including slider thumbs, the bag's remove buttons and menu items (2.5.5).
+- **Focus never hidden.** Keyboard focus keeps the controls on screen through the idle hide, and the swing tag moves clear (2.4.12). The focus ring is black, volt and black, and reads on any frame (2.4.13).
+- **Keyboard only** (2.1.3). Every control is a native button, slider or radio with a label, in visual order. Escape closes the product sheet, bag and settings, and focus returns to the trigger. After the start screen, focus moves to the bar's play button.
+- **Media alternatives.** The soundtrack is captioned (music only, no speech), and the showcase has a full described version of the film (1.2.2, 1.2.8).
+- **Abbreviations expanded**: `SS27` and the size systems (W = waist in inches, EU shoe sizes) (3.1.4).
+- **Motion.** Under reduced motion everything set off by interaction stops: tag swings, zipper pulls, tool swaps, the sliding tape, the ticker and the spinner (2.3.3). The ticker also pauses with the film (2.2.2).
+- **Text blocks** on the showcase stay within 65–72 characters at 1.6+ line height (1.4.8).
 - `prefers-contrast: more`, `prefers-reduced-transparency` and forced-colors modes are handled.
-- Keys: Space/K to play, ←/→ to seek, ↑/↓ for volume, M to mute, F for fullscreen, 0–9 to jump.
+- Keys: Space/K play, ←/→ seek 10s, ↑/↓ volume, M mute, C captions, F fullscreen, 0–9 jump.
+
+Not done: no sign-language track (there is no speech to interpret), and no screen-reader pass with VoiceOver, NVDA or JAWS yet.
 
 ## Use it
 

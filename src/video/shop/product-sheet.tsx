@@ -89,7 +89,7 @@ function SheetBody({ look }: { look: Look }) {
 
         <fieldset className="drop-sizes">
           <legend className="drop-sizes-legend">
-            Size
+            Size{look.sizeGuide && <span className="drop-sizes-guide"> · {look.sizeGuide}</span>}
           </legend>
           <div className="drop-sizes-grid">
             {look.sizes.map((value) => (
