@@ -330,71 +330,42 @@
   touch-action: none;
 }
 
-/* The air leaves the nozzle on the left and fans out to the right. */
+/* Sound waves leave the nozzle on the left and grow to the right. */
 .media-skin[data-skin="drop"] .dryer-track {
   position: relative;
   width: 100%;
   height: calc(var(--u) * 7);
 }
 
-.media-skin[data-skin="drop"] .dryer-fill {
+.media-skin[data-skin="drop"] .dryer-waves {
   position: absolute;
-  inset-block: 0;
-  inset-inline-start: 0;
-  width: var(--media-slider-fill, 0%);
-  overflow: hidden;
-}
-
-.media-skin[data-skin="drop"] .dryer-air {
-  position: absolute;
-  inset-block: 0;
-  inset-inline-start: 0;
-  width: calc(var(--u) * 26);
+  inset: 0;
+  width: 100%;
   height: 100%;
   overflow: visible;
 }
 
-.media-skin[data-skin="drop"] .dryer-air path {
+.media-skin[data-skin="drop"] .dryer-waves path {
   fill: none;
-  stroke-linecap: round;
-  vector-effect: non-scaling-stroke;
-}
-
-/* Where the air doesn't reach yet: a faint dotted trace of the full stream. */
-.media-skin[data-skin="drop"] .dryer-track > .dryer-air path {
   stroke: var(--taupe);
   stroke-width: 1.25px;
-  stroke-dasharray: 1 5;
-  opacity: 0.55;
+  stroke-linecap: round;
+  opacity: 0.5;
+  vector-effect: non-scaling-stroke;
+  transition:
+    stroke var(--drop-fast) ease,
+    stroke-width var(--drop-fast) ease,
+    opacity var(--drop-fast) ease;
 }
 
-/* The air it blows: solid, in the accent. */
-.media-skin[data-skin="drop"] .dryer-fill .dryer-air path {
+/* The arcs it's sending out: solid, in the accent. */
+.media-skin[data-skin="drop"] .dryer-waves path[data-on] {
   stroke: var(--accent);
-  stroke-width: 2px;
-  stroke-dasharray: 14 6;
+  stroke-width: 2.5px;
+  opacity: 1;
 }
 
-/* While the film plays, the air drifts out of the nozzle. */
-.media-skin[data-skin="drop"] .dryer[data-flowing] .dryer-fill .dryer-air path {
-  animation: dryer-flow 1.1s linear infinite;
-}
-
-.media-skin[data-skin="drop"] .dryer-fill .dryer-air path:nth-child(2) {
-  animation-delay: -0.35s;
-}
-
-.media-skin[data-skin="drop"] .dryer-fill .dryer-air path:nth-child(3) {
-  animation-delay: -0.7s;
-}
-
-@keyframes dryer-flow {
-  to {
-    stroke-dashoffset: -20;
-  }
-}
-
-/* The level itself is drawn by the air, so the thumb is an invisible handle; keyboard focus rings the airflow. */
+/* The arcs show the level, so the thumb is an invisible handle; keyboard focus rings the arcs. */
 .media-skin[data-skin="drop"] .dryer-thumb {
   position: absolute;
   left: var(--media-slider-fill, 0%);
@@ -506,7 +477,7 @@
 /* ---------------------------------------------------------------- Preferences */
 
 @media (prefers-reduced-motion: reduce) {
-  .media-skin[data-skin="drop"] :is(.garment-hardware, .dryer-air path) {
+  .media-skin[data-skin="drop"] .garment-hardware {
     animation: none !important;
   }
 

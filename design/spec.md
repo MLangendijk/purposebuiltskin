@@ -30,7 +30,7 @@ centre; one bottom row of mute, the garment strip, time and fullscreen. The tag 
 | --- | --- | --- |
 | Seek bar | One swatch per chapter, finished as it plays | Knitted rows, buttons done up, a seam sewn, pleats pressed, a zip closed |
 | Playhead | The tool doing that finishing | Knitting needle, button, needle and thread, iron, zip pull |
-| Volume | A hairdryer's airflow, reaching further as it gets louder | Stronger blowing is louder; nothing else uses air |
+| Volume | Sound-wave arcs leaving the hairdryer's nozzle; more arcs light up as it gets louder | The universal volume signal, from a tool nothing else uses |
 | Time | Tailor's tape measure that pulls out as it plays | It measures the film's length |
 | Replay | The tape rewinding | Back to zero |
 | Mute | The hairdryer itself, switched off (crossed out) when muted | Off is silent |
@@ -69,8 +69,8 @@ their materials with them.
 ## Slider
 
 - Seek: 6u swatch strip, pill segments, the active one outlined in charcoal, growing 1.5u on hover (**derived**).
-- Volume: three streams of air fanning out from the dryer's nozzle; solid in the accent up to the level, a faint
-  dotted trace beyond it. The air drifts while playing, and rests when paused, muted or under reduced motion.
+- Volume: five sound-wave arcs growing from the dryer's nozzle; lit in the accent up to the level, thin outlines
+  beyond. Any sound lights the first arc; full volume lights all five.
 
 ## Motion
 

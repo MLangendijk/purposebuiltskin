@@ -1,43 +1,48 @@
 /** @jsxImportSource react */
 
-import { selectPlayback, selectVolume } from '@videojs/core/dom';
+import { selectVolume } from '@videojs/core/dom';
 import { usePlayer, VolumeSlider } from '@videojs/react';
 
 import { MuteButton } from '../drop/buttons';
 
-/**
- * Three streams of air leaving the nozzle, fanning out as they go. Drawn on a 100×24 box stretched to the slider, so
- * the stroke stays the same weight at any width.
- */
-function Airflow() {
+/** Five sound-wave arcs leaving the dryer's nozzle, each one taller than the last: the classic volume signal. */
+const ARCS = [
+  { x: 8, h: 4 },
+  { x: 27, h: 6 },
+  { x: 46, h: 8 },
+  { x: 65, h: 10 },
+  { x: 84, h: 12 },
+];
+
+/** The arcs, lit up to the current level. Decorative: the slider carries the value and its name. */
+function SoundWaves({ lit }: { lit: number }) {
   return (
-    <svg className="dryer-air" viewBox="0 0 100 24" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-      <path d="M0 9 C 12 7, 20 9, 30 7 S 50 5, 62 4 S 85 2, 100 1" />
-      <path d="M0 12 C 12 10, 20 14, 32 12 S 52 10, 64 12 S 86 14, 100 12" />
-      <path d="M0 15 C 12 17, 20 15, 30 17 S 50 19, 62 20 S 85 22, 100 23" />
+    <svg className="dryer-waves" viewBox="0 0 100 28" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      {ARCS.map(({ x, h }, i) => (
+        <path key={x} data-on={i < lit ? '' : undefined} d={`M${x} ${14 - h}Q${x + h * 0.75} 14 ${x} ${14 + h}`} />
+      ))}
     </svg>
   );
 }
 
 /**
- * Volume as a hairdryer: the mute button is the dryer itself (switched off when muted), and the slider is its airflow.
- * The louder the film, the further the air reaches. It's an ordinary volume slider underneath: click or drag
- * anywhere, arrow keys in 5% steps, read out as "Volume, 60%". The air drifts while the film plays and rests when it's
- * paused, muted, or under reduced motion. Touch screens keep only the dryer (mute) and use the hardware buttons.
+ * Volume as a hairdryer: the mute button is the dryer itself (switched off when muted), and the slider is the sound
+ * it sends out, drawn as the familiar sound-wave arcs. More arcs light up the louder it plays. It's an ordinary volume
+ * slider underneath: click or drag anywhere, arrow keys in 5% steps, read out as "Volume, 60%". Touch screens keep
+ * only the dryer (mute) and use the hardware buttons.
  */
 export function DryerVolume() {
-  const muted = usePlayer(selectVolume)?.muted ?? false;
-  const paused = usePlayer(selectPlayback)?.paused ?? true;
+  const volume = usePlayer(selectVolume);
+  const level = volume?.muted ? 0 : (volume?.volume ?? 0);
+  // Any sound lights the first arc; full volume lights all five.
+  const lit = level <= 0 ? 0 : Math.ceil(level * ARCS.length - 0.001);
 
   return (
-    <div className="dryer" data-flowing={!muted && !paused ? '' : undefined}>
+    <div className="dryer">
       <MuteButton />
       <VolumeSlider.Root className="dryer-slider" orientation="horizontal" thumbAlignment="center">
         <VolumeSlider.Track className="dryer-track">
-          <Airflow />
-          <VolumeSlider.Fill className="dryer-fill">
-            <Airflow />
-          </VolumeSlider.Fill>
+          <SoundWaves lit={lit} />
         </VolumeSlider.Track>
         <VolumeSlider.Thumb className="dryer-thumb" />
       </VolumeSlider.Root>

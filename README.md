@@ -20,7 +20,7 @@ Every other control takes the garment that does its job:
 | Control | Garment logic |
 | --- | --- |
 | Mute | A hairdryer. On, it blows; muted, it's switched off. |
-| Volume | The hairdryer's airflow. The louder the film, the further the air reaches; it drifts while the film plays. |
+| Volume | The sound the hairdryer sends out, drawn as the familiar sound-wave arcs: more arcs light up the louder it plays. |
 | Time | A tailor's tape measure, measuring the length of the film. The tape pulls out under the readout as it plays (still under reduced motion). |
 | Replay | The tape measure rewinding to zero. |
 | Pause | Two dressmaker's pins, pinning the moment. |
@@ -43,7 +43,7 @@ Play and fullscreen keep their standard shapes, because no garment does those jo
 - **Keyboard only** (2.1.3). Every control is a native button, slider or radio with a label, in visual order. Escape closes the product sheet, bag and settings, and focus returns to the trigger. After the start screen, focus moves to the bar's play button.
 - **Media alternatives.** The soundtrack is captioned (music only, no speech), and the showcase has a full described version of the film (1.2.2, 1.2.8).
 - **Abbreviations expanded**: `SS27` and the size systems (W = waist in inches, EU shoe sizes) (3.1.4).
-- **Motion.** Under reduced motion everything set off by interaction stops: tag swings, tool swaps, the drifting air, the sliding tape and the spinner (2.3.3). The air also rests when the film is paused or muted (2.2.2).
+- **Motion.** Under reduced motion everything set off by interaction stops: tag swings, tool swaps, the sliding tape and the spinner (2.3.3).
 - **Text blocks** on the showcase stay within 65–72 characters at 1.6+ line height (1.4.8).
 - **Phones and tablets.** The skin measures its own box. Under 520px wide or 480px tall (phones either way up, tablets in portrait) it switches to a compact layout: play and the hangers in the middle, one bottom row of mute, garment strip, time and fullscreen, and a product sheet trimmed to name, price, sizes and button. `/devices.html` previews the showcase at iPhone, Android and iPad sizes in both orientations.
 - `prefers-contrast: more`, `prefers-reduced-transparency` and forced-colors modes are handled.

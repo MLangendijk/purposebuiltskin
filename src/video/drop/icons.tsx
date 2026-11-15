@@ -64,11 +64,11 @@ const DRYER = (
   </>
 );
 
-/** Sound on: the hairdryer, blowing. Its airflow is the volume slider beside it. */
+/** Sound on: the hairdryer, sending out a sound wave. The volume slider beside it carries on the waves. */
 export const VolumeIcon = (p: IconProps) => (
   <Icon {...p}>
     {DRYER}
-    <path d="M21.5 7.5h1M21.5 10.5h1" />
+    <path d="M20.75 6.75q1.75 2.25 0 4.5" />
   </Icon>
 );
 
