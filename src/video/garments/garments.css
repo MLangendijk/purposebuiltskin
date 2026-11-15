@@ -345,38 +345,34 @@
 }
 
 /*
- * Compact landscape players (a 16:9 film on a phone held upright) are short, so the label sits beside the frame, not
- * under it, and the frame shrinks to the player's height. The narrowest show the label alone. The preview then always
- * fits above the strip.
+ * Compact landscape players (a 16:9 film on a phone held upright) are short and narrow, so the preview is what phone
+ * players show: a small frame with the time on it, sized to the player's height, narrow enough to travel with the knob.
+ * The chapter is still on the strip's material and the swing tag.
  */
-.media-skin[data-skin="atelier"][data-layout="compact"][data-shape="landscape"] .garment-preview {
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
-  max-width: min(calc(var(--u) * 72), calc(100cqi - var(--u) * 26));
-}
-
 .media-skin[data-skin="atelier"][data-layout="compact"][data-shape="landscape"] .garment-preview-frame {
-  max-width: min(calc(var(--u) * 30), calc((var(--atelier-player-height, 100vh) - var(--u) * 30) * 16 / 9));
+  max-width: min(calc(var(--u) * 32), calc((var(--atelier-player-height, 100vh) - var(--u) * 20) * 16 / 9));
 }
 
 .media-skin[data-skin="atelier"][data-layout="compact"][data-shape="landscape"] .garment-preview-label {
-  flex-direction: column;
-  align-items: flex-start;
-  gap: calc(var(--u) * 0.5);
+  position: absolute;
+  inset-inline-start: calc(var(--u) * 1);
+  bottom: calc(var(--u) * 1);
+  padding: calc(var(--u) * 0.5) calc(var(--u) * 1.5);
+  border-radius: 999px;
+  background: var(--ivory);
 }
 
-@container media-root (width < 22.5rem) {
-  .media-skin[data-skin="atelier"][data-layout="compact"][data-shape="landscape"] .garment-preview-frame {
-    display: none;
-  }
+.media-skin[data-skin="atelier"][data-layout="compact"][data-shape="landscape"] .garment-preview-chapter {
+  display: none;
 }
 
 /*
- * Portrait players: the frame is portrait too, so it takes at most half the player's width, with the time over the
- * chapter title, and the tiniest show the label alone. The preview then always fits above the strip.
+ * Portrait players: the frame is portrait too, so it takes about a third of the player's width, leaving it room to
+ * travel with the knob, with the time over the chapter title. The tiniest show the label alone. The preview then
+ * always fits above the strip.
  */
 .media-skin[data-skin="atelier"][data-shape="portrait"] :is(.garment-preview, .garment-preview-frame) {
-  max-width: min(calc(var(--u) * 48), 50cqi);
+  max-width: min(calc(var(--u) * 48), 36cqi);
 }
 
 .media-skin[data-skin="atelier"][data-shape="portrait"] .garment-preview-label {
