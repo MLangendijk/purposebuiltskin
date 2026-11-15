@@ -38,6 +38,13 @@
   transition: opacity var(--atelier-fast) linear;
 }
 
+/* Narrow players (9:16): no room for the seek feedback beside play and the hangers, so it rises above them. */
+@container media-root (width < 24rem) {
+  .media-skin[data-skin="atelier"][data-layout="compact"][data-shape="portrait"] .media-seek-indicator {
+    translate: 0 calc(var(--u) * -20);
+  }
+}
+
 .media-skin[data-skin="atelier"] .video-controls-content:not([data-visible]) .atelier-center {
   opacity: 0;
   pointer-events: none;
