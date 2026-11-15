@@ -7,3 +7,8 @@ dist
 .vercel
 .netlify
 .wrangler
+
+# Secrets: API tokens and env files never leave this machine.
+*.env
+.env*
+!.env.example

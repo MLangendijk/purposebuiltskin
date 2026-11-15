@@ -98,10 +98,10 @@ build_chapters() {
   log "Writing chapters"
   {
     printf 'WEBVTT\n'
+    # Plain cues, no identifiers, ending within the film: the form Mux accepts for a chapters track.
     for i in "${!LOOKS[@]}"; do
-      # The last chapter runs a second past the film, so encoder rounding never leaves an uncovered sliver at the end.
-      local start=$((i * CLIP_SECONDS)) end=$(((i + 1) * CLIP_SECONDS + (i + 1 == ${#LOOKS[@]})))
-      printf '\n%d\n%s --> %s\n%s\n' $((i + 1)) "$(timestamp $start)" "$(timestamp $end)" \
+      local start=$((i * CLIP_SECONDS))
+      printf '\n%s --> %s\n%s\n' "$(timestamp $start)" "$(timestamp $((start + CLIP_SECONDS)))" \
         "$(field "${LOOKS[$i]}" 5)"
     done
   } >"$OUT/chapters.vtt"

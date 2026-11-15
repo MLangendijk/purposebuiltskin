@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
-# Adds the chapters and captions tracks to the Mux asset, so both are served by Mux:
+# Puts the chapters and captions tracks on the Mux asset, so both are served by Mux:
 #   chapters → https://stream.mux.com/{PLAYBACK_ID}/chapters/{TRACK_ID}.json (read by the skin)
 #   captions → in the HLS stream itself
 #
+# Safe to re-run: errored tracks are removed, and a track that is already ready is left alone.
 # Mux downloads each WebVTT file from a public URL, so the files are read from this repo on GitHub, pinned to a commit.
+#
 # Usage: scripts/mux-add-tracks.sh [commit]   (default: the current HEAD, which must be pushed)
-# Needs: curl, and MUX_TOKEN_ID / MUX_TOKEN_SECRET in .env.local (see that file).
+# Needs: curl, jq, and MUX_TOKEN_ID / MUX_TOKEN_SECRET in mux-access-token-m.env (gitignored), or the file in
+# MUX_ENV_FILE. Create the token in the Mux dashboard: Settings → Access Tokens, permission "Mux Video: Read and Write".
 
 set -euo pipefail
 
@@ -15,19 +18,49 @@ PLAYBACK_ID="iYNPL02029CpHpmg2Hc21G9hWsj3LEYq9bTqf02ipLkW02k"
 REPO="MLangendijk/purposebuiltskin"
 COMMIT="${1:-$(git -C "$ROOT" rev-parse HEAD)}"
 RAW="https://raw.githubusercontent.com/$REPO/$COMMIT/apps/preview/public/media"
+API="https://api.mux.com/video/v1/assets/$ASSET_ID"
 
-# shellcheck disable=SC1091
-source "$ROOT/.env.local"
-: "${MUX_TOKEN_ID:?Set MUX_TOKEN_ID in .env.local}" "${MUX_TOKEN_SECRET:?Set MUX_TOKEN_SECRET in .env.local}"
+ENV_FILE="${MUX_ENV_FILE:-$ROOT/mux-access-token-m.env}"
+# shellcheck disable=SC1090
+source "$ENV_FILE"
+: "${MUX_TOKEN_ID:?Set MUX_TOKEN_ID in $ENV_FILE}" "${MUX_TOKEN_SECRET:?Set MUX_TOKEN_SECRET in $ENV_FILE}"
 
-log() { printf '\033[1m›\033[0m %s\n' "$*"; }
+log() { printf '\033[1m›\033[0m %s\n' "$*" >&2; }
 
 mux() { curl -sf -u "$MUX_TOKEN_ID:$MUX_TOKEN_SECRET" -H 'Content-Type: application/json' "$@"; }
 
-# Prints the new track's id.
-add_track() {
-  local body="$1"
-  mux -X POST "https://api.mux.com/video/v1/assets/$ASSET_ID/tracks" -d "$body" | sed -E 's/.*"id":"([^"]+)".*/\1/'
+# Text tracks of one kind ("chapters" or "subtitles"), as "id status" lines.
+tracks() { mux "$API" | jq -r --arg kind "$1" '.data.tracks[] | select(.text_type == $kind) | "\(.id) \(.status)"'; }
+
+# Waits until the track settles, then prints its status (and Mux's error, if any, on stderr).
+settle() {
+  local id="$1" status
+  for _ in $(seq 1 60); do
+    status="$(mux "$API" | jq -r --arg id "$id" '.data.tracks[] | select(.id == $id) | .status')"
+    [[ "$status" == "preparing" ]] || break
+    sleep 2
+  done
+  echo "$status"
+  [[ "$status" == "ready" ]] || mux "$API" | jq -r --arg id "$id" '.data.tracks[] | select(.id == $id) | .error' >&2
+}
+
+# Makes sure one ready track of this kind exists; prints its id.
+ensure_track() {
+  local kind="$1" body="$2" id status
+  while read -r id status; do
+    [[ -z "$id" ]] && continue
+    if [[ "$status" == "ready" ]]; then echo "$id"; return; fi
+    if [[ "$status" == "errored" ]]; then
+      log "Removing errored $kind track $id"
+      mux -X DELETE "$API/tracks/$id" >/dev/null
+    fi
+  done < <(tracks "$kind")
+
+  log "Adding $kind track"
+  id="$(mux -X POST "$API/tracks" -d "$body" | jq -r '.data.id')"
+  status="$(settle "$id")"
+  [[ "$status" == "ready" ]] || { echo "The $kind track ended up $status" >&2; exit 1; }
+  echo "$id"
 }
 
 log "Checking the files are public at $RAW"
@@ -35,19 +68,10 @@ for file in chapters.vtt captions.vtt; do
   curl -sfo /dev/null "$RAW/$file" || { echo "Not reachable: $RAW/$file (push first?)" >&2; exit 1; }
 done
 
-log "Adding chapters track"
-chapters_id="$(add_track "{\"url\":\"$RAW/chapters.vtt\",\"type\":\"text\",\"text_type\":\"chapters\",\"language_code\":\"en\",\"name\":\"Looks\"}")"
+chapters_id="$(ensure_track chapters "{\"url\":\"$RAW/chapters.vtt\",\"type\":\"text\",\"text_type\":\"chapters\",\"language_code\":\"en\",\"name\":\"Looks\"}")"
+captions_id="$(ensure_track subtitles "{\"url\":\"$RAW/captions.vtt\",\"type\":\"text\",\"text_type\":\"subtitles\",\"language_code\":\"en\",\"name\":\"English (sound)\",\"closed_captions\":true}")"
 
-log "Adding captions track"
-captions_id="$(add_track "{\"url\":\"$RAW/captions.vtt\",\"type\":\"text\",\"text_type\":\"subtitles\",\"language_code\":\"en\",\"name\":\"English (sound)\",\"closed_captions\":true}")"
-
-log "Waiting for Mux to ingest the chapters"
-for _ in $(seq 1 30); do
-  if curl -sfo /dev/null "https://stream.mux.com/$PLAYBACK_ID/chapters/$chapters_id.json"; then break; fi
-  sleep 2
-done
-
-log "Done"
+log "Chapters served at https://stream.mux.com/$PLAYBACK_ID/chapters/$chapters_id.json"
 echo "chapters track: $chapters_id"
 echo "captions track: $captions_id"
 echo "Put the chapters track id in apps/preview/src/frame/player.tsx (MUX_CHAPTERS_TRACK)."

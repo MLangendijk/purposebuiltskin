@@ -47,6 +47,10 @@
   border-radius: 999px;
 }
 
+.media-skin[data-skin="drop"] .garment-segment[data-garment="none"] {
+  display: none;
+}
+
 .media-skin[data-skin="drop"] .garment-segment[data-active] {
   border-color: var(--ink);
   box-shadow: 0 0 0 1px var(--ink);

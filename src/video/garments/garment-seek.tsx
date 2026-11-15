@@ -42,10 +42,11 @@ export function GarmentSeek() {
             <div
               {...props}
               className="garment-segment"
+              // A stretch no chapter covers (a few frames of encoder rounding at the end) shows no garment.
               data-garment={
                 garmentFromTitle(state.cue?.text) ??
-                lookAt(config.looks, state.cue?.startTime ?? state.start, state.index)?.garment ??
-                garment
+                (state.cue ? lookAt(config.looks, state.cue.startTime, state.index)?.garment : undefined) ??
+                'none'
               }
               style={{ ...props.style, '--fill': `${state.fillPercent}%` } as CSSProperties}
             >
