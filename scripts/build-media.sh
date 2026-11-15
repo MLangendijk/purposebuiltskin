@@ -98,13 +98,24 @@ build_chapters() {
   log "Writing chapters"
   {
     printf 'WEBVTT\n'
-    # Plain cues, no identifiers, ending within the film: the form Mux accepts for a chapters track.
+    # Plain WebVTT, for the player's local fallback.
     for i in "${!LOOKS[@]}"; do
       local start=$((i * CLIP_SECONDS))
       printf '\n%s --> %s\n%s\n' "$(timestamp $start)" "$(timestamp $((start + CLIP_SECONDS)))" \
         "$(field "${LOOKS[$i]}" 5)"
     done
   } >"$OUT/chapters.vtt"
+
+  # The same chapters in Apple's JSON chapters format, which is what Mux takes for a chapters track.
+  {
+    printf '['
+    for i in "${!LOOKS[@]}"; do
+      ((i > 0)) && printf ','
+      printf '\n  {"chapter": %d, "start-time": %d, "titles": [{"language": "en", "title": "%s"}]}' \
+        $((i + 1)) $((i * CLIP_SECONDS)) "$(field "${LOOKS[$i]}" 5)"
+    done
+    printf '\n]\n'
+  } >"$OUT/chapters.json"
 }
 
 main() {

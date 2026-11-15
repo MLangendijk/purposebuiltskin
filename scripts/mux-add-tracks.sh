@@ -4,7 +4,8 @@
 #   captions → in the HLS stream itself
 #
 # Safe to re-run: errored tracks are removed, and a track that is already ready is left alone.
-# Mux downloads each WebVTT file from a public URL, so the files are read from this repo on GitHub, pinned to a commit.
+# Mux downloads each file from a public URL, so the files are read from this repo on GitHub, pinned to a commit.
+# Chapters go up in Apple's JSON chapters format (chapters.json): Mux fails validation on a WebVTT chapters file.
 #
 # Usage: scripts/mux-add-tracks.sh [commit]   (default: the current HEAD, which must be pushed)
 # Needs: curl, jq, and MUX_TOKEN_ID / MUX_TOKEN_SECRET in mux-access-token-m.env (gitignored), or the file in
@@ -64,11 +65,11 @@ ensure_track() {
 }
 
 log "Checking the files are public at $RAW"
-for file in chapters.vtt captions.vtt; do
+for file in chapters.json captions.vtt; do
   curl -sfo /dev/null "$RAW/$file" || { echo "Not reachable: $RAW/$file (push first?)" >&2; exit 1; }
 done
 
-chapters_id="$(ensure_track chapters "{\"url\":\"$RAW/chapters.vtt\",\"type\":\"text\",\"text_type\":\"chapters\",\"language_code\":\"en\",\"name\":\"Looks\"}")"
+chapters_id="$(ensure_track chapters "{\"url\":\"$RAW/chapters.json\",\"type\":\"text\",\"text_type\":\"chapters\",\"language_code\":\"en\",\"name\":\"Looks\"}")"
 captions_id="$(ensure_track subtitles "{\"url\":\"$RAW/captions.vtt\",\"type\":\"text\",\"text_type\":\"subtitles\",\"language_code\":\"en\",\"name\":\"English (sound)\",\"closed_captions\":true}")"
 
 log "Chapters served at https://stream.mux.com/$PLAYBACK_ID/chapters/$chapters_id.json"
