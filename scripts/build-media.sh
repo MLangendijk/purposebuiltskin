@@ -99,8 +99,9 @@ build_chapters() {
   {
     printf 'WEBVTT\n'
     for i in "${!LOOKS[@]}"; do
-      local start=$((i * CLIP_SECONDS))
-      printf '\n%d\n%s --> %s\n%s\n' $((i + 1)) "$(timestamp $start)" "$(timestamp $((start + CLIP_SECONDS)))" \
+      # The last chapter runs a second past the film, so encoder rounding never leaves an uncovered sliver at the end.
+      local start=$((i * CLIP_SECONDS)) end=$(((i + 1) * CLIP_SECONDS + (i + 1 == ${#LOOKS[@]})))
+      printf '\n%d\n%s --> %s\n%s\n' $((i + 1)) "$(timestamp $start)" "$(timestamp $end)" \
         "$(field "${LOOKS[$i]}" 5)"
     done
   } >"$OUT/chapters.vtt"

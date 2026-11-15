@@ -20,3 +20,14 @@ export const GARMENT_LABEL: Record<Garment, string> = {
   skirt: 'Skirts',
   dress: 'Dresses',
 };
+
+/**
+ * Reads the garment from a chapter title, so the seek bar can take its materials from the chapters themselves (on
+ * Mux, or a WebVTT file). Titles start with the department or the garment key: `Knitwear · Cable-Knit Jumper`,
+ * `knit: Cable-Knit Jumper`.
+ */
+export function garmentFromTitle(title: string | undefined): Garment | undefined {
+  const head = title?.split(/[·:|—]/)[0]?.trim().toLowerCase();
+  if (!head) return undefined;
+  return GARMENTS.find((garment) => garment === head || GARMENT_LABEL[garment].toLowerCase() === head);
+}
