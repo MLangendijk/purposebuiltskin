@@ -96,16 +96,30 @@
 }
 
 /*
- * Narrow players (a 9:16 film in a side column): first the captions button steps out (captions stay in settings and on
- * the C key), then the time, so settings and bag still fit.
+ * Narrow players (a 9:16 film in a side column): the bag folds to its icon with the count as a badge, so sound, time,
+ * captions, settings and bag all still fit. Only the narrowest drop the time.
  */
 @container media-root (width < 21rem) {
-  .media-skin[data-skin="atelier"] .atelier-top-actions .media-captions-button {
-    display: none;
+  .media-skin[data-skin="atelier"] .atelier-top-actions .atelier-bag-button {
+    position: relative;
+    width: var(--atelier-control);
+    padding: 0;
+    justify-content: center;
+  }
+
+  .media-skin[data-skin="atelier"] .atelier-top-actions .atelier-bag-count {
+    position: absolute;
+    inset-block-start: calc(var(--u) * -1);
+    inset-inline-end: calc(var(--u) * -1);
+    min-width: calc(var(--u) * 4.5);
+    height: calc(var(--u) * 4.5);
+    padding: 0 calc(var(--u) * 1);
+    border: 1px solid var(--hairline);
+    font-size: calc(var(--u) * 2.75);
   }
 }
 
-@container media-root (width < 17rem) {
+@container media-root (width < 18rem) {
   .media-skin[data-skin="atelier"] .atelier-top-start .tape-measure {
     display: none;
   }

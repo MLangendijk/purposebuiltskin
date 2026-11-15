@@ -4,7 +4,7 @@ import { VideoPlayer } from '@videojs/react/video';
 import { type CSSProperties, type ReactNode, useState } from 'react';
 
 import * as Icons from '@/video/atelier/icons';
-import { FullscreenButton, PlayButton } from '@/video/atelier/buttons';
+import { CaptionsButton, FullscreenButton, PlayButton } from '@/video/atelier/buttons';
 import { DryerVolume } from '@/video/garments/dryer-volume';
 import { GarmentIcon } from '@/video/garments/garment-icons';
 import { GarmentSeek } from '@/video/garments/garment-seek';
@@ -162,6 +162,9 @@ function LiveParts() {
                 </Part>
                 <Part name="TapeMeasure" file="src/video/garments/tape-measure.tsx" note="Time on a tape that pulls out as it plays.">
                   <TapeMeasure />
+                </Part>
+                <Part name="CaptionsButton" file="src/video/atelier/buttons.tsx" note="Kept standard: CC, filled while captions are on.">
+                  <CaptionsButton />
                 </Part>
                 <Part name="SettingsMenu" file="src/video/shared/settings-menu.tsx" note="Tailor's scissors: quality, speed, captions.">
                   <SettingsMenu side="bottom" />
