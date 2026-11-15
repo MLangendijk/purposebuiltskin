@@ -456,7 +456,7 @@
   transition: background-position 260ms linear;
 }
 
-.media-skin[data-skin="atelier"] .tape-measure :is(.media-time-current-value, .media-time-separator, .media-time-duration-value, .media-time-toggle) {
+.media-skin[data-skin="atelier"] .tape-measure :is(.media-time-current-value, .media-time-separator, .media-time-duration-value) {
   padding-inline: 2px;
   background: var(--butter);
 }
@@ -473,6 +473,10 @@
   /* Reach over the tape's border so the button is the full 44px tall. */
   height: calc(100% + 2px);
   margin-block: -1px;
+  padding-inline: 2px;
+  border-radius: calc(var(--u) * 2);
+  /* Butter behind the digits only, so the tape's ticks still show above and below. */
+  background: linear-gradient(var(--butter), var(--butter)) center / 100% 1.5em no-repeat;
 }
 
 @container media-root (width >= 20rem) {

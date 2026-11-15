@@ -109,7 +109,6 @@
 
 .media-skin[data-skin="atelier"] .atelier-row-compact .tape-measure {
   padding-inline: calc(var(--u) * 3) calc(var(--u) * 1);
-  border-radius: 999px;
 }
 
 .media-skin[data-skin="atelier"] .atelier-row-compact .tape-measure .media-time-toggle {
