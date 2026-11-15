@@ -7,6 +7,7 @@ import { type CSSProperties, useEffect, useRef } from 'react';
 import { GarmentIcon } from './garment-icons';
 import type { Garment } from './garments';
 import { Hardware } from './hardware';
+import { SteadyThumb } from './steady-thumb';
 import { type Piece, pieceAt, usePieces } from './use-pieces';
 
 /**
@@ -56,7 +57,7 @@ export function GarmentSeek() {
           )}
         />
 
-        <TimeSlider.Thumb className="media-time-slider-thumb garment-thumb">
+        <TimeSlider.Thumb className="media-time-slider-thumb garment-thumb" render={(props) => <SteadyThumb {...props} />}>
           <Hardware key={garment} garment={garment} swapped={swapped} />
         </TimeSlider.Thumb>
 

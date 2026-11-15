@@ -134,6 +134,28 @@ media-i18n {
   border: 1px solid var(--hairline);
 }
 
+.site-header-github {
+  grid-auto-flow: column;
+  gap: 0.5rem;
+}
+
+/* Narrow phones: the mark alone, its label kept for screen readers and voice control. */
+@media (width < 26rem) {
+  .site-header-github {
+    min-width: 2.75rem;
+    padding: 0;
+  }
+
+  .site-header-github-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
 @media (width < 48rem) {
   .site-header {
     grid-template-columns: auto 1fr;

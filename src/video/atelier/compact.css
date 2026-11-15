@@ -102,6 +102,11 @@
   box-shadow: var(--atelier-shadow);
 }
 
+/* The floating buttons' drop shadow must not replace the shared focus ring. */
+.media-skin[data-skin="atelier"] :is(.atelier-top-start, .atelier-top-actions, .atelier-center) .media-button:focus-visible {
+  box-shadow: var(--atelier-focus-ring);
+}
+
 /*
  * Narrow players (a 9:16 film in a side column): the bag folds to its icon with the count as a badge, so sound, time,
  * captions, settings and bag all still fit. Only the narrowest drop the time.
@@ -126,7 +131,7 @@
   }
 }
 
-@container media-root (width < 18rem) {
+@container media-root (width < 17.5rem) {
   .media-skin[data-skin="atelier"] .atelier-top-start .tape-measure {
     display: none;
   }
@@ -206,6 +211,16 @@
 
 .media-skin[data-skin="atelier"][data-layout="compact"][data-controls-visible] .atelier-tag-anchor:not(:has(:focus)) .atelier-tag {
   pointer-events: none;
+}
+
+/* Portrait players have room for it under the top bar, so there the tag stays up, and stays tappable, with the controls. */
+.media-skin[data-skin="atelier"][data-layout="compact"][data-shape="portrait"][data-controls-visible] .atelier-tag-anchor,
+.media-skin[data-skin="atelier"][data-layout="compact"][data-shape="portrait"]:has(.video-controls-content :focus-visible) .atelier-tag-anchor {
+  opacity: 1;
+}
+
+.media-skin[data-skin="atelier"][data-layout="compact"][data-shape="portrait"][data-controls-visible] .atelier-tag-anchor .atelier-tag {
+  pointer-events: auto;
 }
 
 .media-skin[data-skin="atelier"][data-layout="compact"] .atelier-tag-anchor:has(:focus) {

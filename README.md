@@ -60,17 +60,18 @@ Where the chapters come from:
 - **WebVTT:** a chapters `<track>`. The cue identifier is the look id; the title names the garment.
 - **Neither:** the skin builds the chapters from each look's `start` and `end`. Those timings also stand in while a chapters file loads, or if it fails, so the shop keeps working.
 
-The rail drops its labels on short chapters and its icons on very short ones. In compact players the skin switches layout by measuring its own box, so portrait (9:16) and square players work too.
+The rail drops its labels on short chapters and its icons on very short ones. In compact players the skin switches layout by measuring its own box, so portrait (9:16) and square players work too. Narrow players fold the bag to its icon with a count badge, so sound, time, captions, settings and bag still fit; only players under 280px drop the time.
 
 ## Accessibility (WCAG 2.2 AAA target)
 
 - **Contrast 7:1** for all text, including dimmed labels, over solid fills only (1.4.6). Control edges, the unlit volume arcs and the seek swatches' outlines are at least 3:1 (1.4.11), and turn charcoal under `prefers-contrast: more`.
 - **Targets of 44×44px or larger** for every control, including slider thumbs, the bag's remove buttons and menu items (2.5.5).
-- **Focus never hidden.** Keyboard focus keeps the controls on screen through the idle hide, and the swing tag moves clear (2.4.12). In compact players the tag fades while the controls are up but stays in the tab order, and focusing it brings it back. The focus ring is ivory, charcoal and ivory, and reads on any frame (2.4.13).
+- **Focus never hidden.** Keyboard focus keeps the controls on screen through the idle hide, and the swing tag moves clear (2.4.12). Portrait players keep the tag up under the top bar with the controls. Compact 16:9 players have no room for it, so it fades while the controls are up but stays in the tab order, and focusing it brings it back. The focus ring is ivory, charcoal and ivory, the same on every button, slider, menu item and the player itself, and reads on any frame (2.4.13).
 - **Focus kept across layouts.** Going fullscreen, rotating or zooming can switch between the compact and regular layouts. Focus moves to the same control in the new layout, so keyboard users and hotkeys keep their place.
-- **Keyboard only** (2.1.3). Every control is a native button, slider or radio with a label, in visual order. Escape closes the product sheet, bag and settings, and focus returns to the trigger. After the start screen, focus moves to the bar's play button.
+- **Keyboard only** (2.1.3). Every control is a native button, slider or radio with a label, in visual order: top bar, swing tag, then the bar. Escape closes the product sheet, bag and settings, and focus returns to the trigger. After the start screen, focus moves to the bar's play button.
+- **A quiet seek bar.** While the film plays, the focused seek slider holds its spoken value, so a screen reader doesn't count along every second. It updates when you move it or pause. The settings menu follows the menu pattern: ↑/↓ move through it, Tab leaves it.
 - **Names say what happens.** The back hanger reads "Restart look 03" or "Previous look: 02" depending on what it will do. The swing tag's name includes low stock.
-- **Media alternatives.** The soundtrack is captioned (music only, no speech), and the showcase has a full described version of the film (1.2.2, 1.2.8).
+- **Media alternatives.** The soundtrack is captioned (music only, no speech), with a CC button in the bar, and the showcase has a full described version of the film (1.2.2, 1.2.8).
 - **Abbreviations written out** (3.1.4): the season (`Spring/Summer 2027`), the size runs, and "48 hours".
 - **Text wraps** instead of being cut off: product names and chapter titles in the preview (1.4.12).
 - **Motion.** Under reduced motion everything set off by interaction stops: tag swings, tool swaps, the sliding tape and the spinner (2.3.3).
@@ -79,7 +80,9 @@ The rail drops its labels on short chapters and its icons on very short ones. In
 - `prefers-contrast: more`, `prefers-reduced-transparency` and forced-colors modes are handled.
 - Keys: Space/K play, ←/→ seek 10s, ↑/↓ volume, M mute, C captions, F fullscreen, 0–9 jump.
 
-Not done: no sign-language track (there is no speech to interpret), and no pass with a real screen reader (VoiceOver, NVDA, JAWS) or on real touch devices yet.
+Tested in desktop Chrome (keyboard only, every layout from 230px wide up), in the iOS Simulator (iPhone 17 Pro portrait and landscape, iPad Air 11), on real phones and tablets, and with VoiceOver in Chrome on macOS: play, seek, captions, the swing tag, product sheet and bag, fullscreen.
+
+Not done: no sign-language track (there is no speech to interpret), and no pass with NVDA or JAWS on Windows yet.
 
 ## Use it
 
