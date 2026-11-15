@@ -1,0 +1,53 @@
+import type { Garment } from '../garments/garments';
+
+/** One look in the drop: a stretch of the video and the product worn in it. */
+export interface Look {
+  /** Two-digit look number shown on the tags, such as `03`. */
+  id: string;
+  /** Where the look starts and ends in the video, in seconds. */
+  start: number;
+  end: number;
+  /** Product name, such as `Night Shift Leather Jacket`. */
+  name: string;
+  /** Short name for tight spaces, such as `Night Shift Leather`. */
+  shortName?: string;
+  /** What kind of garment it is. Picks the seek-bar material, playhead hardware and icon for this stretch. */
+  garment: Garment;
+  /** Colorway, such as `Oxblood`. */
+  color?: string;
+  /** Fabric composition for the care label, such as `100% cotton oxford`. */
+  fabric?: string;
+  /** Care line for the care label, such as `Machine wash 30°`. */
+  care?: string;
+  /** Price in the shop's currency. */
+  price: number;
+  /** Product shot, ideally a 3:4 crop. */
+  image?: string;
+  sizes: string[];
+  /** Flags a look as nearly gone. */
+  lowStock?: boolean;
+}
+
+export interface BagItem {
+  look: Look;
+  size: string;
+}
+
+/** The shop the skin sells from. Everything except `looks` has a default. */
+export interface ShopConfig {
+  looks: Look[];
+  /** Label name, shown on the start screen and ticker. */
+  brand?: string;
+  /** Drop name, such as `Drop 004`. */
+  drop?: string;
+  /** Season line, such as `SS27`. */
+  season?: string;
+  /** ISO currency code for prices. */
+  currency?: string;
+  /** Locale for prices. */
+  locale?: string;
+  /** Called after an item lands in the bag, so the host page can sync its own cart. */
+  onAddToBag?: (item: BagItem) => void;
+  /** Called when the shopper presses checkout. Without it the bag shows a demo notice. */
+  onCheckout?: (items: BagItem[]) => void;
+}

@@ -1,0 +1,14 @@
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+
+import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource/space-mono/400.css';
+import '@fontsource/space-mono/700.css';
+import './site.css';
+import { Site } from './site';
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <Site />
+  </StrictMode>
+);

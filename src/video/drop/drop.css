@@ -1,0 +1,1436 @@
+/*
+ * DROP — a shoppable fashion skin. This file styles the chrome around the garments: buttons, top bar, bag, swing tag,
+ * product sheet, start screen. Garment materials live in ../garments/garments.css.
+ *
+ * Visual rules
+ * - Three inks: ink (near black), paper (warm white), volt (acid yellow-green). Hot pink is reserved for scarcity.
+ * - Every control is a sticker: a solid fill with a 2px ink keyline and a hard offset shadow. Solid fills keep text and
+ *   icons legible over any frame; the keyline separates them from bright footage, the fill from dark footage.
+ * - Type: Archivo pushed to its narrowest, heaviest cut for display; Space Mono for anything that counts.
+ * - Hard corners only. Motion is snappy and physical (slap, tick), and turns off with reduced motion.
+ *
+ * These rules are unlayered on purpose: they sit on top of the Scaffold skin's layered base, which keeps providing
+ * behavior (state-driven icon swaps, popup positioning, idle hiding).
+ */
+
+.media-skin[data-skin="drop"] {
+  --drop-ink: #0b0b0c;
+  --drop-paper: #f4f1ea;
+  --drop-volt: #d4ff1f;
+  --drop-hot: #ff3d8b;
+  --drop-dim: rgb(244 241 234 / 0.62);
+
+  --u: var(--media-spacing);
+  --drop-control: calc(var(--u) * 10);
+  --drop-line: 2px;
+  --drop-lift: calc(var(--u) * 0.75);
+  --drop-shadow: var(--drop-lift) var(--drop-lift) 0 0 var(--drop-ink);
+  --drop-display: "Archivo Variable", "Archivo", "Arial Narrow", "Helvetica Neue", sans-serif;
+  --drop-mono: "Space Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --drop-ease: cubic-bezier(0.2, 0.9, 0.25, 1.2);
+  --drop-fast: 120ms;
+  --drop-slap: 260ms;
+
+  /* Video.js tokens the base skin reads. */
+  --media-foreground: var(--drop-paper);
+  --media-accent: var(--drop-volt);
+  --media-accent-foreground: var(--drop-ink);
+  --media-ring: var(--drop-volt);
+  --media-popover: var(--drop-ink);
+  --media-popover-foreground: var(--drop-paper);
+  --media-button-highlight: var(--drop-volt);
+  --media-font-family: var(--drop-display);
+
+  font-family: var(--drop-display);
+  font-stretch: 85%;
+  font-weight: 600;
+  word-spacing: 0.18em;
+  background: var(--drop-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (pointer: coarse) {
+  .media-skin[data-skin="drop"] {
+    --drop-control: calc(var(--u) * 11);
+  }
+}
+
+/* Focus: ink | volt | ink rings, so it shows over white, black, and volt alike. */
+.media-skin[data-skin="drop"] :is(button, [role="button"], [role="slider"], input, [tabindex]):focus-visible,
+.media-skin[data-skin="drop"] .media-button:focus-visible {
+  outline: var(--drop-line) solid var(--drop-ink);
+  outline-offset: 5px;
+  box-shadow:
+    0 0 0 2px var(--drop-ink),
+    0 0 0 5px var(--drop-volt);
+}
+
+.media-skin[data-skin="drop"]:focus-visible {
+  outline: 3px solid var(--drop-volt);
+  outline-offset: -3px;
+}
+
+/* ---------------------------------------------------------------- Shared sticker pieces */
+
+.media-skin[data-skin="drop"] .drop-sticker {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--u) * 1);
+  padding: calc(var(--u) * 0.75) calc(var(--u) * 2);
+  border: var(--drop-line) solid var(--drop-ink);
+  box-shadow: var(--drop-shadow);
+  font-family: var(--drop-mono);
+  font-size: calc(var(--u) * 2.75);
+  font-weight: 700;
+  font-stretch: normal;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.media-skin[data-skin="drop"] .drop-sticker-volt {
+  background: var(--drop-volt);
+  color: var(--drop-ink);
+}
+
+.media-skin[data-skin="drop"] .drop-sticker-ink {
+  background: var(--drop-ink);
+  color: var(--drop-paper);
+  border-color: var(--drop-paper);
+}
+
+.media-skin[data-skin="drop"] .drop-sticker-paper {
+  background: var(--drop-paper);
+  color: var(--drop-ink);
+}
+
+.media-skin[data-skin="drop"] .drop-sticker-hot {
+  background: var(--drop-hot);
+  color: var(--drop-ink);
+}
+
+.media-skin[data-skin="drop"] .drop-eyebrow {
+  margin: 0;
+  font-family: var(--drop-mono);
+  font-size: calc(var(--u) * 2.75);
+  font-weight: 400;
+  font-stretch: normal;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--drop-dim);
+}
+
+/* ---------------------------------------------------------------- Buttons */
+
+.media-skin[data-skin="drop"] .media-button,
+.media-skin[data-skin="drop"] .drop-icon-button,
+.media-skin[data-skin="drop"] .drop-bag-button {
+  width: var(--drop-control);
+  height: var(--drop-control);
+  display: inline-grid;
+  place-items: center;
+  padding: 0;
+  margin: 0;
+  border: var(--drop-line) solid var(--drop-ink);
+  border-radius: 0;
+  background: var(--drop-ink);
+  color: var(--drop-paper);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition:
+    background-color var(--drop-fast) linear,
+    color var(--drop-fast) linear,
+    translate var(--drop-fast) var(--drop-ease),
+    box-shadow var(--drop-fast) var(--drop-ease);
+}
+
+.media-skin[data-skin="drop"] :is(.media-button, .drop-icon-button, .drop-bag-button) svg {
+  width: calc(var(--u) * 5.5);
+  height: calc(var(--u) * 5.5);
+  grid-area: 1 / 1;
+}
+
+@media (hover: hover) {
+  .media-skin[data-skin="drop"] :is(.media-button, .drop-icon-button, .drop-bag-button):hover {
+    background: var(--drop-volt);
+    color: var(--drop-ink);
+    box-shadow: var(--drop-shadow);
+    translate: calc(var(--drop-lift) * -0.5) calc(var(--drop-lift) * -0.5);
+  }
+}
+
+.media-skin[data-skin="drop"] :is(.media-button, .drop-icon-button, .drop-bag-button):active {
+  translate: 0 0;
+  box-shadow: none;
+}
+
+.media-skin[data-skin="drop"] :is(.media-button, .drop-bag-button)[aria-expanded="true"] {
+  background: var(--drop-volt);
+  color: var(--drop-ink);
+}
+
+.media-skin[data-skin="drop"] .media-button[aria-disabled="true"] {
+  opacity: 1;
+  color: rgb(244 241 234 / 0.35);
+  cursor: not-allowed;
+}
+
+@media (hover: hover) {
+  .media-skin[data-skin="drop"] .media-button[aria-disabled="true"]:hover {
+    background: var(--drop-ink);
+    color: rgb(244 241 234 / 0.35);
+    box-shadow: none;
+    translate: 0 0;
+  }
+}
+
+/* The play button is the loudest tag on the bar. */
+.media-skin[data-skin="drop"] .drop-play {
+  width: calc(var(--drop-control) * 1.25);
+  background: var(--drop-volt);
+  color: var(--drop-ink);
+  box-shadow: var(--drop-shadow);
+}
+
+@media (hover: hover) {
+  .media-skin[data-skin="drop"] .drop-play:hover {
+    background: var(--drop-paper);
+  }
+}
+
+.media-skin[data-skin="drop"] .media-button-icon-base {
+  width: calc(var(--u) * 5.5);
+  height: calc(var(--u) * 5.5);
+}
+
+/* ---------------------------------------------------------------- Scrim and layout */
+
+.media-skin[data-skin="drop"] .drop-scrim {
+  background-image:
+    linear-gradient(to bottom, rgb(11 11 12 / 0.55), transparent 22%),
+    linear-gradient(to top, rgb(11 11 12 / 0.75), rgb(11 11 12 / 0.25) 30%, transparent 48%);
+}
+
+.media-skin[data-skin="drop"] .drop-top {
+  justify-content: flex-start;
+  align-items: center;
+  gap: calc(var(--u) * 3);
+  padding: calc(var(--u) * 3);
+}
+
+.media-skin[data-skin="drop"] .drop-bottom {
+  gap: calc(var(--u) * 2.5);
+  padding: calc(var(--u) * 3);
+  padding-top: 0;
+}
+
+.media-skin[data-skin="drop"] :is(.drop-top, .drop-bottom) {
+  transition:
+    opacity var(--drop-fast) linear,
+    translate var(--drop-slap) var(--drop-ease);
+}
+
+.media-skin[data-skin="drop"] .video-controls-content:not([data-visible]) .drop-bottom {
+  translate: 0 calc(var(--u) * 3);
+}
+
+.media-skin[data-skin="drop"] .video-controls-content:not([data-visible]) .drop-top {
+  translate: 0 calc(var(--u) * -3);
+}
+
+.media-skin[data-skin="drop"] .drop-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--u) * 2);
+}
+
+.media-skin[data-skin="drop"] .drop-group {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 1.5);
+  min-width: 0;
+}
+
+/* ---------------------------------------------------------------- Top bar */
+
+.media-skin[data-skin="drop"] .drop-stamp {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: stretch;
+  rotate: -2deg;
+  box-shadow: var(--drop-shadow);
+  border: var(--drop-line) solid var(--drop-ink);
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.media-skin[data-skin="drop"] .drop-stamp-brand {
+  padding: calc(var(--u) * 1.5) calc(var(--u) * 2.5);
+  background: var(--drop-ink);
+  color: var(--drop-paper);
+  font-size: calc(var(--u) * 4.5);
+  font-weight: 900;
+  font-stretch: 62%;
+  letter-spacing: 0.01em;
+}
+
+.media-skin[data-skin="drop"] .drop-stamp-drop {
+  display: grid;
+  place-items: center;
+  padding: 0 calc(var(--u) * 2);
+  background: var(--drop-volt);
+  color: var(--drop-ink);
+  font-family: var(--drop-mono);
+  font-size: calc(var(--u) * 2.75);
+  font-weight: 700;
+  font-stretch: normal;
+}
+
+.media-skin[data-skin="drop"] .drop-ticker {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  border-block: var(--drop-line) solid var(--drop-ink);
+  background: var(--drop-volt);
+  color: var(--drop-ink);
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+
+.media-skin[data-skin="drop"] .drop-ticker-track {
+  display: flex;
+  width: max-content;
+  animation: drop-ticker 22s linear infinite;
+}
+
+.media-skin[data-skin="drop"] .drop-ticker-line {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.media-skin[data-skin="drop"] .drop-ticker-line > span {
+  padding: calc(var(--u) * 1) 0 calc(var(--u) * 1) calc(var(--u) * 3);
+  font-family: var(--drop-mono);
+  font-size: calc(var(--u) * 2.75);
+  font-weight: 700;
+  font-stretch: normal;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.media-skin[data-skin="drop"] .drop-ticker-star {
+  padding-inline-start: calc(var(--u) * 3);
+}
+
+.media-skin[data-skin="drop"] .drop-ticker[data-paused] .drop-ticker-track {
+  animation-play-state: paused;
+}
+
+@keyframes drop-ticker {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------------------------------------------------------------- Bag */
+
+.media-skin[data-skin="drop"] .drop-bag-button {
+  width: auto;
+  display: inline-flex;
+  flex-shrink: 0;
+  gap: calc(var(--u) * 2);
+  margin-inline-start: auto;
+  padding: 0 calc(var(--u) * 2.5);
+  border-color: var(--drop-ink);
+  box-shadow: var(--drop-shadow);
+  background: var(--drop-paper);
+  color: var(--drop-ink);
+  font-family: var(--drop-mono);
+  font-size: calc(var(--u) * 3);
+  font-weight: 700;
+  font-stretch: normal;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.media-skin[data-skin="drop"] .drop-bag-count {
+  min-width: calc(var(--u) * 5.5);
+  padding: calc(var(--u) * 0.25) calc(var(--u) * 1);
+  background: var(--drop-hot);
+  color: var(--drop-ink);
+  text-align: center;
+}
+
+.media-skin[data-skin="drop"] .drop-bag-count[data-empty] {
+  background: transparent;
+  outline: var(--drop-line) solid currentColor;
+  outline-offset: -2px;
+}
+
+.media-skin[data-skin="drop"] .drop-bag-popup {
+  z-index: 45;
+  width: min(calc(var(--u) * 84), calc(100cqi - var(--u) * 6));
+  max-height: var(--media-popover-available-height, calc(var(--u) * 80));
+  overflow: auto;
+  padding: calc(var(--u) * 4);
+  display: grid;
+  gap: calc(var(--u) * 3);
+  margin-block-start: calc(var(--u) * 2.5);
+  border: var(--drop-line) solid var(--drop-volt);
+  background: var(--drop-ink);
+  color: var(--drop-paper);
+  box-shadow: calc(var(--u) * 1.5) calc(var(--u) * 1.5) 0 0 var(--drop-volt);
+}
+
+.media-skin[data-skin="drop"] .drop-bag-popup:not([data-open]) {
+  display: none;
+}
+
+.media-skin[data-skin="drop"] .drop-bag-title {
+  margin: 0;
+  font-size: calc(var(--u) * 7);
+  font-weight: 900;
+  font-stretch: 62%;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.media-skin[data-skin="drop"] .drop-bag-title span {
+  color: var(--drop-volt);
+}
+
+.media-skin[data-skin="drop"] .drop-bag-empty {
+  margin: 0;
+  font-family: var(--drop-mono);
+  font-size: calc(var(--u) * 3);
+  font-weight: 400;
+  font-stretch: normal;
+  line-height: 1.5;
+  color: var(--drop-dim);
+}
+
+.media-skin[data-skin="drop"] .drop-bag-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  border-top: 1px dashed rgb(244 241 234 / 0.3);
+}
+
+.media-skin[data-skin="drop"] .drop-bag-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: calc(var(--u) * 2.5);
+  padding-block: calc(var(--u) * 2);
+  border-bottom: 1px dashed rgb(244 241 234 / 0.3);
+}
+
+.media-skin[data-skin="drop"] .drop-bag-item-icon {
+  width: calc(var(--u) * 7);
+  height: calc(var(--u) * 7);
+  padding: calc(var(--u) * 1);
+  background: var(--drop-volt);
+  color: var(--drop-ink);
+}
+
+.media-skin[data-skin="drop"] .drop-bag-item-name {
+  display: grid;
+  font-size: calc(var(--u) * 3.75);
+  font-weight: 800;
+  font-stretch: 75%;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.media-skin[data-skin="drop"] :is(.drop-bag-item-size, .drop-bag-item-price, .drop-bag-total) {
+  font-family: var(--drop-mono);
+  font-size: calc(var(--u) * 3);
+  font-weight: 400;
+  font-stretch: normal;
+  text-transform: uppercase;
+}
+
+.media-skin[data-skin="drop"] .drop-bag-item-size {
+  color: var(--drop-dim);
+}
+
+.media-skin[data-skin="drop"] .drop-icon-button-sm {
+  --drop-control: calc(var(--u) * 8);
+  border-color: rgb(244 241 234 / 0.3);
+}
+
+.media-skin[data-skin="drop"] .drop-icon-button-sm svg {
+  width: calc(var(--u) * 4);
+  height: calc(var(--u) * 4);
+}
+
+.media-skin[data-skin="drop"] .drop-bag-total {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: calc(var(--u) * 3.5);
+}
+
+.media-skin[data-skin="drop"] .drop-bag-notice {
+  margin: 0;
+  font-family: var(--drop-mono);
+  font-size: calc(var(--u) * 2.75);
+  font-weight: 400;
+  font-stretch: normal;
+  color: var(--drop-volt);
+}
+
+.media-skin[data-skin="drop"] .drop-bag-notice:empty {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+/* ---------------------------------------------------------------- Time: a woven care label */
+
+.media-skin[data-skin="drop"] .care-label {
+  height: calc(var(--drop-control) - var(--u) * 1);
+  padding-inline: calc(var(--u) * 5) calc(var(--u) * 3);
+  gap: calc(var(--u) * 1.5);
+  border: var(--drop-line) solid var(--drop-ink);
+  outline: 1px dashed rgb(11 11 12 / 0.45);
+  outline-offset: -5px;
+  background:
+    linear-gradient(90deg, #d9d1bf, #e6dfcf) 0 0 / calc(var(--u) * 2) 100% no-repeat,
+    repeating-linear-gradient(0deg, rgb(11 11 12 / 0.04) 0 1px, transparent 1px 2px),
+    var(--drop-paper);
+  color: var(--drop-ink);
+  font-family: var(--drop-mono);
+  font-size: calc(var(--u) * 3.25);
+  font-weight: 700;
+  font-stretch: normal;
+  letter-spacing: 0.02em;
+}
+
+.media-skin[data-skin="drop"] .care-label :is(.media-time-separator, .media-time-duration-value) {
+  opacity: 1;
+  color: rgb(11 11 12 / 0.6);
+}
+
+.media-skin[data-skin="drop"] .care-label .media-time-toggle:focus-visible {
+  outline: var(--drop-line) solid var(--drop-ink);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+/* ---------------------------------------------------------------- Tooltips and menus */
+
+.media-skin[data-skin="drop"] .media-tooltip-popup {
+  padding: calc(var(--u) * 1) calc(var(--u) * 2);
+  border: var(--drop-line) solid var(--drop-ink);
+  background: var(--drop-volt);
+  color: var(--drop-ink);
+  box-shadow: var(--drop-shadow);
+  font-family: var(--drop-mono);
+  font-size: calc(var(--u) * 2.75);
+  font-weight: 700;
+  font-stretch: normal;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  --media-tooltip-side-offset: calc(var(--u) * 13);
+}
+
+.media-skin[data-skin="drop"] .media-tooltip-shortcut {
+  background: var(--drop-ink);
+  color: var(--drop-volt);
+  padding-inline: calc(var(--u) * 1);
+}
+
+.media-skin[data-skin="drop"] .media-menu-popup {
+  border: var(--drop-line) solid var(--drop-volt);
+  background: var(--drop-ink);
+  color: var(--drop-paper);
+  box-shadow: calc(var(--u) * 1.5) calc(var(--u) * 1.5) 0 0 var(--drop-volt);
+  font-family: var(--drop-mono);
+  font-size: calc(var(--u) * 3);
+  font-weight: 700;
+  font-stretch: normal;
+  text-transform: uppercase;
+  --media-popover-side-offset: calc(var(--u) * 13);
+}
+
+.media-skin[data-skin="drop"] .media-menu-content {
+  background: var(--drop-ink);
+}
+
+.media-skin[data-skin="drop"] :is(.media-menu-item, .media-menu-back-item, .media-menu-radio-item) {
+  min-height: calc(var(--u) * 10);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-transform: uppercase;
+  border: 0;
+}
+
+.media-skin[data-skin="drop"] :is(.media-menu-item, .media-menu-back-item, .media-menu-radio-item)[data-highlighted] {
+  background: var(--drop-volt);
+  color: var(--drop-ink);
+}
+
+.media-skin[data-skin="drop"] :is(.media-menu-item, .media-menu-back-item, .media-menu-radio-item):focus-visible {
+  outline: var(--drop-line) solid var(--drop-volt);
+  outline-offset: -2px;
+  box-shadow: none;
+}
+
+.media-skin[data-skin="drop"] :is(.media-menu-hint, .media-menu-trigger-icon, .media-menu-radio-icon) {
+  opacity: 1;
+}
+
+.media-skin[data-skin="drop"] .media-menu-badge {
+  background: var(--drop-hot);
+  color: var(--drop-ink);
+}
+
+/* ---------------------------------------------------------------- Look tag: a kraft swing tag on a string */
+
+.media-skin[data-skin="drop"] .drop-tag-anchor {
+  position: absolute;
+  z-index: 32;
+  inset-inline-end: calc(var(--u) * 3);
+  bottom: calc(var(--u) * 4);
+  pointer-events: none;
+  transition:
+    bottom var(--drop-slap) var(--drop-ease),
+    opacity var(--drop-fast) linear;
+}
+
+/* Lift the tag clear of the control bar while it is up. */
+.media-skin[data-skin="drop"][data-controls-visible] .drop-tag-anchor {
+  bottom: calc(var(--u) * 42);
+}
+
+.media-skin[data-skin="drop"] .drop-tag {
+  --kraft: #d6bc8a;
+  position: relative;
+  pointer-events: auto;
+  display: block;
+  max-width: min(calc(var(--u) * 100), calc(100cqi - var(--u) * 6));
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--drop-ink);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+  touch-action: manipulation;
+  /* The keyline and hard shadow follow the tag's cut shape, which a border can't. */
+  filter: drop-shadow(2px 0 0 var(--drop-ink)) drop-shadow(-2px 0 0 var(--drop-ink))
+    drop-shadow(0 2px 0 var(--drop-ink)) drop-shadow(0 -2px 0 var(--drop-ink))
+    drop-shadow(var(--drop-lift) var(--drop-lift) 0 var(--drop-ink));
+}
+
+/* The string, looping up from the eyelet. */
+.media-skin[data-skin="drop"] .drop-tag::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--u) * 3);
+  bottom: 50%;
+  width: calc(var(--u) * 6);
+  height: calc(var(--u) * 9);
+  border: 3px solid var(--drop-volt);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-radius: 100% 0 0 0;
+  rotate: 8deg;
+  transform-origin: bottom left;
+}
+
+.media-skin[data-skin="drop"] .drop-tag-face {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: stretch;
+  clip-path: polygon(calc(var(--u) * 5) 0, 100% 0, 100% 100%, calc(var(--u) * 5) 100%, 0 50%);
+  background:
+    radial-gradient(circle calc(var(--u) * 1.5) at calc(var(--u) * 4) 50%, var(--drop-ink) 55%, #a8895a 60% 82%, transparent 86%),
+    repeating-linear-gradient(100deg, rgb(255 255 255 / 0.1) 0 1px, transparent 1px 5px),
+    var(--kraft);
+  rotate: -2deg;
+  transform-origin: calc(var(--u) * 4) 50%;
+  animation: drop-swing 600ms var(--drop-ease) both;
+  transition:
+    rotate var(--drop-fast) var(--drop-ease),
+    translate var(--drop-fast) var(--drop-ease);
+}
+
+@media (hover: hover) {
+  .media-skin[data-skin="drop"] .drop-tag:hover .drop-tag-face {
+    rotate: 0deg;
+    translate: calc(var(--drop-lift) * -0.5) calc(var(--drop-lift) * -0.5);
+  }
+}
+
+.media-skin[data-skin="drop"] .drop-tag:active .drop-tag-face {
+  translate: 0 0;
+}
+
+.media-skin[data-skin="drop"] .drop-tag:focus-visible {
+  outline: 3px solid var(--drop-volt);
+  outline-offset: 6px;
+  box-shadow: none;
+}
+
+.media-skin[data-skin="drop"] .drop-tag:focus-visible .drop-tag-face {
+  rotate: 0deg;
+}
+
+.media-skin[data-skin="drop"] .drop-tag-shop {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: calc(var(--u) * 0.5);
+  padding: calc(var(--u) * 2) calc(var(--u) * 3) calc(var(--u) * 2) calc(var(--u) * 8);
+  border-inline-end: var(--drop-line) dashed rgb(11 11 12 / 0.55);
+  font-family: var(--drop-mono);
+  font-size: calc(var(--u) * 2.5);
+  font-weight: 700;
+  font-stretch: normal;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.media-skin[data-skin="drop"] .drop-tag-shop svg {
+  width: calc(var(--u) * 7);
+  height: calc(var(--u) * 7);
+}
+
+.media-skin[data-skin="drop"] .drop-tag-info {
+  display: grid;
+  align-content: center;
+  gap: calc(var(--u) * 0.5);
+  min-width: 0;
+  padding: calc(var(--u) * 2) calc(var(--u) * 3);
+}
+
+.media-skin[data-skin="drop"] .drop-tag-look {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 2);
+  font-family: var(--drop-mono);
+  font-size: calc(var(--u) * 2.5);
+  font-weight: 700;
+  font-stretch: normal;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.media-skin[data-skin="drop"] .drop-tag-low {
+  padding: 0 calc(var(--u) * 1);
+  background: var(--drop-hot);
+}
+
+.media-skin[data-skin="drop"] .drop-tag-name {
+  overflow: hidden;
+  font-size: calc(var(--u) * 5.5);
+  font-weight: 900;
+  font-stretch: 62%;
+  line-height: 0.95;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.media-skin[data-skin="drop"] .drop-tag-price {
+  display: grid;
+  place-items: center;
+  padding: 0 calc(var(--u) * 3);
+  background: var(--drop-paper);
+  font-family: var(--drop-mono);
+  font-size: calc(var(--u) * 4);
+  font-weight: 700;
+  font-stretch: normal;
+}
+
+/* The tag swings on its string when a new piece comes on. */
+@keyframes drop-swing {
+  0% {
+    opacity: 0;
+    rotate: -24deg;
+  }
+  45% {
+    opacity: 1;
+    rotate: 6deg;
+  }
+  75% {
+    rotate: -4deg;
+  }
+}
+
+/* ---------------------------------------------------------------- Product sheet */
+
+.media-skin[data-skin="drop"] .drop-sheet-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 48;
+  background: rgb(11 11 12 / 0.6);
+  transition: opacity var(--drop-fast) linear;
+}
+
+.media-skin[data-skin="drop"] .drop-sheet-backdrop:not([data-open]) {
+  display: none;
+}
+
+.media-skin[data-skin="drop"] .drop-sheet {
+  position: absolute;
+  z-index: 50;
+  inset-block: calc(var(--u) * 3);
+  inset-inline-end: calc(var(--u) * 3);
+  width: min(calc(var(--u) * 170), calc(100% - var(--u) * 6));
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+  overflow: hidden;
+  border: var(--drop-line) solid var(--drop-ink);
+  background: var(--drop-ink);
+  color: var(--drop-paper);
+  box-shadow: calc(var(--u) * 2) calc(var(--u) * 2) 0 0 var(--drop-volt);
+  outline: none;
+  animation: drop-sheet-in var(--drop-slap) var(--drop-ease) both;
+}
+
+.media-skin[data-skin="drop"] .drop-sheet:not([data-open]) {
+  display: none;
+}
+
+.media-skin[data-skin="drop"] .drop-sheet:focus-visible {
+  outline: 3px solid var(--drop-volt);
+  outline-offset: -3px;
+}
+
+@keyframes drop-sheet-in {
+  from {
+    translate: calc(var(--u) * 12) 0;
+    opacity: 0;
+  }
+}
+
+.media-skin[data-skin="drop"] .drop-sheet-media {
+  position: relative;
+  min-height: 0;
+  background: var(--drop-paper);
+  border-inline-end: var(--drop-line) solid var(--drop-volt);
+}
+
+.media-skin[data-skin="drop"] .drop-sheet-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.media-skin[data-skin="drop"] .drop-sheet-look {
+  position: absolute;
+  top: calc(var(--u) * 3);
+  inset-inline-start: calc(var(--u) * 3);
+  rotate: -3deg;
+  font-size: calc(var(--u) * 3.5);
+}
+
+.media-skin[data-skin="drop"] .drop-sheet-look-of {
+  opacity: 0.55;
+}
+
+.media-skin[data-skin="drop"] .drop-sheet-body {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--u) * 3);
+  min-height: 0;
+  overflow-y: auto;
+  padding: calc(var(--u) * 4);
+}
+
+.media-skin[data-skin="drop"] .drop-sheet-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: calc(var(--u) * 3);
+}
+
+.media-skin[data-skin="drop"] .drop-sheet-close {
+  flex-shrink: 0;
+  border-color: rgb(244 241 234 / 0.35);
+}
+
+.media-skin[data-skin="drop"] .drop-sheet-title {
+  margin: 0;
+  font-size: clamp(calc(var(--u) * 7), 6cqi, calc(var(--u) * 13));
+  font-weight: 900;
+  font-stretch: 62%;
+  line-height: 0.88;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.media-skin[data-skin="drop"] .drop-sheet-meta {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--u) * 2) calc(var(--u) * 3);
+  font-family: var(--drop-mono);
+  font-size: calc(var(--u) * 3);
+  font-weight: 400;
+  font-stretch: normal;
+  text-transform: uppercase;
+  color: var(--drop-dim);
+}
+
+.media-skin[data-skin="drop"] .drop-sheet-price {
+  color: var(--drop-volt);
+  font-size: calc(var(--u) * 5);
+  font-weight: 700;
+}
+
+.media-skin[data-skin="drop"] .drop-sheet-meta .drop-sticker {
+  box-shadow: none;
+  font-size: calc(var(--u) * 2.5);
+}
+
+.media-skin[data-skin="drop"] .drop-sizes {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: grid;
+  gap: calc(var(--u) * 2);
+}
+
+.media-skin[data-skin="drop"] .drop-sizes-legend {
+  padding: 0;
+  margin-bottom: calc(var(--u) * 2);
+  font-family: var(--drop-mono);
+  font-size: calc(var(--u) * 2.75);
+  font-weight: 700;
+  font-stretch: normal;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--drop-dim);
+}
+
+.media-skin[data-skin="drop"] .drop-sizes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(calc(var(--u) * 11), 1fr));
+  gap: calc(var(--u) * 1.5);
+}
+
+/* Size chips are real radio buttons, styled as woven size labels. */
+.media-skin[data-skin="drop"] .drop-size {
+  position: relative;
+  display: grid;
+}
+
+.media-skin[data-skin="drop"] .drop-size input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.media-skin[data-skin="drop"] .drop-size span {
+  display: grid;
+  place-items: center;
+  min-height: calc(var(--u) * 11);
+  border: var(--drop-line) solid rgb(244 241 234 / 0.4);
+  font-family: var(--drop-mono);
+  font-size: calc(var(--u) * 3.25);
+  font-weight: 700;
+  font-stretch: normal;
+  transition:
+    background-color var(--drop-fast) linear,
+    color var(--drop-fast) linear;
+}
+
+@media (hover: hover) {
+  .media-skin[data-skin="drop"] .drop-size:hover span {
+    border-color: var(--drop-paper);
+  }
+}
+
+.media-skin[data-skin="drop"] .drop-size input:checked + span {
+  border-color: var(--drop-volt);
+  background: var(--drop-volt);
+  color: var(--drop-ink);
+}
+
+.media-skin[data-skin="drop"] .drop-size input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.media-skin[data-skin="drop"] .drop-size input:focus-visible + span {
+  outline: var(--drop-line) solid var(--drop-paper);
+  outline-offset: 3px;
+}
+
+.media-skin[data-skin="drop"] .drop-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--u) * 3);
+  min-height: calc(var(--u) * 12);
+  margin-top: auto;
+  padding: 0 calc(var(--u) * 4);
+  border: var(--drop-line) solid var(--drop-ink);
+  background: var(--drop-volt);
+  color: var(--drop-ink);
+  box-shadow: var(--drop-lift) var(--drop-lift) 0 0 var(--drop-paper);
+  font-family: var(--drop-display);
+  font-size: calc(var(--u) * 5.5);
+  font-weight: 900;
+  font-stretch: 62%;
+  text-transform: uppercase;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition:
+    translate var(--drop-fast) var(--drop-ease),
+    box-shadow var(--drop-fast) var(--drop-ease),
+    background-color var(--drop-fast) linear;
+}
+
+.media-skin[data-skin="drop"] .drop-cta svg {
+  width: calc(var(--u) * 6);
+  height: calc(var(--u) * 6);
+  flex-shrink: 0;
+}
+
+@media (hover: hover) {
+  .media-skin[data-skin="drop"] .drop-cta:hover {
+    translate: calc(var(--drop-lift) * -0.5) calc(var(--drop-lift) * -0.5);
+    box-shadow: calc(var(--drop-lift) * 1.5) calc(var(--drop-lift) * 1.5) 0 0 var(--drop-paper);
+  }
+}
+
+.media-skin[data-skin="drop"] .drop-cta:active {
+  translate: 0 0;
+  box-shadow: none;
+}
+
+.media-skin[data-skin="drop"] .drop-cta-price {
+  font-family: var(--drop-mono);
+  font-size: calc(var(--u) * 3.75);
+  font-weight: 700;
+  font-stretch: normal;
+}
+
+.media-skin[data-skin="drop"] .drop-cta-done {
+  justify-content: flex-start;
+  background: var(--drop-paper);
+}
+
+.media-skin[data-skin="drop"] .drop-bag-popup .drop-cta {
+  margin-top: 0;
+}
+
+/* Fabric and care, printed like the woven label inside a collar. */
+.media-skin[data-skin="drop"] .drop-sheet-care {
+  display: grid;
+  gap: calc(var(--u) * 0.5);
+  margin: 0;
+  padding: calc(var(--u) * 2) calc(var(--u) * 3) calc(var(--u) * 2) calc(var(--u) * 5);
+  outline: 1px dashed rgb(11 11 12 / 0.45);
+  outline-offset: -5px;
+  background:
+    linear-gradient(90deg, #d9d1bf, #e6dfcf) 0 0 / calc(var(--u) * 2) 100% no-repeat,
+    repeating-linear-gradient(0deg, rgb(11 11 12 / 0.04) 0 1px, transparent 1px 2px),
+    var(--drop-paper);
+  color: var(--drop-ink);
+  font-family: var(--drop-mono);
+  font-size: calc(var(--u) * 2.75);
+  font-weight: 400;
+  font-stretch: normal;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.media-skin[data-skin="drop"] .drop-sheet-care span:first-child {
+  font-weight: 700;
+}
+
+.media-skin[data-skin="drop"] .drop-sheet-dept {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 1.5);
+}
+
+.media-skin[data-skin="drop"] .drop-sheet-dept svg {
+  width: calc(var(--u) * 5);
+  height: calc(var(--u) * 5);
+  color: var(--drop-volt);
+}
+
+.media-skin[data-skin="drop"] .drop-sheet-note {
+  margin: 0;
+  font-family: var(--drop-mono);
+  font-size: calc(var(--u) * 2.75);
+  font-weight: 400;
+  font-stretch: normal;
+  text-transform: uppercase;
+  color: var(--drop-dim);
+}
+
+/* ---------------------------------------------------------------- Start screen */
+
+/* The rack: every piece in the drop, by department. */
+.media-skin[data-skin="drop"] .drop-start-rack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--u) * 1.5);
+  padding: 0;
+  list-style: none;
+}
+
+.media-skin[data-skin="drop"] .drop-start-rack li {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 1.5);
+  padding: calc(var(--u) * 1) calc(var(--u) * 2.5) calc(var(--u) * 1) calc(var(--u) * 1.5);
+  border: var(--drop-line) solid var(--drop-ink);
+  background: var(--drop-paper);
+  color: var(--drop-ink);
+  font-family: var(--drop-mono);
+  font-size: calc(var(--u) * 2.75);
+  font-weight: 700;
+  font-stretch: normal;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.media-skin[data-skin="drop"] .drop-start-rack svg {
+  width: calc(var(--u) * 5);
+  height: calc(var(--u) * 5);
+}
+
+.media-skin[data-skin="drop"] .drop-start {
+  position: absolute;
+  inset: 0;
+  z-index: 35;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: calc(var(--u) * 3);
+  padding: calc(var(--u) * 6);
+  background:
+    linear-gradient(to top, rgb(11 11 12 / 0.9), rgb(11 11 12 / 0.35) 55%, rgb(11 11 12 / 0.1)),
+    linear-gradient(to right, rgb(11 11 12 / 0.55), transparent 70%);
+}
+
+.media-skin[data-skin="drop"] .drop-start > * {
+  margin: 0;
+}
+
+.media-skin[data-skin="drop"] .drop-start-kicker {
+  display: flex;
+  gap: calc(var(--u) * 2);
+  rotate: -2deg;
+}
+
+.media-skin[data-skin="drop"] .drop-start-title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.06em;
+  color: var(--drop-paper);
+  font-size: clamp(calc(var(--u) * 14), 19cqi, calc(var(--u) * 60));
+  font-weight: 900;
+  font-stretch: 62%;
+  line-height: 0.78;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.media-skin[data-skin="drop"] .drop-start-number {
+  color: var(--drop-volt);
+  -webkit-text-stroke: 0.025em var(--drop-ink);
+  paint-order: stroke fill;
+}
+
+.media-skin[data-skin="drop"] .drop-start-sub {
+  font-family: var(--drop-mono);
+  font-size: calc(var(--u) * 3.25);
+  font-weight: 700;
+  font-stretch: normal;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--drop-paper);
+}
+
+.media-skin[data-skin="drop"] .drop-start-play.media-button {
+  width: auto;
+  height: calc(var(--u) * 14);
+  display: inline-flex;
+  gap: calc(var(--u) * 3);
+  padding: 0 calc(var(--u) * 6) 0 calc(var(--u) * 5);
+  background: var(--drop-volt);
+  color: var(--drop-ink);
+  box-shadow: calc(var(--drop-lift) * 1.5) calc(var(--drop-lift) * 1.5) 0 0 var(--drop-paper);
+  font-size: calc(var(--u) * 7);
+  font-weight: 900;
+  font-stretch: 62%;
+  text-transform: uppercase;
+}
+
+.media-skin[data-skin="drop"] .drop-start-play svg {
+  width: calc(var(--u) * 7);
+  height: calc(var(--u) * 7);
+}
+
+@media (hover: hover) {
+  .media-skin[data-skin="drop"] .drop-start-play.media-button:hover {
+    background: var(--drop-paper);
+    box-shadow: calc(var(--drop-lift) * 2) calc(var(--drop-lift) * 2) 0 0 var(--drop-volt);
+  }
+}
+
+/* ---------------------------------------------------------------- Feedback: indicators, buffering, error */
+
+.media-skin[data-skin="drop"] .media-indicator {
+  padding: calc(var(--u) * 1.5) calc(var(--u) * 3);
+  border: var(--drop-line) solid var(--drop-ink);
+  background: var(--drop-volt);
+  color: var(--drop-ink);
+  box-shadow: var(--drop-shadow);
+  font-family: var(--drop-mono);
+  font-size: calc(var(--u) * 3);
+  font-weight: 700;
+  font-stretch: normal;
+  text-transform: uppercase;
+}
+
+.media-skin[data-skin="drop"] .media-buffering-indicator-spinner-icon {
+  width: calc(var(--u) * 12);
+  height: calc(var(--u) * 12);
+  padding: calc(var(--u) * 2.5);
+  border: var(--drop-line) solid var(--drop-ink);
+  background: var(--drop-volt);
+  color: var(--drop-ink);
+  box-shadow: var(--drop-shadow);
+}
+
+.media-skin[data-skin="drop"] .media-dialog-popup {
+  border: var(--drop-line) solid var(--drop-volt);
+  background: var(--drop-ink);
+  box-shadow: calc(var(--u) * 1.5) calc(var(--u) * 1.5) 0 0 var(--drop-volt);
+}
+
+.media-skin[data-skin="drop"] .media-dialog-title {
+  font-size: calc(var(--u) * 8);
+  font-weight: 900;
+  font-stretch: 62%;
+  text-transform: uppercase;
+}
+
+.media-skin[data-skin="drop"] .media-dialog-description {
+  font-family: var(--drop-mono);
+  font-weight: 400;
+  font-stretch: normal;
+}
+
+.media-skin[data-skin="drop"] .media-dialog-close.media-button {
+  width: auto;
+  padding-inline: calc(var(--u) * 4);
+  background: var(--drop-volt);
+  color: var(--drop-ink);
+  font-family: var(--drop-mono);
+  font-weight: 700;
+  font-stretch: normal;
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------------- Responsive: by player width, not page width */
+
+/*
+ * Container queries can't style the container itself, so size tokens are set on its children. The tag and sheet sit
+ * outside the controls, hence the three hosts.
+ */
+@container media-root (width < 52rem) {
+  .media-skin[data-skin="drop"] .drop-sheet {
+    grid-template-columns: minmax(0, 0.6fr) minmax(0, 1fr);
+  }
+}
+
+@container media-root (width < 40rem) {
+  .media-skin[data-skin="drop"] .drop-ticker {
+    display: none;
+  }
+
+  .media-skin[data-skin="drop"] .drop-bag-button {
+    margin-inline-start: auto;
+  }
+
+  .media-skin[data-skin="drop"][data-controls-visible] .drop-tag-anchor {
+    bottom: calc(var(--u) * 38);
+  }
+
+  .media-skin[data-skin="drop"] .drop-tag-name {
+    font-size: calc(var(--u) * 4.5);
+  }
+
+  .media-skin[data-skin="drop"] .drop-tag-price {
+    font-size: calc(var(--u) * 3.25);
+    padding-inline: calc(var(--u) * 2);
+  }
+
+  .media-skin[data-skin="drop"] .drop-sheet {
+    inset: 0;
+    width: 100%;
+    grid-template-columns: 1fr;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .media-skin[data-skin="drop"] .drop-sheet-media {
+    display: none;
+  }
+
+  .media-skin[data-skin="drop"] .drop-start {
+    padding: calc(var(--u) * 4);
+  }
+}
+
+@container media-root (width < 30rem) {
+  .media-skin[data-skin="drop"] :is(.video-controls-content, .drop-tag-anchor, .drop-start) {
+    --drop-control: calc(var(--u) * 10);
+  }
+
+  .media-skin[data-skin="drop"] .drop-skip,
+  .media-skin[data-skin="drop"] .drop-bag-label,
+  .media-skin[data-skin="drop"] .drop-stamp-drop {
+    display: none;
+  }
+
+  .media-skin[data-skin="drop"] .drop-group {
+    gap: calc(var(--u) * 1);
+  }
+
+  .media-skin[data-skin="drop"] .drop-top,
+  .media-skin[data-skin="drop"] .drop-bottom {
+    padding: calc(var(--u) * 2);
+  }
+
+  .media-skin[data-skin="drop"] .drop-bottom {
+    padding-top: 0;
+  }
+
+  .media-skin[data-skin="drop"] .drop-stamp-brand {
+    font-size: calc(var(--u) * 3.5);
+  }
+
+  .media-skin[data-skin="drop"] .care-label {
+    padding-inline: calc(var(--u) * 4) calc(var(--u) * 2);
+  }
+
+  /* No room for the tag between the top bar and the controls: it steps aside while they're up. */
+  .media-skin[data-skin="drop"][data-controls-visible] .drop-tag-anchor {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .media-skin[data-skin="drop"] .drop-tag-anchor {
+    inset-inline-end: calc(var(--u) * 2);
+    bottom: calc(var(--u) * 2);
+  }
+
+  .media-skin[data-skin="drop"] .drop-tag-info {
+    padding: calc(var(--u) * 1.5) calc(var(--u) * 2);
+  }
+
+  .media-skin[data-skin="drop"] .drop-tag-shop {
+    padding: calc(var(--u) * 1.5) calc(var(--u) * 2) calc(var(--u) * 1.5) calc(var(--u) * 7);
+  }
+
+  .media-skin[data-skin="drop"] .drop-tag-shop span {
+    display: none;
+  }
+
+  .media-skin[data-skin="drop"] :is(.drop-start-sub, .drop-start-rack) {
+    display: none;
+  }
+
+  .media-skin[data-skin="drop"] .drop-start-play.media-button {
+    height: calc(var(--u) * 12);
+    font-size: calc(var(--u) * 5.5);
+  }
+}
+
+/* ---------------------------------------------------------------- Preferences */
+
+@media (prefers-reduced-motion: reduce) {
+  .media-skin[data-skin="drop"] {
+    --drop-fast: 0ms;
+    --drop-slap: 0ms;
+  }
+
+  .media-skin[data-skin="drop"] .drop-ticker-track {
+    animation: none;
+  }
+
+  .media-skin[data-skin="drop"] :is(.drop-tag-face, .drop-sheet) {
+    animation: none;
+  }
+
+  .media-skin[data-skin="drop"] .video-controls-content:not([data-visible]) :is(.drop-top, .drop-bottom) {
+    translate: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .media-skin[data-skin="drop"] {
+    --drop-dim: var(--drop-paper);
+  }
+
+  .media-skin[data-skin="drop"] .drop-scrim {
+    background-image: linear-gradient(to top, rgb(11 11 12 / 0.9), transparent 55%);
+  }
+
+  .media-skin[data-skin="drop"] :is(.media-button, .belt, .garment-seek) {
+    border-color: var(--drop-paper);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .media-skin[data-skin="drop"] .drop-sheet-backdrop {
+    background: var(--drop-ink);
+  }
+}
+
+@media (forced-colors: active) {
+  .media-skin[data-skin="drop"] :is(.media-button, .drop-icon-button, .drop-bag-button, .drop-tag-face, .drop-cta, .drop-size span) {
+    forced-color-adjust: none;
+    background: ButtonFace;
+    color: ButtonText;
+    border-color: ButtonText;
+    box-shadow: none;
+  }
+
+  .media-skin[data-skin="drop"] :is(.drop-tag-shop, .drop-bag-count, .drop-tag-low) {
+    forced-color-adjust: none;
+    background: Highlight;
+    color: HighlightText;
+  }
+
+  .media-skin[data-skin="drop"] :is(.drop-sheet, .drop-bag-popup, .media-menu-popup) {
+    border-color: CanvasText;
+    box-shadow: none;
+  }
+
+  .media-skin[data-skin="drop"] .drop-size input:checked + span {
+    background: Highlight;
+    color: HighlightText;
+  }
+
+  .media-skin[data-skin="drop"] :is(button, [role="slider"], input):focus-visible {
+    outline: 3px solid Highlight;
+    box-shadow: none;
+  }
+}
