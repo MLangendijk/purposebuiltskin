@@ -14,7 +14,7 @@ import { ButtonTooltip } from '../shared/tooltip';
 import { ExitFullscreenIcon, FullscreenIcon, MutedIcon, PauseIcon, PlayIcon, RestartIcon, VolumeIcon } from './icons';
 
 /*
- * Drop's buttons wrap the Video.js primitives and keep the Scaffold class names that swap icons by state
+ * Atelier's buttons wrap the Video.js primitives and keep the Scaffold class names that swap icons by state
  * (`media-play-button-play-icon` and friends), so only the artwork changes.
  */
 
@@ -37,7 +37,7 @@ export function PlayButton({
         <PlayIcon className={cn(icon, 'media-play-button-play-icon')} />
         <PauseIcon className={cn(icon, 'media-play-button-pause-icon')} />
         {label && (
-          <span className="drop-play-label" aria-hidden="true">
+          <span className="atelier-play-label" aria-hidden="true">
             {label}
           </span>
         )}

@@ -8,7 +8,7 @@ const media = (file: string) => `./media/${file}`;
 
 export const SPRING_EDIT: ShopConfig = {
   brand: 'Maison Marelle',
-  drop: 'The Spring Edit',
+  collection: 'The Spring Edit',
   season: 'SS27',
   seasonName: 'Spring/Summer 2027',
   currency: 'EUR',

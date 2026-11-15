@@ -1,7 +1,7 @@
 [
-  {"chapter": 1, "start-time": 0, "titles": [{"language": "en", "title": "Knitwear · Cable-Knit Cashmere Jumper"}]},
-  {"chapter": 2, "start-time": 8, "titles": [{"language": "en", "title": "Shirting · Oxford Cotton Shirt"}]},
-  {"chapter": 3, "start-time": 16, "titles": [{"language": "en", "title": "Tailoring · Single-Breasted Wool Blazer"}]},
-  {"chapter": 4, "start-time": 24, "titles": [{"language": "en", "title": "Skirts · Pleated Midi Skirt"}]},
-  {"chapter": 5, "start-time": 32, "titles": [{"language": "en", "title": "Dresses · Linen Maxi Dress"}]}
+  {"chapter": 1, "start-time": 0, "titles": [{"language": "en", "title": "Knitwear · Cable-Knit Cashmere Jumper"}], "metadata": [{"key": "garment", "value": "knit"}, {"key": "look", "value": "01"}]},
+  {"chapter": 2, "start-time": 8, "titles": [{"language": "en", "title": "Shirting · Oxford Cotton Shirt"}], "metadata": [{"key": "garment", "value": "shirt"}, {"key": "look", "value": "02"}]},
+  {"chapter": 3, "start-time": 16, "titles": [{"language": "en", "title": "Tailoring · Single-Breasted Wool Blazer"}], "metadata": [{"key": "garment", "value": "tailoring"}, {"key": "look", "value": "03"}]},
+  {"chapter": 4, "start-time": 24, "titles": [{"language": "en", "title": "Skirts · Pleated Midi Skirt"}], "metadata": [{"key": "garment", "value": "skirt"}, {"key": "look", "value": "04"}]},
+  {"chapter": 5, "start-time": 32, "titles": [{"language": "en", "title": "Dresses · Linen Maxi Dress"}], "metadata": [{"key": "garment", "value": "dress"}, {"key": "look", "value": "05"}]}
 ]

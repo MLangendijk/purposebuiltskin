@@ -16,6 +16,8 @@ const PATHS: Record<Garment, string> = {
   skirt: 'M7.5 4h9l3.5 16H4L7.5 4zM7.5 7h9M10 7l-1.5 13M14 7l1.5 13M12 7v13',
   // Fitted maxi dress with a tie waist.
   dress: 'M9 3h6l-1 6 5 12H5l5-12-1-6zM10 9h4M9 3l3 4 3-4',
+  // A dressmaker's form on its stand, for anything else (a toile is fitted on one).
+  other: 'M8 3h8c0 3-1.5 4.5-1.5 7 0 2.5 2 3.5 2 6.5h-9c0-3 2-4 2-6.5C9.5 7.5 8 6 8 3zM12 16.5V21M9 21h6',
 };
 
 export function GarmentIcon({ garment, ...props }: { garment: Garment } & SVGProps<SVGSVGElement>) {

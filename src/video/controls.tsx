@@ -1,10 +1,10 @@
 /** @jsxImportSource react */
 
-import { Controls, Tooltip } from '@videojs/react';
+import { Controls, Tooltip, useTranslator } from '@videojs/react';
 
-import { FullscreenButton, MuteButton, PlayButton } from './drop/buttons';
-import { TopBar } from './drop/top-bar';
-import type { Layout } from './drop/use-layout';
+import { FullscreenButton, MuteButton, PlayButton } from './atelier/buttons';
+import { TopBar } from './atelier/top-bar';
+import type { Layout } from './atelier/use-layout';
 import { GarmentSeek } from './garments/garment-seek';
 import { DryerVolume } from './garments/dryer-volume';
 import { TapeMeasure } from './garments/tape-measure';
@@ -13,7 +13,7 @@ import { VideoBufferingIndicator } from './shared/video-feedback';
 import { LookSkip } from './shop/look-skip';
 
 /**
- * Drop's control layouts. The Scaffold layout classes (`video-controls-*`) are kept for positioning and the idle hide.
+ * Atelier's control layouts. The Scaffold layout classes (`video-controls-*`) are kept for positioning and the idle hide.
  *
  * - regular: brand, ticker and bag on top; the garment strip with its department rail, then one row of controls.
  * - compact (phones, either way up): settings and bag on top; play and the hangers in the middle, where a thumb
@@ -22,7 +22,7 @@ import { LookSkip } from './shop/look-skip';
 export function VideoControls({ layout }: { layout: Layout }) {
   return (
     <Controls.Root>
-      <Controls.Backdrop className="video-controls-backdrop drop-scrim" />
+      <Controls.Backdrop className="video-controls-backdrop atelier-scrim" />
       <VideoBufferingIndicator />
       <Controls.Content className="video-controls-content">
         <Tooltip.Provider>{layout === 'compact' ? <CompactControls /> : <RegularControls />}</Tooltip.Provider>
@@ -32,23 +32,24 @@ export function VideoControls({ layout }: { layout: Layout }) {
 }
 
 function RegularControls() {
+  const t = useTranslator();
   return (
     <>
-      <Controls.Group className="video-controls-top drop-top">
+      <Controls.Group className="video-controls-top atelier-top">
         <TopBar />
       </Controls.Group>
 
-      <div className="video-controls-bottom video-controls-video-bottom drop-bottom">
+      <div className="video-controls-bottom video-controls-video-bottom atelier-bottom">
         <GarmentSeek />
-        <Controls.Group className="drop-row" aria-label="Playback controls">
-          <div className="drop-group">
-            <PlayButton className="drop-play" />
+        <Controls.Group className="atelier-row" aria-label={t('atelier.playbackControls', { default: 'Playback controls' })}>
+          <div className="atelier-group">
+            <PlayButton className="atelier-play" />
             <LookSkip direction="prev" />
             <LookSkip direction="next" />
             <DryerVolume />
             <TapeMeasure />
           </div>
-          <div className="drop-group">
+          <div className="atelier-group">
             <SettingsMenu />
             <FullscreenButton />
           </div>
@@ -59,20 +60,21 @@ function RegularControls() {
 }
 
 function CompactControls() {
+  const t = useTranslator();
   return (
     <>
-      <Controls.Group className="video-controls-top drop-top">
+      <Controls.Group className="video-controls-top atelier-top">
         <TopBar settings={<SettingsMenu side="bottom" />} />
       </Controls.Group>
 
-      <Controls.Group className="drop-center" aria-label="Playback">
+      <Controls.Group className="atelier-center" aria-label={t('atelier.playback', { default: 'Playback' })}>
         <LookSkip direction="prev" />
-        <PlayButton className="drop-play drop-play-center" />
+        <PlayButton className="atelier-play atelier-play-center" />
         <LookSkip direction="next" />
       </Controls.Group>
 
-      <div className="video-controls-bottom video-controls-video-bottom drop-bottom">
-        <Controls.Group className="drop-row drop-row-compact" aria-label="Playback controls">
+      <div className="video-controls-bottom video-controls-video-bottom atelier-bottom">
+        <Controls.Group className="atelier-row atelier-row-compact" aria-label={t('atelier.playbackControls', { default: 'Playback controls' })}>
           <MuteButton />
           <GarmentSeek />
           <TapeMeasure />

@@ -3,23 +3,36 @@
 import type { TextCueInit } from '@videojs/core';
 import { useCreateTextTrack } from '@videojs/react';
 
-/** One entry of Mux's chapters JSON: `stream.mux.com/{PLAYBACK_ID}/chapters/{TRACK_ID}.json`. */
+import type { ChapterValue } from '../garments/use-pieces';
+
+/**
+ * One entry of Mux's chapters JSON (`stream.mux.com/{PLAYBACK_ID}/chapters/{TRACK_ID}.json`), which is Apple's JSON
+ * chapters format: a start, titles, and optional `{ key, value }` metadata. Mux serves the file as it was uploaded.
+ */
 interface MuxChapter {
-  chapter: number;
   'start-time': number;
   titles?: { language: string; title: string }[];
+  metadata?: { key: string; value: string }[];
 }
 
 /**
- * Reads Mux's chapters JSON into cues. Mux gives each chapter a start only; in a chapters track Video.js runs each
- * one to the next, and the last to the end of the media.
+ * Reads Mux's chapters JSON into cues. Mux gives each chapter a start only; in a chapters track Video.js runs each one
+ * to the next, and the last to the end of the media. The `garment` and `look` metadata keys become the cue's value, so
+ * the seek bar knows each chapter's material and product without parsing its title.
  */
-export function parseMuxChapters(text: string): TextCueInit[] {
+export function parseMuxChapters(text: string): TextCueInit<ChapterValue>[] {
   const chapters = JSON.parse(text) as MuxChapter[];
   return chapters
     .slice()
     .sort((a, b) => a['start-time'] - b['start-time'])
-    .map((chapter) => ({ startTime: chapter['start-time'], text: chapter.titles?.[0]?.title ?? '' }));
+    .map((chapter) => {
+      const meta = Object.fromEntries((chapter.metadata ?? []).map(({ key, value }) => [key, value]));
+      return {
+        startTime: chapter['start-time'],
+        text: chapter.titles?.[0]?.title ?? '',
+        value: { garment: meta.garment, look: meta.look },
+      };
+    });
 }
 
 /**

@@ -24,7 +24,7 @@ export function StartScreen() {
     const container = focusHome.current;
     if (!started || !container) return;
     focusHome.current = null;
-    requestAnimationFrame(() => (container.querySelector<HTMLElement>('.drop-play') ?? container).focus());
+    requestAnimationFrame(() => (container.querySelector<HTMLElement>('.atelier-play') ?? container).focus());
   }, [started]);
 
   if (started) return null;
@@ -33,17 +33,17 @@ export function StartScreen() {
 
   return (
     <div
-      className="drop-start"
+      className="atelier-start"
       onFocus={(event) => (focusHome.current = event.currentTarget.closest('.media-container'))}
       onBlur={() => (focusHome.current = null)}
     >
-      <div className="drop-start-card">
-      <p className="drop-start-kicker">
-        {config.brand} · <abbr title={config.seasonName}>{config.season}</abbr>
+      <div className="atelier-start-card">
+      <p className="atelier-start-kicker">
+        {config.brand} · {config.seasonName}
       </p>
-      <p className="drop-start-title">{config.drop}</p>
+      <h2 className="atelier-start-title">{config.collection}</h2>
       {config.looks.length > 0 && (
-        <ul className="drop-start-rack" aria-label={t('drop.piecesInFilm', { default: 'Pieces in this film' })}>
+        <ul className="atelier-start-rack" aria-label={t('atelier.piecesInFilm', { default: 'Pieces in this film' })}>
           {config.looks.map((look) => (
             <li key={look.id}>
               <GarmentIcon garment={look.garment} />
@@ -52,11 +52,11 @@ export function StartScreen() {
           ))}
         </ul>
       )}
-      <p className="drop-start-sub">
-        {t('drop.piecesShoppable', { count: config.looks.length, default: '{count} pieces, shoppable as you watch' })}
-        {from ? ` · ${t('drop.fromPrice', { price: formatPrice(from), default: 'from {price}' })}` : ''}
+      <p className="atelier-start-sub">
+        {t('atelier.piecesShoppable', { count: config.looks.length, default: '{count} pieces, shoppable as you watch' })}
+        {from ? ` · ${t('atelier.fromPrice', { price: formatPrice(from), default: 'from {price}' })}` : ''}
       </p>
-      <PlayButton className="drop-start-play" label={t('drop.watchFilm', { default: 'Watch the film' })} tooltip={false} />
+      <PlayButton className="atelier-start-play" label={t('atelier.watchFilm', { default: 'Watch the film' })} tooltip={false} />
       </div>
     </div>
   );

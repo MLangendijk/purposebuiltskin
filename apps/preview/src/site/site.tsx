@@ -55,7 +55,7 @@ export function Site() {
       <main>
         <section className="site-hero" aria-labelledby="hero-title">
           <p className="site-kicker">
-            <abbr title={SPRING_EDIT.seasonName}>{SPRING_EDIT.season}</abbr> · {SPRING_EDIT.drop}
+            <abbr title={SPRING_EDIT.seasonName}>{SPRING_EDIT.season}</abbr> · {SPRING_EDIT.collection}
           </p>
           <h1 id="hero-title" className="site-title">
             Shop the <em>film</em>
@@ -90,7 +90,7 @@ export function Site() {
                   <span className="site-look-price">
                     {look.color} · {format.format(look.price)}
                   </span>
-                  <button type="button" className="site-look-watch" onClick={() => watchLook(look.start)}>
+                  <button type="button" className="site-look-watch" onClick={() => watchLook(look.start ?? 0)}>
                     Watch in the film
                   </button>
                 </div>

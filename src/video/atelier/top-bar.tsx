@@ -11,10 +11,10 @@ export function TopBar({ settings }: { settings?: ReactNode } = {}) {
 
   return (
     <>
-      <span className="drop-stamp" aria-hidden="true">
+      <span className="atelier-stamp" aria-hidden="true">
         {config.brand}
       </span>
-      <span className="drop-top-actions">
+      <span className="atelier-top-actions">
         {settings}
         <BagMenu />
       </span>

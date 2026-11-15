@@ -6,7 +6,7 @@ import type { ClassValue } from 'cn';
 
 import { cn, resolveClassName } from '@/lib/resolve-class-name';
 
-import { SpinnerIcon } from '../drop/icons';
+import { SpinnerIcon } from '../atelier/icons';
 
 export function Poster({ renderImage }: { renderImage?: PosterPrimitive.ImageProps['render'] } = {}) {
   return (

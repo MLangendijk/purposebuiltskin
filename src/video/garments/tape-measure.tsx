@@ -16,7 +16,7 @@ export function TapeMeasure() {
 
   return (
     <Time.Group
-      className="media-time-group drop-time tape-measure"
+      className="media-time-group atelier-time tape-measure"
       style={{ '--tape-x': `${-seconds * PX_PER_SECOND}px` } as CSSProperties}
     >
       <Time.Value className="media-time-toggle" type="current" toggle />

@@ -20,7 +20,7 @@ import {
   MutedIcon as VolumeOffIconPrimitive,
   VolumeIcon as VolumeHighIconPrimitive,
   VolumeIcon as VolumeLowIconPrimitive,
-} from '../drop/icons';
+} from '../atelier/icons';
 
 const STATUS_ACTIONS = ['toggleSubtitles', 'toggleFullscreen', 'togglePictureInPicture'] as const;
 

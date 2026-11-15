@@ -16,7 +16,7 @@ import { QualityRadioGroup } from '@videojs/react/ui/quality-radio-group';
 
 import { cn } from '@/lib/resolve-class-name';
 
-import { SettingsIcon } from '../drop/icons';
+import { SettingsIcon } from '../atelier/icons';
 
 import { Button } from './button';
 import { RadioItem } from './menu-item';

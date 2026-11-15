@@ -1,6 +1,6 @@
 /** @jsxImportSource react */
 
-import type { ReactNode } from 'react';
+import { type ReactNode, useState } from 'react';
 
 import type { Garment } from './garments';
 
@@ -65,13 +65,31 @@ const PARTS: Record<Garment, ReactNode> = {
       <circle cx="14" cy="26.5" r="1.4" fill={INK} />
     </>
   ),
+  // A tracing wheel on a wooden handle, running the pattern line onto the toile.
+  other: (
+    <>
+      <path d="M14 3v14" stroke={INK} strokeWidth="5.5" strokeLinecap="round" />
+      <path d="M14 3v14" stroke={GOLD} strokeWidth="3" strokeLinecap="round" />
+      <path d="M14 17v5" stroke={INK} strokeWidth="1.75" />
+      <path
+        d="M14 19.5v-2M14 32.5v2M7.5 26h-2M20.5 26h2M9.4 21.4l-1.4-1.4M18.6 30.6l1.4 1.4M9.4 30.6L8 32M18.6 21.4l1.4-1.4"
+        stroke={INK}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <circle cx="14" cy="26" r="6" fill={SILVER} stroke={INK} strokeWidth="1.5" />
+      <circle cx="14" cy="26" r="1.6" fill={INK} />
+    </>
+  ),
 };
 
+/** `swapped`: this tool replaces another one, so it swings in. Read once, when the tool mounts. */
 export function Hardware({ garment, swapped = false }: { garment: Garment; swapped?: boolean }) {
+  const [swingIn] = useState(swapped);
   return (
     <svg
       className="garment-hardware"
-      data-swapped={swapped ? '' : undefined}
+      data-swapped={swingIn ? '' : undefined}
       viewBox="0 0 28 36"
       aria-hidden="true"
       focusable="false"

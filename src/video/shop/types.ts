@@ -1,12 +1,16 @@
 import type { Garment } from '../garments/garments';
 
-/** One look in the drop: a stretch of the video and the product worn in it. */
+/**
+ * One look in the collection: the product worn in a stretch of the film. The film's chapters say where it plays: a
+ * chapter names its look by id (Mux chapter metadata `look`, or a WebVTT cue identifier). Without a chapters track the
+ * skin builds one from `start` and `end`.
+ */
 export interface Look {
-  /** Two-digit look number shown on the tags, such as `03`. */
+  /** Look number shown on the tags, such as `03`. Chapters refer to the look by it. */
   id: string;
-  /** Where the look starts and ends in the video, in seconds. */
-  start: number;
-  end: number;
+  /** Where the look starts and ends in the video, in seconds. Only needed when the film has no chapters. */
+  start?: number;
+  end?: number;
   /** Product name, such as `Night Shift Leather Jacket`. */
   name: string;
   /** Short name for tight spaces, such as `Night Shift Leather`. */
@@ -41,7 +45,7 @@ export interface ShopConfig {
   /** House name, shown as the wordmark. */
   brand?: string;
   /** Collection name, such as `The Spring Edit`. */
-  drop?: string;
+  collection?: string;
   /** Season line, such as `SS27`. */
   season?: string;
   /** The season written out, used to expand the abbreviation, such as `Spring/Summer 2027`. */

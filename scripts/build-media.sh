@@ -3,6 +3,7 @@
 # product shots, thumbnail storyboard, and chapter track.
 #
 # Usage: scripts/build-media.sh [work-dir]
+#        scripts/build-media.sh chapters    (only rewrite chapters.vtt and chapters.json)
 # Needs: curl, ffmpeg, ffprobe. Downloads go to the work dir (default: a temp dir), output to apps/preview/public/media.
 
 set -euo pipefail
@@ -14,13 +15,14 @@ WORK="${1:-$(mktemp -d)}"
 CLIP_SECONDS=8
 MUSIC_ID=132 # "Hazy After Hours"
 
-# One row per look: Mixkit clip id | start offset (s) | speed factor | product-shot crop (w:h:x:y, 3:4) | chapter title
+# One row per look, numbered 01, 02, … in order:
+# Mixkit clip id | start offset (s) | speed factor | product-shot crop (w:h:x:y, 3:4) | chapter title | garment key
 LOOKS=(
-  "33167|1|1.00|540:720:370:0|Knitwear · Cable-Knit Cashmere Jumper"
-  "24581|4|1.00|540:720:370:0|Shirting · Oxford Cotton Shirt"
-  "52194|2|1.00|420:560:560:160|Tailoring · Single-Breasted Wool Blazer"
-  "14842|3|1.00|540:720:250:0|Skirts · Pleated Midi Skirt"
-  "33527|0|1.00|540:720:210:0|Dresses · Linen Maxi Dress"
+  "33167|1|1.00|540:720:370:0|Knitwear · Cable-Knit Cashmere Jumper|knit"
+  "24581|4|1.00|540:720:370:0|Shirting · Oxford Cotton Shirt|shirt"
+  "52194|2|1.00|420:560:560:160|Tailoring · Single-Breasted Wool Blazer|tailoring"
+  "14842|3|1.00|540:720:250:0|Skirts · Pleated Midi Skirt|skirt"
+  "33527|0|1.00|540:720:210:0|Dresses · Linen Maxi Dress|dress"
 )
 
 log() { printf '\033[1m›\033[0m %s\n' "$*"; }
@@ -96,23 +98,26 @@ build_storyboard() {
 
 build_chapters() {
   log "Writing chapters"
+  # WebVTT, for the player's local fallback. Each cue's identifier is its look's id, which links it to the product.
   {
     printf 'WEBVTT\n'
-    # Plain WebVTT, for the player's local fallback.
     for i in "${!LOOKS[@]}"; do
       local start=$((i * CLIP_SECONDS))
-      printf '\n%s --> %s\n%s\n' "$(timestamp $start)" "$(timestamp $((start + CLIP_SECONDS)))" \
+      printf '\n%02d\n%s --> %s\n%s\n' $((i + 1)) "$(timestamp $start)" "$(timestamp $((start + CLIP_SECONDS)))" \
         "$(field "${LOOKS[$i]}" 5)"
     done
   } >"$OUT/chapters.vtt"
 
-  # The same chapters in Apple's JSON chapters format, which is what Mux takes for a chapters track.
+  # The same chapters in Apple's JSON chapters format, which is what Mux takes for a chapters track. The metadata
+  # names each chapter's garment and look, so the seek bar needn't read them from the title.
   {
     printf '['
     for i in "${!LOOKS[@]}"; do
       ((i > 0)) && printf ','
-      printf '\n  {"chapter": %d, "start-time": %d, "titles": [{"language": "en", "title": "%s"}]}' \
+      printf '\n  {"chapter": %d, "start-time": %d, "titles": [{"language": "en", "title": "%s"}], ' \
         $((i + 1)) $((i * CLIP_SECONDS)) "$(field "${LOOKS[$i]}" 5)"
+      printf '"metadata": [{"key": "garment", "value": "%s"}, {"key": "look", "value": "%02d"}]}' \
+        "$(field "${LOOKS[$i]}" 6)" $((i + 1))
     done
     printf '\n]\n'
   } >"$OUT/chapters.json"
@@ -129,4 +134,8 @@ main() {
   log "Done: $OUT"
 }
 
-main
+if [[ "${1:-}" == "chapters" ]]; then
+  build_chapters
+else
+  main
+fi

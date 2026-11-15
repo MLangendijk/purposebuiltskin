@@ -3,7 +3,8 @@
 #   chapters → https://stream.mux.com/{PLAYBACK_ID}/chapters/{TRACK_ID}.json (read by the skin)
 #   captions → in the HLS stream itself
 #
-# Safe to re-run: errored tracks are removed, and a track that is already ready is left alone.
+# Safe to re-run: errored tracks are removed, and a ready track is left alone, except a chapters track whose file
+# differs from the local chapters.json, which is replaced (its id changes, so update the player).
 # Mux downloads each file from a public URL, so the files are read from this repo on GitHub, pinned to a commit.
 # Chapters go up in Apple's JSON chapters format (chapters.json): Mux fails validation on a WebVTT chapters file.
 #
@@ -45,11 +46,21 @@ settle() {
   [[ "$status" == "ready" ]] || mux "$API" | jq -r --arg id "$id" '.data.tracks[] | select(.id == $id) | .error' >&2
 }
 
-# Makes sure one ready track of this kind exists; prints its id.
+# Whether Mux serves a chapters track that matches the local chapters.json.
+chapters_current() {
+  cmp -s <(curl -sf "https://stream.mux.com/$PLAYBACK_ID/chapters/$1.json") "$ROOT/apps/preview/public/media/chapters.json"
+}
+
+# Makes sure one ready, current track of this kind exists; prints its id.
 ensure_track() {
   local kind="$1" body="$2" id status
   while read -r id status; do
     [[ -z "$id" ]] && continue
+    if [[ "$status" == "ready" && "$kind" == "chapters" ]] && ! chapters_current "$id"; then
+      log "Replacing chapters track $id: chapters.json changed"
+      mux -X DELETE "$API/tracks/$id" >/dev/null
+      continue
+    fi
     if [[ "$status" == "ready" ]]; then echo "$id"; return; fi
     if [[ "$status" == "errored" ]]; then
       log "Removing errored $kind track $id"

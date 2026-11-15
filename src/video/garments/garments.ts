@@ -7,8 +7,10 @@
  * - tailoring: tailor's chalk lines ahead, a sewn seam behind; the playhead is the needle sewing along the chalk.
  * - skirt: flat crepe ahead, pressed pleats behind; the playhead is an iron.
  * - dress: the back zip open ahead, closed behind; the playhead is a fine zip pull.
+ * - other: anything else is drawn as a toile, the calico mock-up every garment starts as: the pattern line traced
+ *   ahead, basted behind; the playhead is a tracing wheel.
  */
-export const GARMENTS = ['knit', 'shirt', 'tailoring', 'skirt', 'dress'] as const;
+export const GARMENTS = ['knit', 'shirt', 'tailoring', 'skirt', 'dress', 'other'] as const;
 
 export type Garment = (typeof GARMENTS)[number];
 
@@ -19,7 +21,21 @@ export const GARMENT_LABEL: Record<Garment, string> = {
   tailoring: 'Tailoring',
   skirt: 'Skirts',
   dress: 'Dresses',
+  other: 'Pieces',
 };
+
+/** A garment from its key or department name, in any case: `knit`, `Knitwear`. */
+export function parseGarment(name: string | undefined): Garment | undefined {
+  const value = name?.trim().toLowerCase();
+  if (!value) return undefined;
+  return GARMENTS.find((garment) => garment === value || GARMENT_LABEL[garment].toLowerCase() === value);
+}
+
+/** The part of a chapter title before its separator: `Knitwear` in `Knitwear · Cable-Knit Jumper`. */
+export function titleHead(title: string | undefined): string | undefined {
+  const parts = title?.split(/[·:|—]/);
+  return parts && parts.length > 1 ? parts[0]!.trim() : undefined;
+}
 
 /**
  * Reads the garment from a chapter title, so the seek bar can take its materials from the chapters themselves (on
@@ -27,7 +43,5 @@ export const GARMENT_LABEL: Record<Garment, string> = {
  * `knit: Cable-Knit Jumper`.
  */
 export function garmentFromTitle(title: string | undefined): Garment | undefined {
-  const head = title?.split(/[·:|—]/)[0]?.trim().toLowerCase();
-  if (!head) return undefined;
-  return GARMENTS.find((garment) => garment === head || GARMENT_LABEL[garment].toLowerCase() === head);
+  return parseGarment(titleHead(title) ?? title);
 }

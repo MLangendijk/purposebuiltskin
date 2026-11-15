@@ -3,11 +3,11 @@
 import { Popover, useTranslator } from '@videojs/react';
 import { useId, useRef, useState } from 'react';
 
-import { ArrowIcon, BagIcon, CloseIcon } from '../drop/icons';
+import { ArrowIcon, BagIcon, CloseIcon } from '../atelier/icons';
 import { GarmentIcon } from '../garments/garment-icons';
 import { useShop } from './shop-context';
 
-/** The bag: a counter in the top bar that opens the pieces picked from the drop. */
+/** The bag: a counter in the top bar that opens the pieces picked from the collection. */
 export function BagMenu() {
   const { bag, config, formatPrice, removeFromBag } = useShop();
   const t = useTranslator();
@@ -21,7 +21,7 @@ export function BagMenu() {
   function remove(index: number) {
     removeFromBag(index);
     requestAnimationFrame(() => {
-      const buttons = popup.current?.querySelectorAll<HTMLButtonElement>('.drop-bag-remove');
+      const buttons = popup.current?.querySelectorAll<HTMLButtonElement>('.atelier-bag-remove');
       (buttons?.[Math.min(index, buttons.length - 1)] ?? popup.current)?.focus();
     });
   }
@@ -29,18 +29,18 @@ export function BagMenu() {
   return (
     <Popover.Root side="bottom" align="end" onOpenChange={(open) => !open && setNotice(false)}>
       <Popover.Trigger
-        className="drop-bag-button"
+        className="atelier-bag-button"
         aria-label={
           count === 0
-            ? t('drop.bagEmpty', { default: 'Bag, empty' })
+            ? t('atelier.bagEmpty', { default: 'Bag, empty' })
             : count === 1
-              ? t('drop.bagOne', { default: 'Bag, 1 item' })
-              : t('drop.bagMany', { count, default: 'Bag, {count} items' })
+              ? t('atelier.bagOne', { default: 'Bag, 1 item' })
+              : t('atelier.bagMany', { count, default: 'Bag, {count} items' })
         }
       >
         <BagIcon />
-        <span className="drop-bag-label">{t('drop.bag', { default: 'Bag' })}</span>
-        <span className="drop-bag-count" data-empty={count === 0 ? '' : undefined} aria-hidden="true">
+        <span className="atelier-bag-label">{t('atelier.bag', { default: 'Bag' })}</span>
+        <span className="atelier-bag-count" data-empty={count === 0 ? '' : undefined} aria-hidden="true">
           {count}
         </span>
       </Popover.Trigger>
@@ -48,33 +48,33 @@ export function BagMenu() {
       {/* `data-interactive` keeps clicks in the bag from reaching the player's tap gestures. */}
       <Popover.Popup
         ref={popup}
-        className="media-popup drop-bag-popup"
+        className="media-popup atelier-bag-popup"
         aria-labelledby={titleId}
         tabIndex={-1}
         data-interactive=""
       >
-        <p className="drop-bag-title" id={titleId}>
-          {t('drop.yourBag', { default: 'Your bag' })} <span>({count})</span>
+        <p className="atelier-bag-title" id={titleId}>
+          {t('atelier.yourBag', { default: 'Your bag' })} <span>({count})</span>
         </p>
         {count === 0 ? (
-          <p className="drop-bag-empty">
-            {t('drop.bagEmptyHint', { default: 'Nothing yet. Open a swing tag in the film to shop the piece.' })}
+          <p className="atelier-bag-empty">
+            {t('atelier.bagEmptyHint', { default: 'Nothing yet. Open a swing tag in the film to shop the piece.' })}
           </p>
         ) : (
           <>
-            <ul className="drop-bag-list">
+            <ul className="atelier-bag-list">
               {bag.map((item, i) => (
-                <li key={`${item.look.id}-${i}`} className="drop-bag-item">
-                  <GarmentIcon garment={item.look.garment} className="drop-bag-item-icon" />
-                  <span className="drop-bag-item-name">
+                <li key={`${item.look.id}-${i}`} className="atelier-bag-item">
+                  <GarmentIcon garment={item.look.garment} className="atelier-bag-item-icon" />
+                  <span className="atelier-bag-item-name">
                     {item.look.name}
-                    <span className="drop-bag-item-size">{t('drop.sizeValue', { size: item.size, default: 'Size {size}' })}</span>
+                    <span className="atelier-bag-item-size">{t('atelier.sizeValue', { size: item.size, default: 'Size {size}' })}</span>
                   </span>
-                  <span className="drop-bag-item-price">{formatPrice(item.look.price)}</span>
+                  <span className="atelier-bag-item-price">{formatPrice(item.look.price)}</span>
                   <button
                     type="button"
-                    className="drop-icon-button drop-icon-button-sm drop-bag-remove"
-                    aria-label={t('drop.removeItem', { name: item.look.name, size: item.size, default: 'Remove {name}, size {size}' })}
+                    className="atelier-icon-button atelier-icon-button-sm atelier-bag-remove"
+                    aria-label={t('atelier.removeItem', { name: item.look.name, size: item.size, default: 'Remove {name}, size {size}' })}
                     onClick={() => remove(i)}
                   >
                     <CloseIcon />
@@ -82,22 +82,22 @@ export function BagMenu() {
                 </li>
               ))}
             </ul>
-            <p className="drop-bag-total">
-              <span>{t('drop.total', { default: 'Total' })}</span>
+            <p className="atelier-bag-total">
+              <span>{t('atelier.total', { default: 'Total' })}</span>
               <span>{formatPrice(total)}</span>
             </p>
             <button
               type="button"
-              className="drop-cta"
+              className="atelier-cta"
               onClick={() => (config.onCheckout ? config.onCheckout(bag) : setNotice(true))}
             >
-              <span>{t('drop.checkout', { default: 'Checkout' })}</span>
+              <span>{t('atelier.checkout', { default: 'Checkout' })}</span>
               <ArrowIcon />
             </button>
           </>
         )}
-        <p className="drop-bag-notice" role="status">
-          {notice ? t('drop.demoNotice', { default: 'Demo store: nothing was charged.' }) : ''}
+        <p className="atelier-bag-notice" role="status">
+          {notice ? t('atelier.demoNotice', { default: 'Demo store: nothing was charged.' }) : ''}
         </p>
       </Popover.Popup>
     </Popover.Root>

@@ -3,7 +3,7 @@
 import { selectVolume } from '@videojs/core/dom';
 import { usePlayer, VolumeSlider } from '@videojs/react';
 
-import { MuteButton } from '../drop/buttons';
+import { MuteButton } from '../atelier/buttons';
 
 /** Five sound-wave arcs leaving the dryer's nozzle, each one taller than the last: the classic volume signal. */
 const ARCS = [

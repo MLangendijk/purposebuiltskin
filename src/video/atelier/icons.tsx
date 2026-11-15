@@ -3,11 +3,11 @@
 import type { SVGProps } from 'react';
 
 /**
- * Drop's icon set, in fine line. Where an atelier tool has a real job that matches the control, the icon is that tool:
+ * Atelier's icon set, in fine line. Where an atelier tool has a real job that matches the control, the icon is that tool:
  * pins hold the moment (pause), a tape measure rewinds to zero (replay), a hairdryer switches the sound on and off
  * (mute), hangers move along the rail (next look), scissors make alterations (settings), stitches sew while it loads. Play and fullscreen keep their
  * standard shapes, because no garment does those jobs better. Every icon is decorative; the button carries the label.
- * Parts that animate on a state change carry an `icon-*` class (see drop.css).
+ * Parts that animate on a state change carry an `icon-*` class (see atelier.css).
  */
 type IconProps = SVGProps<SVGSVGElement>;
 

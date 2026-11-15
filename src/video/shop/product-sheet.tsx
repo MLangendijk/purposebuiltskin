@@ -3,7 +3,7 @@
 import { Dialog, useTranslator } from '@videojs/react';
 import { useEffect, useRef, useState } from 'react';
 
-import { CheckIcon, CloseIcon } from '../drop/icons';
+import { CheckIcon, CloseIcon } from '../atelier/icons';
 import { GarmentIcon } from '../garments/garment-icons';
 import { useGarmentLabel } from '../garments/use-garment-label';
 import { useShop } from './shop-context';
@@ -40,8 +40,8 @@ export function ProductSheet() {
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={(open) => !open && setOpenLook(null)}>
-      <Dialog.Backdrop className="drop-sheet-backdrop" onClick={() => setOpenLook(null)} />
-      <Dialog.Popup className="drop-sheet">{shown && <SheetBody key={shown.id} look={shown} />}</Dialog.Popup>
+      <Dialog.Backdrop className="atelier-sheet-backdrop" onClick={() => setOpenLook(null)} />
+      <Dialog.Popup className="atelier-sheet">{shown && <SheetBody key={shown.id} look={shown} />}</Dialog.Popup>
     </Dialog.Root>
   );
 }
@@ -56,48 +56,48 @@ function SheetBody({ look }: { look: Look }) {
 
   return (
     <>
-      <div className="drop-sheet-media">
-        {look.image && <img className="drop-sheet-image" src={look.image} alt="" />}
-        <span className="drop-sheet-look" aria-hidden="true">
-          {t('drop.lookNumber', { id: look.id, default: 'Look {id}' })}
-          <span className="drop-sheet-look-of">/{String(config.looks.length).padStart(2, '0')}</span>
+      <div className="atelier-sheet-media">
+        {look.image && <img className="atelier-sheet-image" src={look.image} alt="" />}
+        <span className="atelier-sheet-look" aria-hidden="true">
+          {t('atelier.lookNumber', { id: look.id, default: 'Look {id}' })}
+          <span className="atelier-sheet-look-of">/{String(config.looks.length).padStart(2, '0')}</span>
         </span>
       </div>
 
-      <div className="drop-sheet-body">
-        <div className="drop-sheet-head">
-          <p className="drop-eyebrow drop-sheet-dept">
+      <div className="atelier-sheet-body">
+        <div className="atelier-sheet-head">
+          <p className="atelier-eyebrow atelier-sheet-dept">
             <GarmentIcon garment={look.garment} />
             {department(look.garment)} ·{' '}
-            {t('drop.lookPosition', { position, total: config.looks.length, default: 'Look {position} of {total}' })}
+            {t('atelier.lookPosition', { position, total: config.looks.length, default: 'Look {position} of {total}' })}
           </p>
-          <Dialog.Close className="drop-icon-button drop-sheet-close" aria-label={t('drop.closeSheet', { default: 'Close and keep watching' })}>
+          <Dialog.Close className="atelier-icon-button atelier-sheet-close" aria-label={t('atelier.closeSheet', { default: 'Close and keep watching' })}>
             <CloseIcon />
           </Dialog.Close>
         </div>
 
-        <Dialog.Title className="drop-sheet-title">{look.name}</Dialog.Title>
-        <Dialog.Description className="drop-sheet-meta">
+        <Dialog.Title className="atelier-sheet-title">{look.name}</Dialog.Title>
+        <Dialog.Description className="atelier-sheet-meta">
           {look.color && <span>{look.color}</span>}
-          <span className="drop-sheet-price">{formatPrice(look.price)}</span>
-          {look.lowStock && <span className="drop-badge">{t('drop.lowStock', { default: 'Low stock' })}</span>}
+          <span className="atelier-sheet-price">{formatPrice(look.price)}</span>
+          {look.lowStock && <span className="atelier-badge">{t('atelier.lowStock', { default: 'Low stock' })}</span>}
         </Dialog.Description>
 
         {(look.fabric || look.care) && (
-          <p className="drop-sheet-care">
+          <p className="atelier-sheet-care">
             {look.fabric && <span>{look.fabric}</span>}
             {look.care && <span>{look.care}</span>}
           </p>
         )}
 
-        <fieldset className="drop-sizes">
-          <legend className="drop-sizes-legend">
-            {t('drop.size', { default: 'Size' })}
-            {look.sizeGuide && <span className="drop-sizes-guide"> · {look.sizeGuide}</span>}
+        <fieldset className="atelier-sizes">
+          <legend className="atelier-sizes-legend">
+            {t('atelier.size', { default: 'Size' })}
+            {look.sizeGuide && <span className="atelier-sizes-guide"> · {look.sizeGuide}</span>}
           </legend>
-          <div className="drop-sizes-grid">
+          <div className="atelier-sizes-grid">
             {look.sizes.map((value) => (
-              <label key={value} className="drop-size">
+              <label key={value} className="atelier-size">
                 <input
                   type="radio"
                   name={`size-${look.id}`}
@@ -115,27 +115,27 @@ function SheetBody({ look }: { look: Look }) {
         </fieldset>
 
         {added ? (
-          <button type="button" className="drop-cta drop-cta-done" onClick={() => setOpenLook(null)}>
+          <button type="button" className="atelier-cta atelier-cta-done" onClick={() => setOpenLook(null)}>
             <CheckIcon />
-            <span>{t('drop.inBag', { default: 'In the bag — keep watching' })}</span>
+            <span>{t('atelier.inBag', { default: 'In the bag — keep watching' })}</span>
           </button>
         ) : (
           <button
             type="button"
-            className="drop-cta"
+            className="atelier-cta"
             onClick={() => {
               addToBag({ look, size });
               setAdded(true);
             }}
           >
-            <span>{t('drop.addToBag', { default: 'Add to bag' })}</span>
-            <span className="drop-cta-price">{formatPrice(look.price)}</span>
+            <span>{t('atelier.addToBag', { default: 'Add to bag' })}</span>
+            <span className="atelier-cta-price">{formatPrice(look.price)}</span>
           </button>
         )}
-        <p className="drop-sheet-note" role="status">
+        <p className="atelier-sheet-note" role="status">
           {added
-            ? t('drop.added', { name: look.name, size, default: 'Added {name}, size {size}, to your bag.' })
-            : t('drop.serviceNote', { default: 'Free returns · Ships in 48h' })}
+            ? t('atelier.added', { name: look.name, size, default: 'Added {name}, size {size}, to your bag.' })
+            : t('atelier.serviceNote', { default: 'Free returns · Ships in 48 hours' })}
         </p>
       </div>
     </>

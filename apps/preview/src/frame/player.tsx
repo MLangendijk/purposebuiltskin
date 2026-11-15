@@ -1,3 +1,4 @@
+import { MuxData } from '@videojs/react/extensions/mux-data';
 import { MuxVideo } from '@videojs/react/media/mux-video';
 import { VideoPlayer } from '@videojs/react/video';
 
@@ -20,6 +21,16 @@ const POSTER = `https://image.mux.com/${PLAYBACK_ID}/thumbnail.webp?time=34&widt
 /** The Mux chapters track, printed by `scripts/mux-add-tracks.sh`. Unset, the local WebVTT chapters are used instead. */
 const MUX_CHAPTERS_TRACK: string | undefined = 'sMjYSqNbfn7ewhs3LlKLpGBsYKpf02LWBaQPK84MziEHum2MQD02VMBA';
 
+/**
+ * What Mux Data reports with each view. The playback ID already ties views to the asset's environment, so no `envKey`.
+ * Cookies stay off: the demo sets none, so it needs no consent banner.
+ */
+const MUX_DATA = {
+  player_name: 'Atelier',
+  video_title: `${SPRING_EDIT.brand} · ${SPRING_EDIT.collection}`,
+  video_series: SPRING_EDIT.season,
+};
+
 /** `media` carries the workbench's playback options: autoplay, muted, loop, and preload. */
 export function Player({ media }: { media?: PlaybackProps }) {
   return (
@@ -34,6 +45,7 @@ export function Player({ media }: { media?: PlaybackProps }) {
             <track kind="captions" label="English (sound)" srcLang="en" src="./media/captions.vtt" />
           )}
         </MuxVideo>
+        <MuxData disableCookies metadata={MUX_DATA} />
         {MUX_CHAPTERS_TRACK && <MuxChapters playbackId={PLAYBACK_ID} trackId={MUX_CHAPTERS_TRACK} />}
       </VideoSkin>
     </VideoPlayer>
