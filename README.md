@@ -42,11 +42,13 @@ Play and fullscreen keep their standard shapes, because no garment does those jo
 The strip follows the film's chapters, so it fits any video: a 40-second lookbook or a runway show, five looks or twenty, an intro or a backstage shot between pieces. For each chapter the skin works out:
 
 - **Its garment:** from the chapter's metadata, else its title (`Knitwear · Cable-Knit Jumper`), else the look it sells. A garment the skin doesn't draw (`Outerwear`, `Footwear`) is cut as a toile, and the department rail shows the title's own word for it.
-- **Its look:** the look the chapter's metadata or cue id names, else the look in the same position when there's one per chapter. Chapters without a look (an intro, a finale) have no swing tag, and the hangers skip them.
+- **Its look:** the look the chapter's metadata or cue id names, else the one its title names (`… · Linen Maxi Dress`), else the look in the same position when there's one per chapter. Chapters without a look (an intro, a finale) have no swing tag, and the hangers skip them.
+
+The showcase proves it with two films on Mux: the 16:9 lookbook (five looks of eight seconds), and a 30-second 9:16 vertical cut. The vertical cut opens on the rail with nothing to buy, then shows the same pieces in a new order and at different lengths. The skin and products are the same, and the strip, tags and hangers follow each film's chapters.
 
 Where the chapters come from:
 
-- **Mux:** a chapters track in Apple's JSON chapters format, with the garment and look as chapter metadata. Mux serves the file as uploaded.
+- **Mux:** a chapters track in Apple's JSON chapters format, with the garment and look as chapter metadata. Mux also puts the chapters in the HLS stream, and Video.js prefers those, but they keep only the titles. That's why a title names both garment and product. `MuxChapters` loads the JSON with its metadata for playback that doesn't expose the stream's chapters.
 
   ```json
   { "chapter": 1, "start-time": 0,
@@ -110,8 +112,11 @@ Looks need no timings when the film has chapters. Without `shop` it's a plain pl
 
 Mux hosts the stream, poster, storyboard, chapters and captions, and measures views with Mux Data.
 
-- `scripts/mux-add-tracks.sh` puts the chapters and captions on the asset. It's safe to re-run, and it replaces the chapters track when `chapters.json` changes.
-- `scripts/mux-set-meta.sh` names the asset (title, external id).
+Each film has a config in `scripts/films/` (`spring-edit`, `vertical`), and the scripts take its name:
+
+- `scripts/mux-upload.sh <film>` uploads the video as a new asset (a direct upload, so it needn't be public first) and writes the ids into the config.
+- `scripts/mux-add-tracks.sh <film>` puts the chapters and captions on the asset. It's safe to re-run, and it replaces the chapters track when `chapters.json` changes.
+- `scripts/mux-set-meta.sh <film>` names the asset (title, external id).
 - **Mux Data:** the showcase player includes Video.js's `<MuxData>` extension. No env key is needed: views are tied to the environment through the playback ID. It reports `player_name`, `video_title` and `video_series`, and sets no cookies, so the demo needs no consent banner.
 
 ## Develop
@@ -123,7 +128,7 @@ pnpm run build
 ```
 
 - `src/video/skin.tsx`: the skin. `garments/` holds the seek strip, its pieces (`use-pieces.ts`), playhead tools, icons, hairdryer volume and tape-measure time; `atelier/` the other controls, layouts and styles; `shop/` the swing tag, product sheet, bag, look skipping and the looks-as-chapters fallback; `mux/` the Mux chapters loader.
-- `scripts/build-media.sh`: rebuilds the demo lookbook, poster, product shots, storyboard and chapters from Mixkit sources (`build-media.sh chapters` rewrites only the chapters).
+- `scripts/build-media.sh`: rebuilds the demo lookbook, poster, product shots, storyboard and chapters from Mixkit sources (`build-media.sh chapters` rewrites only the chapters). `scripts/build-vertical.sh` cuts the 9:16 film from the same clips.
 - `apps/preview/`: the showcase page (`index.html`), the Video.js workbench (`workbench.html`), and the demo media.
 
 The skin started from the Scaffold skin made by `videojs skin create`. Scaffold's layered CSS still supplies behavior (icon swaps, popup positioning, idle hiding), and Atelier's unlayered CSS styles on top.

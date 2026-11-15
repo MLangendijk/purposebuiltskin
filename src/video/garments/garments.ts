@@ -37,6 +37,12 @@ export function titleHead(title: string | undefined): string | undefined {
   return parts && parts.length > 1 ? parts[0]!.trim() : undefined;
 }
 
+/** The part of a chapter title after its separator: `Cable-Knit Jumper` in `Knitwear · Cable-Knit Jumper`. */
+export function titleTail(title: string | undefined): string | undefined {
+  const parts = title?.split(/[·:|—]/);
+  return parts && parts.length > 1 ? parts.slice(1).join(' ').trim() : undefined;
+}
+
 /**
  * Reads the garment from a chapter title, so the seek bar can take its materials from the chapters themselves (on
  * Mux, or a WebVTT file). Titles start with the department or the garment key: `Knitwear · Cable-Knit Jumper`,

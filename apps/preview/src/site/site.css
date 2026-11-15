@@ -202,6 +202,70 @@ media-i18n {
   }
 }
 
+/* ---------------------------------------------------------------- Vertical cut */
+
+.site-vertical {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: center;
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 4rem var(--gutter);
+  border-top: 1px solid var(--hairline);
+}
+
+@media (width >= 48rem) {
+  .site-vertical {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 4rem;
+  }
+}
+
+.site-vertical-copy {
+  max-width: 34rem;
+  line-height: 1.7;
+}
+
+.site-vertical-copy .site-h2 {
+  text-align: start;
+}
+
+.site-vertical-chapters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-vertical-chapters li {
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background: var(--ivory);
+  font-size: 0.85rem;
+}
+
+/* A phone-shaped player: never taller than the screen. */
+.site-player.site-player-vertical {
+  width: min(22rem, calc((100svh - 4rem) * 9 / 16), 100%);
+  max-width: none;
+  margin-inline: auto;
+}
+
+.site-player-vertical .media-skin {
+  aspect-ratio: 9 / 16;
+}
+
+@media (width < 40rem) {
+  .site-player.site-player-vertical {
+    margin-inline: auto;
+    border-radius: 1.25rem;
+  }
+}
+
 .site-player-note {
   max-width: 40rem;
   margin: 1.5rem auto 0;

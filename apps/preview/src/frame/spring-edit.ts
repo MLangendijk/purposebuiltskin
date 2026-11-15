@@ -107,3 +107,12 @@ export const DESCRIBED_VERSION: { time: string; text: string }[] = [
     text: 'On a rock above a turquoise sea, a woman in a white linen maxi dress raises one arm as the wind lifts the skirt.',
   },
 ];
+
+/**
+ * The vertical cut sells the same pieces, but its chapters on Mux say when and in what order: an opening with nothing to
+ * buy, then the dress, blazer, skirt, shirt and jumper. So these looks carry no timings of their own.
+ */
+export const VERTICAL_CUT: ShopConfig = {
+  ...SPRING_EDIT,
+  looks: SPRING_EDIT.looks.map(({ start: _start, end: _end, ...look }) => look),
+};

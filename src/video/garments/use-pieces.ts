@@ -4,15 +4,16 @@ import { useMemo } from 'react';
 
 import { useShop } from '../shop/shop-context';
 import type { Look } from '../shop/types';
-import { type Garment, garmentFromTitle, parseGarment, titleHead } from './garments';
+import { type Garment, garmentFromTitle, parseGarment, titleHead, titleTail } from './garments';
 import { useGarmentLabel } from './use-garment-label';
 
 type ChapterCue = NonNullable<ReturnType<typeof selectTextTrack>>['chaptersCues'][number];
 
 /**
- * What a chapter can carry as its cue `value`, so the strip doesn't have to read it from the title: the garment, and
- * the id of the look it sells. Mux chapters carry it as chapter metadata (see `mux/mux-chapters.tsx`). A WebVTT chapter
- * names its look with its cue identifier instead.
+ * What a chapter can carry as its cue `value`: the garment, and the id of the look it sells. Chapters loaded by
+ * `MuxChapters` carry it from Mux's chapter metadata. Chapters the media brings itself (Mux streams carry their chapters
+ * in the HLS playlist, which Video.js prefers) have only a title, so the title names both: `Knitwear · Cable-Knit
+ * Cashmere Jumper`. A WebVTT chapter can also name its look with its cue identifier.
  */
 export interface ChapterValue {
   garment?: string;
@@ -34,8 +35,8 @@ export interface Piece {
  * chapters from the looks' own timings (see `shop/look-chapters.tsx`), and those timings also stand in while a
  * chapters file loads or if it fails. For each chapter:
  *
- * - the look is the one its metadata or cue id names, else the look in the same position when there's one look per
- *   chapter, else none (an intro, a backstage shot);
+ * - the look is the one its metadata or cue id names, else the one its title names (`… · Linen Maxi Dress`), else the
+ *   look in the same position when there's one look per chapter, else none (an opening, a backstage shot);
  * - the garment comes from its metadata, else its title (`Knitwear · …`), else its look, else it's a toile (`other`).
  */
 export function usePieces(): Piece[] {
@@ -80,7 +81,10 @@ function chapterValue(cue: ChapterCue): ChapterValue {
 
 function findLook(looks: Look[], cue: ChapterCue, value: ChapterValue, index: number, count: number) {
   const id = value.look ?? cue.id;
+  const name = (titleTail(cue.text) ?? cue.text).toLowerCase();
   return (
-    looks.find((look) => look.id === id) ?? (looks.length === count ? looks[index] : undefined)
+    looks.find((look) => look.id === id) ??
+    looks.find((look) => look.name.toLowerCase() === name || look.shortName?.toLowerCase() === name) ??
+    (looks.length === count ? looks[index] : undefined)
   );
 }

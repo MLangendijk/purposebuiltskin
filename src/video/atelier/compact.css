@@ -95,6 +95,13 @@
   box-shadow: var(--atelier-shadow);
 }
 
+/* Very narrow players (a 9:16 film in a side column): the time steps out so settings and bag still fit. */
+@container media-root (width < 17rem) {
+  .media-skin[data-skin="atelier"] .atelier-top-start .tape-measure {
+    display: none;
+  }
+}
+
 /* The wordmark only where there's room beside sound, time, settings and bag. */
 @container media-root (width < 30rem) {
   .media-skin[data-skin="atelier"][data-layout="compact"] .atelier-stamp {

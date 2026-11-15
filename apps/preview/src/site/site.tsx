@@ -1,7 +1,7 @@
 import { GarmentIcon } from '@/video/garments/garment-icons';
 import { GARMENT_LABEL } from '@/video/garments/garments';
 
-import { Player } from '../frame/player';
+import { Player, VERTICAL } from '../frame/player';
 import { DESCRIBED_VERSION, SPRING_EDIT } from '../frame/spring-edit';
 
 const KEYS: [string, string][] = [
@@ -43,6 +43,7 @@ export function Site() {
       <header className="site-header">
         <nav className="site-nav" aria-label="Sections">
           <a href="#player">The film</a>
+          <a href="#vertical">Vertical cut</a>
           <a href="#pieces">The pieces</a>
           <a href="#about">The skin</a>
         </nav>
@@ -71,6 +72,34 @@ export function Site() {
             There is no dialogue; the music is captioned (Scissors, then Captions, or press C).{' '}
             <a href="#described">Read the described version</a>.
           </p>
+        </section>
+
+        <section className="site-vertical" id="vertical" aria-labelledby="vertical-title">
+          <div className="site-vertical-copy">
+            <h2 id="vertical-title" className="site-h2">
+              The vertical cut
+            </h2>
+            <p>
+              The same pieces, cut for phones: 9:16, thirty seconds, a separate film on Mux. It opens on the rail with
+              nothing to buy, then shows the looks in a new order and at different lengths.
+            </p>
+            <p>
+              Nothing in the skin changes. Each chapter on Mux names its garment and its look, so the seek bar re-cuts
+              itself: the opening becomes a calico toile, the hangers skip straight to the pieces, and every swing tag
+              finds its product.
+            </p>
+            <ol className="site-vertical-chapters">
+              <li>Opening</li>
+              <li>Dress</li>
+              <li>Blazer</li>
+              <li>Skirt</li>
+              <li>Shirt</li>
+              <li>Jumper</li>
+            </ol>
+          </div>
+          <div className="site-player site-player-vertical" id="vertical-film">
+            <Player film={VERTICAL} />
+          </div>
         </section>
 
         <section className="site-looks" id="pieces" aria-labelledby="looks-title">
