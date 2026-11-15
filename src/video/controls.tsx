@@ -1,10 +1,11 @@
 /** @jsxImportSource react */
 
-import { Controls, Time, Tooltip } from '@videojs/react';
+import { Controls, Tooltip } from '@videojs/react';
 
 import { FullscreenButton, PlayButton } from './drop/buttons';
 import { TopBar } from './drop/top-bar';
 import { SizeVolume } from './garments/size-volume';
+import { TapeMeasure } from './garments/tape-measure';
 import { GarmentSeek } from './garments/garment-seek';
 import { SettingsMenu } from './shared/settings-menu';
 import { VideoBufferingIndicator } from './shared/video-feedback';
@@ -33,12 +34,7 @@ export function VideoControls() {
                 <LookSkip direction="prev" />
                 <LookSkip direction="next" />
                 <SizeVolume />
-                <Time.Group className="media-time-group drop-time tape-measure">
-                  <Time.Value className="media-time-toggle" type="current" toggle />
-                  <Time.Value className="media-time-current-value" type="current" />
-                  <Time.Separator className="media-time-separator" />
-                  <Time.Value className="media-time-duration-value" type="duration" />
-                </Time.Group>
+                <TapeMeasure />
               </div>
               <div className="drop-group">
                 <SettingsMenu />

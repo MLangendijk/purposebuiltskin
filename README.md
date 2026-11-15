@@ -21,7 +21,7 @@ Every other control takes the garment that does its job:
 | --- | --- |
 | Mute | A zipper. Unzipped, the sound comes out; zipped, it's shut in. The pull slides across when you mute. |
 | Volume | A size run, XS to XL. Turning it up is going up a size; muted, every size reads sold out. |
-| Time | A tailor's tape measure, measuring the length of the film. |
+| Time | A tailor's tape measure, measuring the length of the film. The tape pulls out under the readout as it plays (still under reduced motion). |
 | Replay | The tape measure rewinding to zero. |
 | Pause | Two dressmaker's pins, pinning the moment. |
 | Next / previous look | Hangers moving along the rail. |

@@ -443,15 +443,16 @@
   padding-inline: calc(var(--u) * 4) calc(var(--u) * 3);
   gap: calc(var(--u) * 1.5);
   border: var(--drop-line) solid var(--drop-ink);
+  /* The tape slides by --tape-x as the film plays; the brass end (the case) stays put. */
+  --tick-long: linear-gradient(90deg, var(--tick) 0 1px, transparent 1px);
   background:
-    /* Brass end cap. */
     linear-gradient(90deg, #b8862e, #e0b866 60%, #9a6d22) 0 0 / calc(var(--u) * 2) 100% no-repeat,
-    /* Long ticks every centimetre, short ticks every millimetre, top and bottom edges. */
-    repeating-linear-gradient(90deg, var(--tick) 0 1px, transparent 1px 20px) 0 0 / 100% 7px no-repeat,
-    repeating-linear-gradient(90deg, var(--tick) 0 1px, transparent 1px 4px) 0 0 / 100% 4px no-repeat,
-    repeating-linear-gradient(90deg, var(--tick) 0 1px, transparent 1px 20px) 0 100% / 100% 7px no-repeat,
-    repeating-linear-gradient(90deg, var(--tick) 0 1px, transparent 1px 4px) 0 100% / 100% 4px no-repeat,
+    var(--tick-long) var(--tape-x, 0) 0 / 20px 7px repeat-x,
+    var(--tick-long) var(--tape-x, 0) 0 / 4px 4px repeat-x,
+    var(--tick-long) var(--tape-x, 0) 100% / 20px 7px repeat-x,
+    var(--tick-long) var(--tape-x, 0) 100% / 4px 4px repeat-x,
     #f5e7a8;
+  transition: background-position 260ms linear;
   color: var(--drop-ink);
   font-family: var(--drop-mono);
   font-size: calc(var(--u) * 3.25);
@@ -504,6 +505,12 @@
 @media (prefers-reduced-motion: reduce) {
   .media-skin[data-skin="drop"] .garment-hardware {
     animation: none;
+  }
+
+  /* The readout still counts; the tape just stops sliding. */
+  .media-skin[data-skin="drop"] .tape-measure {
+    --tape-x: 0px !important;
+    transition: none;
   }
 }
 
