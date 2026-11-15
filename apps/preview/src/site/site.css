@@ -124,8 +124,13 @@ media-i18n {
   white-space: nowrap;
 }
 
-.site-header-link {
+.site-header-links {
+  display: flex;
   justify-self: end;
+  gap: 0.5rem;
+}
+
+.site-header-link {
   border: 1px solid var(--hairline);
 }
 
@@ -204,12 +209,14 @@ media-i18n {
 
 /* ---------------------------------------------------------------- Vertical cut */
 
+/* The phone-shaped player's width: never taller than the screen. */
 .site-vertical {
+  --vertical-width: min(22rem, calc((100svh - 4rem) * 9 / 16));
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 2.5rem;
   align-items: center;
-  max-width: 64rem;
+  max-width: 80rem;
   margin: 0 auto;
   padding: 4rem var(--gutter);
   border-top: 1px solid var(--hairline);
@@ -217,8 +224,9 @@ media-i18n {
 
 @media (width >= 48rem) {
   .site-vertical {
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 4rem;
+    grid-template-columns: minmax(0, 1fr) var(--vertical-width);
+    gap: clamp(3rem, 8vw, 8rem);
+    padding-inline: clamp(var(--gutter), 8vw, 8rem);
   }
 }
 
@@ -248,9 +256,8 @@ media-i18n {
   font-size: 0.85rem;
 }
 
-/* A phone-shaped player: never taller than the screen. */
 .site-player.site-player-vertical {
-  width: min(22rem, calc((100svh - 4rem) * 9 / 16), 100%);
+  width: min(var(--vertical-width), 100%);
   max-width: none;
   margin-inline: auto;
 }

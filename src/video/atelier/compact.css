@@ -286,3 +286,19 @@
 .media-skin[data-skin="atelier"][data-layout="compact"]:has(.video-controls-content :focus-visible) {
   --media-caption-track-y: calc(var(--u) * -15);
 }
+
+/* A narrow start card (a 9:16 film in a column): the button keeps its label on one line. */
+@container media-root (width < 22rem) {
+  .media-skin[data-skin="atelier"][data-layout="compact"] .atelier-start-play.media-button {
+    width: 100%;
+    justify-content: center;
+    gap: calc(var(--u) * 2);
+    padding-inline: calc(var(--u) * 3);
+    font-size: calc(var(--u) * 3.25);
+    letter-spacing: 0.06em;
+  }
+
+  .media-skin[data-skin="atelier"] .atelier-start-card {
+    padding: calc(var(--u) * 4);
+  }
+}

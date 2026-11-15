@@ -1,0 +1,369 @@
+/* The elements page: Atelier's parts on their own, in the showcase's type and colours (site.css). */
+
+.el-header-tag {
+  justify-self: end;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.el-main {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 var(--gutter) 4rem;
+}
+
+.el-intro {
+  padding: clamp(2rem, 5vw, 4rem) 0 1rem;
+  text-align: center;
+}
+
+.el-section {
+  padding: 4rem 0 2rem;
+  border-top: 1px solid var(--hairline);
+  scroll-margin-top: 1rem;
+}
+
+.el-intro + .el-section {
+  border-top: 0;
+}
+
+.el-lede {
+  max-width: 44rem;
+  margin: -1.5rem auto 2.5rem;
+  color: var(--taupe);
+  line-height: 1.7;
+  text-align: center;
+}
+
+.el-main code {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.85em;
+}
+
+/* Static specimens sit under the skin's attributes, and need the container its queries measure. They take the page's
+   colours, not the player's. */
+.el-static,
+.el-tools,
+.el-tags {
+  container: media-root / inline-size;
+}
+
+.el-main .media-skin {
+  background: transparent;
+  color: var(--ink);
+}
+
+/* ---------------------------------------------------------------- Live parts */
+
+.media-skin.el-bench {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2rem;
+  height: auto;
+  overflow: visible;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--sans);
+}
+
+@media (width >= 56rem) {
+  .media-skin.el-bench {
+    grid-template-columns: 18rem minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+/* Popups stand just off their part here; the regular layout's gap clears a control panel the bench doesn't have. */
+.media-skin[data-skin="atelier"][data-layout="regular"].el-bench {
+  --atelier-popup-gap: calc(var(--u) * 2);
+}
+
+.el-bench-film {
+  position: relative;
+  width: min(18rem, 100%);
+  aspect-ratio: 9 / 16;
+  margin-inline: auto;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  background: #000;
+  box-shadow: 0 24px 60px rgb(42 40 38 / 0.18);
+}
+
+.el-bench-film video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.el-parts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 1rem;
+}
+
+.el-part {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  margin: 0;
+  border: 1px solid var(--hairline);
+  border-radius: 1rem;
+  background: var(--ivory);
+}
+
+.el-part[data-wide] {
+  grid-column: 1 / -1;
+}
+
+.el-part-stage {
+  display: grid;
+  place-items: center;
+  min-height: 7rem;
+  padding: 1.25rem;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.el-part[data-wide] .el-part-stage > * {
+  width: 100%;
+}
+
+.el-part figcaption {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.85rem 1rem 1rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.el-part-name {
+  font-weight: 600;
+}
+
+.el-part-file {
+  color: var(--taupe);
+  font-size: 0.8rem;
+}
+
+.el-part-note {
+  color: var(--ink);
+}
+
+.el-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* ---------------------------------------------------------------- Materials */
+
+.el-materials {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(22rem, 100%), 1fr));
+  gap: 1.5rem 2.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.el-material-name {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.el-material-name svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.el-material-name code {
+  margin-inline-start: auto;
+  color: var(--taupe);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.el-swatch {
+  --garment-strip: calc(var(--u) * 7);
+}
+
+.media-skin[data-skin="atelier"] .el-swatch-slider {
+  position: relative;
+  height: calc(var(--u) * 14);
+}
+
+.media-skin[data-skin="atelier"] .el-swatch-thumb {
+  position: absolute;
+  top: 50%;
+  translate: -50% -50%;
+  pointer-events: none;
+}
+
+/* The range input is the real control, laid invisibly over the strip; its focus shows on the tool. */
+.el-swatch-range {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: ew-resize;
+}
+
+.media-skin[data-skin="atelier"] .el-swatch-slider:has(.el-swatch-range:focus-visible) .el-swatch-thumb {
+  box-shadow: var(--atelier-focus-ring);
+}
+
+.el-material-notes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.el-material-notes dt {
+  color: var(--taupe);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.el-material-notes dd {
+  margin: 0.15rem 0 0;
+}
+
+/* ---------------------------------------------------------------- Tools, tags, icons */
+
+.el-tools,
+.el-icons,
+.el-palette {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.el-tools {
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+}
+
+.el-tools li,
+.el-icons li {
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+  padding: 1.25rem 0.75rem;
+  border: 1px solid var(--hairline);
+  border-radius: 1rem;
+  background: var(--ivory);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.el-tools code,
+.el-icons code {
+  color: var(--taupe);
+  font-size: 0.75rem;
+}
+
+.media-skin[data-skin="atelier"] .el-tool {
+  position: relative;
+  width: 4.5rem;
+  height: 5.75rem;
+}
+
+.el-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem 2.5rem;
+  margin: 0;
+  padding: 1rem 0;
+  list-style: none;
+}
+
+.media-skin[data-skin="atelier"] .el-tag {
+  display: inline-block;
+}
+
+.el-icons {
+  grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
+}
+
+.el-icons svg {
+  width: 2rem;
+  height: 2rem;
+  color: var(--ink);
+}
+
+/* ---------------------------------------------------------------- Tokens */
+
+.el-palette {
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+}
+
+.el-palette li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: repeat(3, auto);
+  column-gap: 0.85rem;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.el-chip {
+  grid-row: 1 / -1;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+}
+
+.el-palette code,
+.el-palette span:not(.el-chip) {
+  color: var(--taupe);
+  font-size: 0.8rem;
+}
+
+.el-type {
+  display: grid;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding: 2rem;
+  border-radius: 1rem;
+  background: var(--linen);
+}
+
+.el-type p {
+  margin: 0;
+}
+
+.el-type-serif {
+  font-family: var(--serif);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 500;
+}
+
+.el-type-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.el-type-body {
+  font-variant-numeric: tabular-nums;
+  line-height: 1.6;
+}

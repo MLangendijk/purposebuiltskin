@@ -48,9 +48,14 @@ export function Site() {
           <a href="#about">The skin</a>
         </nav>
         <span className="site-logo">{SPRING_EDIT.brand}</span>
-        <a className="site-header-link" href="./workbench.html">
-          Workbench
-        </a>
+        <span className="site-header-links">
+          <a className="site-header-link" href="./elements.html">
+            Elements
+          </a>
+          <a className="site-header-link" href="./workbench.html">
+            Workbench
+          </a>
+        </span>
       </header>
 
       <main>

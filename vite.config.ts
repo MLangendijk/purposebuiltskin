@@ -25,9 +25,10 @@ export default defineConfig({
     outDir: path('./dist'),
     emptyOutDir: true,
     rolldownOptions: {
-      // The public showcase page, the workbench shell, and the preview page it frames.
+      // The public showcase page, the elements page, the workbench shell, and the preview page it frames.
       input: {
         site: path('./apps/preview/index.html'),
+        elements: path('./apps/preview/elements.html'),
         workbench: path('./apps/preview/workbench.html'),
         preview: path('./apps/preview/preview.html'),
       },
