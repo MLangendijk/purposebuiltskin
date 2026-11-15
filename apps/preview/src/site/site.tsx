@@ -99,16 +99,18 @@ export function Site() {
                 Each chapter of the bar is cut from the garment on screen: a button placket for the shirt, selvedge
                 denim with orange double stitching, a zipper for the leather jacket, a drawstring through rib knit, laces
                 for the sneakers, printed pleats for the dress. Whatever has played is finished: buttoned, zipped,
-                laced. The playhead turns into the hardware: a button, a rivet, a zip pull, a cord stopper, an aglet, a
-                pin.
+                laced. The playhead is the tool doing the work: a button doing up the shirt, a needle sewing the seam,
+                the zip pull, a safety pin threading the drawstring, the aglet lacing the shoe, an iron pressing the
+                pleats.
               </p>
             </article>
             <article>
-              <h3>Dressed down to the details</h3>
+              <h3>Every control has a job in the wardrobe</h3>
               <p>
-                Volume is a leather belt: slide the buckle along the holes. Time is printed on a woven care label.
-                Products hang on kraft swing tags with a cord that swing in when the piece changes, and the product
-                sheet carries the fabric and care line like the label inside a collar.
+                Mute is a zipper: open lets the sound out, zipped shuts it in. Volume is a size run, so turning it up is
+                going up a size. Time is a tailor's tape measure, and replay rewinds it to zero. Pause pins the moment.
+                Hangers move you along the rail to the next look, scissors open the alterations. Prices hang on kraft
+                swing tags, and fabric and care sit on a label like the one inside a collar.
               </p>
             </article>
             <article>

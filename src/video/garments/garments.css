@@ -1,5 +1,6 @@
 /*
- * Garment materials for the seek bar, the playhead hardware, the department rail, and the belt volume.
+ * Garment materials for the seek bar, the playhead tools, the department rail, the size-run volume, and the
+ * tape-measure time.
  *
  * Every chapter of the strip has two layers of the same garment: "ahead" (unfinished: buttonholes, an open zipper,
  * bare eyelets) and "done" (finished: buttons, a closed zipper, laces), clipped to how much of the chapter has played.
@@ -339,69 +340,88 @@
   opacity: 1;
 }
 
-/* ---------------------------------------------------------------- Belt volume */
+/* ---------------------------------------------------------------- Volume: a size run, XS to XL */
 
-.media-skin[data-skin="drop"] .belt {
+.media-skin[data-skin="drop"] {
+  --size-run: calc(var(--u) * 30);
+}
+
+.media-skin[data-skin="drop"] .size-volume {
   display: flex;
   align-items: center;
   height: var(--drop-control);
   background: var(--drop-ink);
 }
 
-.media-skin[data-skin="drop"] .belt-slider {
+.media-skin[data-skin="drop"] .size-slider {
   position: relative;
   display: flex;
   align-items: center;
-  width: calc(var(--u) * 24);
+  width: var(--size-run);
   height: 100%;
-  margin-inline: calc(var(--u) * 2) calc(var(--u) * 3);
+  margin-inline: calc(var(--u) * 1) calc(var(--u) * 2.5);
   cursor: pointer;
   touch-action: none;
 }
 
-/* The tail of the belt: tan leather punched with holes. */
-.media-skin[data-skin="drop"] .belt-strap {
+.media-skin[data-skin="drop"] .size-track {
   position: relative;
   width: 100%;
-  height: calc(var(--u) * 4.5);
-  overflow: hidden;
-  border: var(--drop-line) solid var(--drop-ink);
-  outline: 1px solid rgb(244 241 234 / 0.25);
-  background:
-    radial-gradient(ellipse 2.2px 2.6px at 50% 50%, #1b0f07 85%, transparent) 0 0 / 10% 100% repeat-x,
-    linear-gradient(90deg, #e3c08f 55%, transparent 55%) 0 2px / 5px 1px repeat-x,
-    linear-gradient(90deg, #e3c08f 55%, transparent 55%) 0 calc(100% - 2px) / 5px 1px repeat-x,
-    linear-gradient(180deg, #a36e3e, #7f522b);
+  height: calc(var(--u) * 6);
 }
 
-/* The worn part, up to the buckle. */
-.media-skin[data-skin="drop"] .belt-strap-fill {
+.media-skin[data-skin="drop"] .size-fill {
   position: absolute;
   inset-block: 0;
   inset-inline-start: 0;
   width: var(--media-slider-fill, 0%);
-  background:
-    linear-gradient(90deg, #f0d3a8 55%, transparent 55%) 0 2px / 5px 1px repeat-x,
-    linear-gradient(90deg, #f0d3a8 55%, transparent 55%) 0 calc(100% - 2px) / 5px 1px repeat-x,
-    linear-gradient(180deg, #6a3f1d, #4a2b12);
+  overflow: hidden;
 }
 
-.media-skin[data-skin="drop"] .belt-buckle {
+.media-skin[data-skin="drop"] .size-run {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2px;
+  width: var(--size-run);
+  height: 100%;
+}
+
+.media-skin[data-skin="drop"] .size-run span {
+  display: grid;
+  place-items: center;
+  border: 1px solid rgb(244 241 234 / 0.3);
+  color: rgb(244 241 234 / 0.55);
+  font-family: var(--drop-mono);
+  font-size: calc(var(--u) * 2.5);
+  font-weight: 700;
+  font-stretch: normal;
+}
+
+.media-skin[data-skin="drop"] .size-fill .size-run span {
+  border-color: var(--drop-volt);
+  background: var(--drop-volt);
+  color: var(--drop-ink);
+}
+
+/* Muted: the run stays, but every size reads as sold out. */
+.media-skin[data-skin="drop"] .size-volume:has([data-muted]) .size-fill .size-run span {
+  border-color: rgb(244 241 234 / 0.3);
+  background: transparent;
+  color: rgb(244 241 234 / 0.55);
+  text-decoration: line-through;
+}
+
+.media-skin[data-skin="drop"] .size-thumb {
   position: absolute;
   left: var(--media-slider-fill, 0%);
-  width: calc(var(--u) * 5);
-  height: calc(var(--u) * 7);
+  width: calc(var(--u) * 1);
+  height: calc(var(--u) * 8);
   translate: -50% 0;
-  display: grid;
+  background: var(--drop-paper);
+  outline: 1px solid var(--drop-ink);
 }
 
-.media-skin[data-skin="drop"] .belt-buckle svg {
-  width: 100%;
-  height: 100%;
-  filter: drop-shadow(0 2px 0 rgb(11 11 12 / 0.55));
-}
-
-.media-skin[data-skin="drop"] .belt-buckle:focus-visible {
+.media-skin[data-skin="drop"] .size-thumb:focus-visible {
   outline: var(--drop-line) solid var(--drop-ink);
   outline-offset: 3px;
   box-shadow:
@@ -410,16 +430,57 @@
 }
 
 @media (pointer: coarse) {
-  .media-skin[data-skin="drop"] .belt-slider {
+  .media-skin[data-skin="drop"] .size-slider {
     display: none;
   }
+}
+
+/* ---------------------------------------------------------------- Time: a tailor's tape measure */
+
+.media-skin[data-skin="drop"] .tape-measure {
+  --tick: var(--drop-ink);
+  height: calc(var(--drop-control) - var(--u) * 1);
+  padding-inline: calc(var(--u) * 4) calc(var(--u) * 3);
+  gap: calc(var(--u) * 1.5);
+  border: var(--drop-line) solid var(--drop-ink);
+  background:
+    /* Brass end cap. */
+    linear-gradient(90deg, #b8862e, #e0b866 60%, #9a6d22) 0 0 / calc(var(--u) * 2) 100% no-repeat,
+    /* Long ticks every centimetre, short ticks every millimetre, top and bottom edges. */
+    repeating-linear-gradient(90deg, var(--tick) 0 1px, transparent 1px 20px) 0 0 / 100% 7px no-repeat,
+    repeating-linear-gradient(90deg, var(--tick) 0 1px, transparent 1px 4px) 0 0 / 100% 4px no-repeat,
+    repeating-linear-gradient(90deg, var(--tick) 0 1px, transparent 1px 20px) 0 100% / 100% 7px no-repeat,
+    repeating-linear-gradient(90deg, var(--tick) 0 1px, transparent 1px 4px) 0 100% / 100% 4px no-repeat,
+    #f5e7a8;
+  color: var(--drop-ink);
+  font-family: var(--drop-mono);
+  font-size: calc(var(--u) * 3.25);
+  font-weight: 700;
+  font-stretch: normal;
+  letter-spacing: 0.02em;
+}
+
+.media-skin[data-skin="drop"] .tape-measure :is(.media-time-current-value, .media-time-separator, .media-time-duration-value, .media-time-toggle) {
+  padding-inline: 2px;
+  background: #f5e7a8;
+}
+
+.media-skin[data-skin="drop"] .tape-measure :is(.media-time-separator, .media-time-duration-value) {
+  opacity: 1;
+  color: rgb(11 11 12 / 0.65);
+}
+
+.media-skin[data-skin="drop"] .tape-measure .media-time-toggle:focus-visible {
+  outline: var(--drop-line) solid var(--drop-ink);
+  outline-offset: 2px;
+  box-shadow: none;
 }
 
 /* ---------------------------------------------------------------- Narrow players */
 
 @container media-root (width < 40rem) {
   .media-skin[data-skin="drop"] .garment-rail-label,
-  .media-skin[data-skin="drop"] .belt-slider {
+  .media-skin[data-skin="drop"] .size-slider {
     display: none;
   }
 

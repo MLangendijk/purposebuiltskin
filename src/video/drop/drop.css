@@ -204,6 +204,43 @@
   height: calc(var(--u) * 5.5);
 }
 
+/* State changes act out the garment: muting zips the sound shut, unmuting unzips it. */
+.media-skin[data-skin="drop"] :is(.icon-zip-pull, .icon-teeth, .icon-spin) {
+  transform-box: fill-box;
+}
+
+.media-skin[data-skin="drop"] .media-mute-button-off-icon .icon-zip-pull {
+  animation: icon-zip 420ms var(--drop-ease) both;
+}
+
+.media-skin[data-skin="drop"] .media-mute-button-high-icon .icon-teeth {
+  transform-origin: 0 50%;
+  animation: icon-unzip 360ms var(--drop-ease) both;
+}
+
+.media-skin[data-skin="drop"] .icon-spin {
+  transform-origin: center;
+  animation: icon-spin 1.4s linear infinite;
+}
+
+@keyframes icon-zip {
+  from {
+    translate: -9px 0;
+  }
+}
+
+@keyframes icon-unzip {
+  from {
+    scale: 1 0.1;
+  }
+}
+
+@keyframes icon-spin {
+  to {
+    rotate: 1turn;
+  }
+}
+
 /* ---------------------------------------------------------------- Scrim and layout */
 
 .media-skin[data-skin="drop"] .drop-scrim {
@@ -490,38 +527,6 @@
   height: 1px;
   overflow: hidden;
   clip-path: inset(50%);
-}
-
-/* ---------------------------------------------------------------- Time: a woven care label */
-
-.media-skin[data-skin="drop"] .care-label {
-  height: calc(var(--drop-control) - var(--u) * 1);
-  padding-inline: calc(var(--u) * 5) calc(var(--u) * 3);
-  gap: calc(var(--u) * 1.5);
-  border: var(--drop-line) solid var(--drop-ink);
-  outline: 1px dashed rgb(11 11 12 / 0.45);
-  outline-offset: -5px;
-  background:
-    linear-gradient(90deg, #d9d1bf, #e6dfcf) 0 0 / calc(var(--u) * 2) 100% no-repeat,
-    repeating-linear-gradient(0deg, rgb(11 11 12 / 0.04) 0 1px, transparent 1px 2px),
-    var(--drop-paper);
-  color: var(--drop-ink);
-  font-family: var(--drop-mono);
-  font-size: calc(var(--u) * 3.25);
-  font-weight: 700;
-  font-stretch: normal;
-  letter-spacing: 0.02em;
-}
-
-.media-skin[data-skin="drop"] .care-label :is(.media-time-separator, .media-time-duration-value) {
-  opacity: 1;
-  color: rgb(11 11 12 / 0.6);
-}
-
-.media-skin[data-skin="drop"] .care-label .media-time-toggle:focus-visible {
-  outline: var(--drop-line) solid var(--drop-ink);
-  outline-offset: 2px;
-  box-shadow: none;
 }
 
 /* ---------------------------------------------------------------- Tooltips and menus */
@@ -1326,8 +1331,8 @@
     font-size: calc(var(--u) * 3.5);
   }
 
-  .media-skin[data-skin="drop"] .care-label {
-    padding-inline: calc(var(--u) * 4) calc(var(--u) * 2);
+  .media-skin[data-skin="drop"] .tape-measure {
+    padding-inline: calc(var(--u) * 3.5) calc(var(--u) * 2);
   }
 
   /* No room for the tag between the top bar and the controls: it steps aside while they're up. */
@@ -1371,8 +1376,13 @@
     --drop-slap: 0ms;
   }
 
-  .media-skin[data-skin="drop"] .drop-ticker-track {
+  .media-skin[data-skin="drop"] :is(.drop-ticker-track, .icon-zip-pull, .icon-teeth) {
     animation: none;
+  }
+
+  /* The spinner slows to a gentle turn rather than stopping, so loading still reads as loading. */
+  .media-skin[data-skin="drop"] .icon-spin {
+    animation-duration: 4s;
   }
 
   .media-skin[data-skin="drop"] :is(.drop-tag-face, .drop-sheet) {
@@ -1393,7 +1403,7 @@
     background-image: linear-gradient(to top, rgb(11 11 12 / 0.9), transparent 55%);
   }
 
-  .media-skin[data-skin="drop"] :is(.media-button, .belt, .garment-seek) {
+  .media-skin[data-skin="drop"] :is(.media-button, .size-volume, .garment-seek) {
     border-color: var(--drop-paper);
   }
 }

@@ -1,12 +1,13 @@
 /**
- * The garment types the skin knows how to draw. Each one gets its own seek-bar material, playhead hardware, and icon:
+ * The garment types the skin knows how to draw. In the seek bar, each one is finished as it plays, and the playhead is
+ * the tool that does the finishing:
  *
- * - shirt: a button placket. Buttonholes ahead, buttons done up behind the playhead, a shirt button as the playhead.
- * - denim: light-wash twill ahead, raw indigo with orange double stitching behind, a copper rivet as the playhead.
- * - leather: an open zipper ahead, zipped up behind, a zip pull as the playhead.
- * - knit: flat jersey ahead, rib knit with a drawstring behind, a cord stopper as the playhead.
- * - footwear: bare eyelets ahead, criss-cross laces behind, an aglet as the playhead.
- * - dress: flat crepe ahead, pressed printed pleats behind, a dressmaker's pin as the playhead.
+ * - shirt: buttonholes ahead, buttons done up behind; the playhead is a button.
+ * - denim: light-wash twill ahead, raw indigo with orange topstitching behind; the playhead is the needle sewing it.
+ * - leather: an open zipper ahead, zipped shut behind; the playhead is the zip pull.
+ * - knit: flat jersey ahead, rib knit with the drawstring threaded behind; the playhead is the safety pin threading it.
+ * - footwear: bare eyelets ahead, laces criss-crossed behind; the playhead is the lace's aglet.
+ * - dress: flat crepe ahead, pressed printed pleats behind; the playhead is the iron pressing them.
  */
 export const GARMENTS = ['shirt', 'denim', 'leather', 'knit', 'footwear', 'dress'] as const;
 

@@ -7,17 +7,20 @@ import {
 import {
   CaptionsOnIcon as CaptionsOnIconPrimitive,
   CaptionsOffIcon as CaptionsOffIconPrimitive,
-  FullscreenEnterIcon as FullscreenEnterIconPrimitive,
-  FullscreenExitIcon as FullscreenExitIconPrimitive,
   PipEnterIcon as PipEnterIconPrimitive,
   PipExitIcon as PipExitIconPrimitive,
-  VolumeHighIcon as VolumeHighIconPrimitive,
-  VolumeLowIcon as VolumeLowIconPrimitive,
-  VolumeOffIcon as VolumeOffIconPrimitive,
 } from '@videojs/react/icons/scaffold';
 import type { ReactNode } from 'react';
 
 import { cn } from '@/lib/resolve-class-name';
+
+import {
+  ExitFullscreenIcon as FullscreenExitIconPrimitive,
+  FullscreenIcon as FullscreenEnterIconPrimitive,
+  MutedIcon as VolumeOffIconPrimitive,
+  VolumeIcon as VolumeHighIconPrimitive,
+  VolumeIcon as VolumeLowIconPrimitive,
+} from '../drop/icons';
 
 const STATUS_ACTIONS = ['toggleSubtitles', 'toggleFullscreen', 'togglePictureInPicture'] as const;
 

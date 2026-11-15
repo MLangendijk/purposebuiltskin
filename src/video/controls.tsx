@@ -4,7 +4,7 @@ import { Controls, Time, Tooltip } from '@videojs/react';
 
 import { FullscreenButton, PlayButton } from './drop/buttons';
 import { TopBar } from './drop/top-bar';
-import { BeltVolume } from './garments/belt-volume';
+import { SizeVolume } from './garments/size-volume';
 import { GarmentSeek } from './garments/garment-seek';
 import { SettingsMenu } from './shared/settings-menu';
 import { VideoBufferingIndicator } from './shared/video-feedback';
@@ -32,8 +32,8 @@ export function VideoControls() {
                 <PlayButton className="drop-play" />
                 <LookSkip direction="prev" />
                 <LookSkip direction="next" />
-                <BeltVolume />
-                <Time.Group className="media-time-group drop-time care-label">
+                <SizeVolume />
+                <Time.Group className="media-time-group drop-time tape-measure">
                   <Time.Value className="media-time-toggle" type="current" toggle />
                   <Time.Value className="media-time-current-value" type="current" />
                   <Time.Separator className="media-time-separator" />

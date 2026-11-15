@@ -2,23 +2,38 @@
 
 **A shoppable fashion skin for the [Video.js v10](https://videojs.org) player, with controls cut from the clothes.**
 
-Fashion video deserves controls made of clothes. Drop's seek bar is a strip of the garments in the film. Each chapter is cut from its garment's material, and whatever has played is finished: the shirt buttoned, the jacket zipped, the sneaker laced. The playhead turns into each garment's hardware as it crosses from one piece to the next. A kraft swing tag for the piece on screen lets you pick a size and bag it without leaving the film.
+Fashion video deserves controls made of clothes, and each one has to make sense for its job. Drop's seek bar is a strip of the garments in the film: each chapter is cut from its garment's material, and whatever has played is finished. The playhead is the tool that does the finishing, and it changes as the film moves from one piece to the next.
 
 ## Design
 
-| Garment | Ahead of the playhead | Behind it | Playhead |
+| Garment | Ahead of the playhead | Behind it | Playhead (the tool doing the work) |
 | --- | --- | --- | --- |
-| Shirt | Buttonholes on oxford | Buttons done up | Shirt button |
-| Denim | Light-wash twill | Raw indigo, orange double stitch | Copper rivet |
-| Leather | Open zipper | Zipped shut | Zip pull |
-| Knit | Flat heather jersey | Rib knit with drawstring | Cord stopper |
-| Footwear | Bare eyelets | Criss-cross laces | Aglet |
-| Dress | Flat crepe | Printed pleats | Dressmaker's pin |
+| Shirt | Buttonholes on oxford | Buttons done up | A button |
+| Denim | Light-wash twill | Raw indigo, orange topstitching | The needle sewing it |
+| Leather | Open zipper | Zipped shut | The zip pull |
+| Knit | Flat heather jersey | Rib knit, drawstring threaded | A safety pin, which is how drawstrings are threaded |
+| Footwear | Bare eyelets | Criss-cross laces | The lace's aglet |
+| Dress | Flat crepe | Pressed, printed pleats | An iron |
 
-- **The rest of the wardrobe.** Volume is a leather belt: slide the buckle along the holes. Time is printed on a woven care label. Products hang on kraft swing tags with a cord, which swing in when the piece changes. The product sheet carries the fabric and care line like the label in a collar, with real sizes (W30, EU 42).
-- **All CSS.** The materials are layered gradients, so they scale with the player and cost no images. A new garment type is a few gradient rules in `src/video/garments/garments.css`.
+Every other control takes the garment that does its job:
+
+| Control | Garment logic |
+| --- | --- |
+| Mute | A zipper. Unzipped, the sound comes out; zipped, it's shut in. The pull slides across when you mute. |
+| Volume | A size run, XS to XL. Turning it up is going up a size; muted, every size reads sold out. |
+| Time | A tailor's tape measure, measuring the length of the film. |
+| Replay | The tape measure rewinding to zero. |
+| Pause | Two dressmaker's pins, pinning the moment. |
+| Next / previous look | Hangers moving along the rail. |
+| Settings | Tailor's scissors, for alterations. |
+| Loading | A ring of stitches being sewn. |
+| Shop | A kraft swing tag on a cord (the price tag), and a product sheet with the fabric and care label. |
+
+Play and fullscreen keep their standard shapes, because no garment does those jobs better.
+
+- **All CSS.** The materials are layered gradients, so they scale with the player and cost no images. A new garment type is a few gradient rules in `src/video/garments/garments.css` and a tool in `hardware.tsx`.
 - **Inks and type.** Black, warm white and acid volt, with hot pink kept for scarcity. Archivo at its narrowest for display, Space Mono for anything that counts.
-- **Legible over anything.** Controls are solid fills with a black keyline and a hard shadow, so they read over a white sneaker or a black leather jacket alike.
+- **Legible over anything.** Controls are solid fills with a black keyline, so they read over a white sneaker or a black leather jacket alike.
 
 ## Accessibility
 
@@ -65,7 +80,7 @@ pnpm dev        # showcase at /, workbench at /workbench.html
 pnpm run build
 ```
 
-- `src/video/skin.tsx`: the skin. `garments/` holds the garment seek strip, hardware, icons and belt volume; `drop/` the other controls and `drop.css`; `shop/` the swing tag, product sheet, bag and look skipping.
+- `src/video/skin.tsx`: the skin. `garments/` holds the garment seek strip, playhead tools, icons and size-run volume; `drop/` the other controls and `drop.css`; `shop/` the swing tag, product sheet, bag and look skipping.
 - `scripts/build-media.sh`: rebuilds the demo lookbook, poster, product shots, storyboard and chapters from Mixkit sources.
 - `apps/preview/`: the showcase page (`index.html`), the Video.js workbench (`workbench.html`), and the demo media.
 

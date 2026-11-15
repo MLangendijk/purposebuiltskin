@@ -2,10 +2,11 @@
 
 import { Poster as PosterPrimitive } from '@videojs/react';
 import { BufferingIndicator as BufferingIndicatorPrimitive, Controls } from '@videojs/react';
-import { SpinnerIcon as SpinnerIconPrimitive } from '@videojs/react/icons/scaffold';
 import type { ClassValue } from 'cn';
 
 import { cn, resolveClassName } from '@/lib/resolve-class-name';
+
+import { SpinnerIcon } from '../drop/icons';
 
 export function Poster({ renderImage }: { renderImage?: PosterPrimitive.ImageProps['render'] } = {}) {
   return (
@@ -20,7 +21,7 @@ export function BufferingIndicator({ className }: { className?: ClassValue } = {
     <BufferingIndicatorPrimitive
       className={(state) => cn('media-buffering-indicator', resolveClassName(className, state))}
     >
-      <SpinnerIconPrimitive className={'media-buffering-indicator-spinner-icon'} />
+      <SpinnerIcon className={'media-buffering-indicator-spinner-icon'} />
     </BufferingIndicatorPrimitive>
   );
 }

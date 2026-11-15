@@ -5,8 +5,9 @@ import type { ReactNode } from 'react';
 import type { Garment } from './garments';
 
 /*
- * The seek bar's playhead, as a piece of garment hardware. Drawn on a 28×36 box centred on the bar; the ink keyline
- * keeps each part visible over light and dark materials alike.
+ * The seek bar's playhead is the tool that finishes each garment as it moves: it does up the shirt's buttons, sews the
+ * denim's seam, closes the zipper, threads the drawstring, laces the shoe, presses the pleats. Drawn on a 28×36 box
+ * centred on the bar; the ink keyline keeps each one visible over light and dark materials alike.
  */
 
 const INK = '#0b0b0c';
@@ -26,13 +27,12 @@ const PARTS: Record<Garment, ReactNode> = {
       </g>
     </>
   ),
-  // Hammered copper rivet.
+  // Sewing needle, trailing the orange topstitch thread it lays down.
   denim: (
     <>
-      <circle cx="14" cy="18" r="11" fill="#b8682e" stroke={INK} strokeWidth="2" />
-      <circle cx="14" cy="18" r="7" fill="#d98a48" stroke="#8a4a1f" strokeWidth="1.5" />
-      <circle cx="14" cy="18" r="2.5" fill="#8a4a1f" />
-      <path d="M9.5 13.5a6.5 6.5 0 0 1 5-2" stroke="#f3c08f" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+      <path d="M1 30c4-1 7-3 9-6" stroke="#f0a043" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+      <path d="M11 3h6v25l-3 7-3-7z" fill="#d9dce1" stroke={INK} strokeWidth="2" strokeLinejoin="round" />
+      <rect x="12.75" y="5" width="2.5" height="6" rx="1.25" fill={INK} />
     </>
   ),
   // Zip slider with a hanging pull tab.
@@ -44,13 +44,21 @@ const PARTS: Record<Garment, ReactNode> = {
       <path d="M11.5 15h5" stroke="#f1f2f4" strokeWidth="1.5" strokeLinecap="round" />
     </>
   ),
-  // Spring cord stopper threaded on a drawstring.
+  // Safety pin: how a drawstring is threaded through its channel.
   knit: (
     <>
-      <path d="M14 0v36" stroke="#f6f3ec" strokeWidth="4" />
-      <rect x="6" y="9" width="16" height="18" rx="6" fill="#2c2d30" stroke={INK} strokeWidth="2" />
-      <rect x="10" y="4" width="8" height="6" rx="2" fill="#d4ff1f" stroke={INK} strokeWidth="2" />
-      <path d="M14 13v10" stroke="#f6f3ec" strokeWidth="3" />
+      <path d="M0 18h8" stroke="#f6f3ec" strokeWidth="4" strokeLinecap="round" />
+      <path d="M0 18h8" stroke={INK} strokeWidth="1" opacity="0.4" />
+      <path
+        d="M9 31V8a5 5 0 0 1 10 0v21"
+        fill="none"
+        stroke={INK}
+        strokeWidth="5"
+        strokeLinecap="round"
+      />
+      <path d="M9 31V8a5 5 0 0 1 10 0v21" fill="none" stroke="#d9dce1" strokeWidth="2.5" strokeLinecap="round" />
+      <circle cx="9" cy="32" r="3.5" fill="#d9dce1" stroke={INK} strokeWidth="2" />
+      <rect x="15" y="26" width="8" height="9" rx="2" fill="#c3c7ce" stroke={INK} strokeWidth="2" />
     </>
   ),
   // Lace end with a clear plastic aglet.
@@ -62,14 +70,14 @@ const PARTS: Record<Garment, ReactNode> = {
       <path d="M12 18v12" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" />
     </>
   ),
-  // Dressmaker's pin: round head, steel shaft.
+  // Iron, nose forward, pressing the pleats in behind it.
   dress: (
-    <>
-      <path d="M14 14v21" stroke={INK} strokeWidth="4" strokeLinecap="round" />
-      <path d="M14 14v21" stroke="#d9dce1" strokeWidth="2" strokeLinecap="round" />
-      <circle cx="14" cy="10" r="8" fill="#ff3d8b" stroke={INK} strokeWidth="2" />
-      <circle cx="11.5" cy="7.5" r="2.2" fill="#ffd1e3" />
-    </>
+    <g transform="translate(28 0) scale(-1 1)">
+      <path d="M5 13h14a6 6 0 0 1 6 6v6H3l2-12z" fill="#f6f3ec" stroke={INK} strokeWidth="2" strokeLinejoin="round" />
+      <path d="M3 25h22v4H2.5z" fill="#d9dce1" stroke={INK} strokeWidth="2" strokeLinejoin="round" />
+      <path d="M9 13c0-5 2-7 7-7h3" fill="none" stroke={INK} strokeWidth="2.5" strokeLinecap="round" />
+      <circle cx="18" cy="18.5" r="2" fill="#ff3d8b" stroke={INK} strokeWidth="1.5" />
+    </g>
   ),
 };
 
