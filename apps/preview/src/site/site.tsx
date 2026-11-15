@@ -71,7 +71,7 @@ export function Site() {
             <Player />
           </div>
           <p className="site-player-note">
-            There is no dialogue; the music is captioned (Scissors, then Captions, or press C).{' '}
+            There is no dialogue; the music is captioned (the CC button, or press C).{' '}
             <a href="#described">Read the described version</a>.
           </p>
         </section>

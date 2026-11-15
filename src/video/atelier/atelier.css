@@ -86,9 +86,19 @@
   box-shadow: var(--atelier-focus-ring);
 }
 
+/* The player itself takes focus for its hotkeys. An inset shadow on it would sit under the video, so the ring is drawn on top. */
 .media-skin[data-skin="atelier"]:focus-visible {
   outline: var(--atelier-focus-outline);
+}
+
+.media-skin[data-skin="atelier"]:focus-visible::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  border-radius: inherit;
   box-shadow: inset 0 0 0 3px var(--ivory), inset 0 0 0 6px var(--ink);
+  pointer-events: none;
 }
 
 .media-skin[data-skin="atelier"] abbr[title] {
@@ -233,7 +243,7 @@
   translate: none;
 }
 
-.media-skin[data-skin="atelier"]:has(.video-controls-content :focus-visible) .atelier-tag-anchor {
+.media-skin[data-skin="atelier"]:has(.video-controls-content :focus-visible:not(.atelier-tag)) .atelier-tag-anchor {
   bottom: calc(var(--u) * 46);
 }
 

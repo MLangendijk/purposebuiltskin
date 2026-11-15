@@ -403,11 +403,10 @@
     opacity var(--atelier-fast) ease;
 }
 
-/* The arcs it's sending out: solid, in the accent. */
-.media-skin[data-skin="atelier"] .dryer-waves path[data-on] {
+/* The sound it's sending out: the accent, laid over the unlit arc; the arc the level is inside is lit part way. */
+.media-skin[data-skin="atelier"] .dryer-waves .dryer-wave-lit {
   stroke: var(--accent);
   stroke-width: 2.5px;
-  opacity: 1;
 }
 
 /* The arcs show the level, so the thumb is an invisible handle; keyboard focus rings the arcs. */

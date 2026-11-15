@@ -2,7 +2,7 @@
 
 import { Controls, Tooltip, useTranslator } from '@videojs/react';
 
-import { FullscreenButton, MuteButton, PlayButton } from './atelier/buttons';
+import { CaptionsButton, FullscreenButton, MuteButton, PlayButton } from './atelier/buttons';
 import { TopBar } from './atelier/top-bar';
 import type { Layout } from './atelier/use-layout';
 import { GarmentSeek } from './garments/garment-seek';
@@ -11,14 +11,18 @@ import { TapeMeasure } from './garments/tape-measure';
 import { SettingsMenu } from './shared/settings-menu';
 import { VideoBufferingIndicator } from './shared/video-feedback';
 import { LookSkip } from './shop/look-skip';
+import { LookTag } from './shop/look-tag';
 
 /**
  * Atelier's control layouts. The Scaffold layout classes (`video-controls-*`) are kept for positioning and the idle hide.
  *
  * - regular: brand, ticker and bag on top; the garment strip with its department rail, then one row of controls.
- * - compact (phones, either way up): sound, time, settings and bag on top; play and the hangers in the middle, where a
+ * - compact (phones, either way up): sound, time, captions, settings and bag on top; play and the hangers in the middle, where a
  *   thumb lands; the garment strip and fullscreen along the bottom, so the strip gets nearly the full width. The
  *   picture keeps most of the frame.
+ *
+ * The swing tag sits between the top bar and the rest, where it hangs, so it comes in that order when tabbing. The
+ * controls hide by group, so the tag stays up while they rest.
  */
 export function VideoControls({ layout }: { layout: Layout }) {
   return (
@@ -40,6 +44,8 @@ function RegularControls() {
         <TopBar />
       </Controls.Group>
 
+      <LookTag />
+
       <div className="video-controls-bottom video-controls-video-bottom atelier-bottom">
         <GarmentSeek />
         <Controls.Group className="atelier-row" aria-label={t('atelier.playbackControls', { default: 'Playback controls' })}>
@@ -51,6 +57,7 @@ function RegularControls() {
             <TapeMeasure />
           </div>
           <div className="atelier-group">
+            <CaptionsButton />
             <SettingsMenu />
             <FullscreenButton />
           </div>
@@ -72,9 +79,16 @@ function CompactControls() {
               <TapeMeasure />
             </>
           }
-          settings={<SettingsMenu side="bottom" />}
+          settings={
+            <>
+              <CaptionsButton />
+              <SettingsMenu side="bottom" />
+            </>
+          }
         />
       </Controls.Group>
+
+      <LookTag />
 
       <Controls.Group className="atelier-center" aria-label={t('atelier.playback', { default: 'Playback' })}>
         <LookSkip direction="prev" />

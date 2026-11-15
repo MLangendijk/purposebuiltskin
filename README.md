@@ -22,16 +22,17 @@ Every other control takes the tool that does its job:
 | Control | What it is |
 | --- | --- |
 | Mute | A hairdryer. Muted, it's switched off. |
-| Volume | The sound the hairdryer sends out, as sound-wave arcs: more arcs light up the louder it plays. |
+| Volume | The sound the hairdryer sends out, as sound-wave arcs: they light up as it gets louder, the last one part way, so every level shows. |
 | Time | A tailor's tape measure that pulls out as the film plays. |
 | Replay | The tape rewinding to zero. |
 | Pause | Two dressmaker's pins, pinning the moment. |
 | Previous / next look | Hangers moving along the rail. |
 | Settings | Tailor's scissors, for alterations. |
+| Captions | The standard CC box, filled while captions are on. |
 | Loading | A ring of stitches being sewn. |
 | Shop | An ivory swing tag on a gold cord, and a product sheet with the fabric and care label. |
 
-Play and fullscreen keep their standard shapes, because no garment does those jobs better.
+Play, captions and fullscreen keep their standard shapes, because no garment does those jobs better.
 
 - **Boutique, not streetwear.** Ivory and linen surfaces, charcoal type, pastel fills, soft-gold hardware. Cormorant Garamond for names, Jost for everything functional.
 - **All CSS.** The materials are layered gradients, so they scale with the player and cost no images. A new garment is a few gradient rules in `src/video/garments/garments.css` and a tool in `hardware.tsx`.

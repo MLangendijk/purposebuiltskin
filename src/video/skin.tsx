@@ -27,7 +27,6 @@ import { SeekIndicator } from './shared/seek-indicator';
 import { StatusAnnouncer } from './shared/status-announcer';
 import { Poster } from './shared/video-feedback';
 import { LookChapters } from './shop/look-chapters';
-import { LookTag } from './shop/look-tag';
 import { ProductSheet } from './shop/product-sheet';
 import { ShopProvider } from './shop/shop-context';
 import type { ShopConfig } from './shop/types';
@@ -69,7 +68,6 @@ export function VideoSkin({ children, className, shop, renderPoster, ...props }:
         <StartScreen />
         <ErrorDialog />
         <VideoControls layout={layout} />
-        <LookTag />
         <ProductSheet />
         <LookChapters />
 

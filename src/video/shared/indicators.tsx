@@ -5,8 +5,6 @@ import {
   VolumeIndicator as VolumeIndicatorPrimitive,
 } from '@videojs/react';
 import {
-  CaptionsOnIcon as CaptionsOnIconPrimitive,
-  CaptionsOffIcon as CaptionsOffIconPrimitive,
   PipEnterIcon as PipEnterIconPrimitive,
   PipExitIcon as PipExitIconPrimitive,
 } from '@videojs/react/icons/scaffold';
@@ -15,6 +13,8 @@ import type { ReactNode } from 'react';
 import { cn } from '@/lib/resolve-class-name';
 
 import {
+  CaptionsOffIcon as CaptionsOffIconPrimitive,
+  CaptionsOnIcon as CaptionsOnIconPrimitive,
   ExitFullscreenIcon as FullscreenExitIconPrimitive,
   FullscreenIcon as FullscreenEnterIconPrimitive,
   MutedIcon as VolumeOffIconPrimitive,

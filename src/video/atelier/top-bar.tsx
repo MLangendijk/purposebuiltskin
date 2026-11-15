@@ -6,8 +6,8 @@ import { BagMenu } from '../shop/bag-menu';
 import { useShop } from '../shop/shop-context';
 
 /**
- * The house wordmark and the bag. Compact players also keep sound and time (`start`, after the wordmark) and settings
- * here, so the garment strip gets the bottom row to itself.
+ * The house wordmark and the bag. Compact players also keep sound and time (`start`, after the wordmark) and captions and
+ * settings here, so the garment strip gets the bottom row to itself.
  */
 export function TopBar({ start, settings }: { start?: ReactNode; settings?: ReactNode } = {}) {
   const { config } = useShop();

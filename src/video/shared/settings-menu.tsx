@@ -7,7 +7,6 @@ import {
   SwitchesIcon as SwitchesIconPrimitive,
   SpeechIcon as SpeechIconPrimitive,
   SpeedIcon as SpeedIconPrimitive,
-  CaptionsOffIcon as CaptionsOffIconPrimitive,
 } from '@videojs/react/icons/scaffold';
 import { AudioTrackRadioGroup } from '@videojs/react/ui/audio-track-radio-group';
 import { CaptionsRadioGroup } from '@videojs/react/ui/captions-radio-group';
@@ -16,7 +15,7 @@ import { QualityRadioGroup } from '@videojs/react/ui/quality-radio-group';
 
 import { cn } from '@/lib/resolve-class-name';
 
-import { SettingsIcon } from '../atelier/icons';
+import { CaptionsOffIcon, SettingsIcon } from '../atelier/icons';
 
 import { Button } from './button';
 import { RadioItem } from './menu-item';
@@ -131,7 +130,7 @@ function CaptionsMenu() {
     <Menu.Root>
       <CaptionsRadioGroup.Root>
         <Menu.Trigger className={'media-menu-item'}>
-          <CaptionsOffIconPrimitive className={'media-menu-trigger-icon'} />
+          <CaptionsOffIcon className={'media-menu-trigger-icon'} />
           <TextPrimitive token={captionsText.key}>{captionsText.text}</TextPrimitive>
           <span className={'media-menu-hint'}>
             <CaptionsRadioGroup.Value className={'media-menu-hint-label'} />

@@ -1,6 +1,7 @@
 /** @jsxImportSource react */
 
 import {
+  CaptionsButton as CaptionsButtonPrimitive,
   FullscreenButton as FullscreenButtonPrimitive,
   MuteButton as MuteButtonPrimitive,
   PlayButton as PlayButtonPrimitive,
@@ -11,7 +12,17 @@ import { cn, resolveClassName } from '@/lib/resolve-class-name';
 
 import { Button } from '../shared/button';
 import { ButtonTooltip } from '../shared/tooltip';
-import { ExitFullscreenIcon, FullscreenIcon, MutedIcon, PauseIcon, PlayIcon, RestartIcon, VolumeIcon } from './icons';
+import {
+  CaptionsOffIcon,
+  CaptionsOnIcon,
+  ExitFullscreenIcon,
+  FullscreenIcon,
+  MutedIcon,
+  PauseIcon,
+  PlayIcon,
+  RestartIcon,
+  VolumeIcon,
+} from './icons';
 
 /*
  * Atelier's buttons wrap the Video.js primitives and keep the Scaffold class names that swap icons by state
@@ -53,6 +64,18 @@ export function MuteButton() {
         <MutedIcon className={cn('media-button-icon', 'media-mute-button-off-icon')} />
         <VolumeIcon className={cn('media-button-icon', 'media-mute-button-high-icon')} />
       </MuteButtonPrimitive>
+    </ButtonTooltip>
+  );
+}
+
+/** Captions on and off, in the bar where people look for it. Renders nothing when the film has no captions. */
+export function CaptionsButton() {
+  return (
+    <ButtonTooltip>
+      <CaptionsButtonPrimitive render={<Button />} className="media-captions-button">
+        <CaptionsOffIcon className={cn('media-button-icon', 'media-captions-button-off-icon')} />
+        <CaptionsOnIcon className={cn('media-button-icon', 'media-captions-button-on-icon')} />
+      </CaptionsButtonPrimitive>
     </ButtonTooltip>
   );
 }

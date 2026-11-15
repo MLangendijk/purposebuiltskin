@@ -95,7 +95,16 @@
   box-shadow: var(--atelier-shadow);
 }
 
-/* Very narrow players (a 9:16 film in a side column): the time steps out so settings and bag still fit. */
+/*
+ * Narrow players (a 9:16 film in a side column): first the captions button steps out (captions stay in settings and on
+ * the C key), then the time, so settings and bag still fit.
+ */
+@container media-root (width < 21rem) {
+  .media-skin[data-skin="atelier"] .atelier-top-actions .media-captions-button {
+    display: none;
+  }
+}
+
 @container media-root (width < 17rem) {
   .media-skin[data-skin="atelier"] .atelier-top-start .tape-measure {
     display: none;
@@ -170,7 +179,7 @@
  * the tab order and the accessibility tree, and focusing it brings it back, lifted above the bottom row.
  */
 .media-skin[data-skin="atelier"][data-layout="compact"][data-controls-visible] .atelier-tag-anchor,
-.media-skin[data-skin="atelier"][data-layout="compact"]:has(.video-controls-content :focus-visible) .atelier-tag-anchor {
+.media-skin[data-skin="atelier"][data-layout="compact"]:has(.video-controls-content :focus-visible:not(.atelier-tag)) .atelier-tag-anchor {
   opacity: 0;
 }
 

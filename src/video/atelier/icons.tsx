@@ -1,12 +1,12 @@
 /** @jsxImportSource react */
 
-import type { SVGProps } from 'react';
+import { type SVGProps, useId } from 'react';
 
 /**
  * Atelier's icon set, in fine line. Where an atelier tool has a real job that matches the control, the icon is that tool:
  * pins hold the moment (pause), a tape measure rewinds to zero (replay), a hairdryer switches the sound on and off
- * (mute), hangers move along the rail (next look), scissors make alterations (settings), stitches sew while it loads. Play and fullscreen keep their
- * standard shapes, because no garment does those jobs better. Every icon is decorative; the button carries the label.
+ * (mute), hangers move along the rail (next look), scissors make alterations (settings), stitches sew while it loads.
+ * Play, captions and fullscreen keep their standard shapes, because no garment does those jobs better. Every icon is decorative; the button carries the label.
  * Parts that animate on a state change carry an `icon-*` class (see atelier.css).
  */
 type IconProps = SVGProps<SVGSVGElement>;
@@ -92,6 +92,29 @@ export const ExitFullscreenIcon = (p: IconProps) => (
     <path d="M9 3.5V9H3.5M20.5 9H15V3.5M15 20.5V15h5.5M3.5 15H9v5.5" />
   </Icon>
 );
+
+/** Captions: the standard CC box, the one shape everyone looks for. Off is outlined; on is filled, the letters cut out. */
+const CC = 'M10.6 10.4a2.2 2.2 0 1 0 0 3.2M17.1 10.4a2.2 2.2 0 1 0 0 3.2';
+
+export const CaptionsOffIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="2.5" y="5" width="19" height="14" rx="2.5" />
+    <path d={CC} />
+  </Icon>
+);
+
+export function CaptionsOnIcon(p: IconProps) {
+  const mask = useId();
+  return (
+    <Icon {...p}>
+      <mask id={mask}>
+        <rect width="24" height="24" fill="white" />
+        <path d={CC} stroke="black" strokeWidth="1.8" />
+      </mask>
+      <rect x="1.7" y="4.2" width="20.6" height="15.6" rx="3.2" fill="currentColor" stroke="none" mask={`url(#${mask})`} />
+    </Icon>
+  );
+}
 
 /** Settings: tailor's scissors, for alterations. */
 export const SettingsIcon = (p: IconProps) => (

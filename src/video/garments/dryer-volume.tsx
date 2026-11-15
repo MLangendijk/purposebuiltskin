@@ -14,35 +14,43 @@ const ARCS = [
   { x: 84, h: 12 },
 ];
 
-/** The arcs, lit up to the current level. Decorative: the slider carries the value and its name. */
-function SoundWaves({ lit }: { lit: number }) {
+/**
+ * The arcs, lit up to the current level: each arc is a fifth of the range, and the one the level is inside lights up
+ * part way, so every step of the slider shows. Decorative: the slider carries the value and its name.
+ */
+function SoundWaves({ level }: { level: number }) {
   return (
     <svg className="dryer-waves" viewBox="0 0 100 28" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-      {ARCS.map(({ x, h }, i) => (
-        <path key={x} data-on={i < lit ? '' : undefined} d={`M${x} ${14 - h}Q${x + h * 0.75} 14 ${x} ${14 + h}`} />
-      ))}
+      {ARCS.map(({ x, h }, i) => {
+        const d = `M${x} ${14 - h}Q${x + h * 0.75} 14 ${x} ${14 + h}`;
+        const lit = Math.min(1, Math.max(0, level * ARCS.length - i));
+        return (
+          <g key={x}>
+            <path d={d} />
+            {lit > 0 && <path className="dryer-wave-lit" d={d} style={{ opacity: lit }} />}
+          </g>
+        );
+      })}
     </svg>
   );
 }
 
 /**
  * Volume as a hairdryer: the mute button is the dryer itself (switched off when muted), and the slider is the sound
- * it sends out, drawn as the familiar sound-wave arcs. More arcs light up the louder it plays. It's an ordinary volume
+ * it sends out, drawn as the familiar sound-wave arcs. The arcs light up as it gets louder. It's an ordinary volume
  * slider underneath: click or drag anywhere, arrow keys in 5% steps, read out as "Volume, 60%". Touch screens keep
  * only the dryer (mute) and use the hardware buttons.
  */
 export function DryerVolume() {
   const volume = usePlayer(selectVolume);
   const level = volume?.muted ? 0 : (volume?.volume ?? 0);
-  // Any sound lights the first arc; full volume lights all five.
-  const lit = level <= 0 ? 0 : Math.ceil(level * ARCS.length - 0.001);
 
   return (
     <div className="dryer">
       <MuteButton />
       <VolumeSlider.Root className="dryer-slider" orientation="horizontal" thumbAlignment="center">
         <VolumeSlider.Track className="dryer-track">
-          <SoundWaves lit={lit} />
+          <SoundWaves level={level} />
         </VolumeSlider.Track>
         <VolumeSlider.Thumb className="dryer-thumb" />
       </VolumeSlider.Root>
