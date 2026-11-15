@@ -484,12 +484,25 @@
   display: grid;
   place-items: center;
   min-width: calc(var(--u) * 11);
-  height: 100%;
+  /* Reach over the tape's border so the button is the full 44px tall. */
+  height: calc(100% + var(--drop-line) * 2);
+  margin-block: calc(var(--drop-line) * -1);
 }
 
 @container media-root (width >= 20rem) {
   .media-skin[data-skin="drop"] .tape-measure .media-time-toggle {
     display: none;
+  }
+}
+
+/* Below 24rem the tape shows one reading, a 44px button that switches elapsed and remaining. */
+@container media-root (width < 24rem) {
+  .media-skin[data-skin="drop"] .tape-measure :is(.media-time-current-value, .media-time-separator, .media-time-duration-value) {
+    display: none;
+  }
+
+  .media-skin[data-skin="drop"] .tape-measure .media-time-toggle {
+    display: grid;
   }
 }
 
