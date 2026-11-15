@@ -123,13 +123,13 @@ Each film has a config in `scripts/films/` (`spring-edit`, `vertical`), and the 
 
 ```sh
 pnpm install
-pnpm dev        # showcase at /, elements at /elements.html, workbench at /workbench.html, devices at /devices.html
+pnpm dev        # showcase at /, elements at /elements.html, device simulator at /devices.html
 pnpm run build
 ```
 
 - `src/video/skin.tsx`: the skin. `garments/` holds the seek strip, its pieces (`use-pieces.ts`), playhead tools, icons, hairdryer volume and tape-measure time; `atelier/` the other controls, layouts and styles; `shop/` the swing tag, product sheet, bag, look skipping and the looks-as-chapters fallback; `mux/` the Mux chapters loader.
 - `scripts/build-media.sh`: rebuilds the demo lookbook, poster, product shots, storyboard and chapters from Mixkit sources (`build-media.sh chapters` rewrites only the chapters). `scripts/build-vertical.sh` cuts the 9:16 film from the same clips.
-- `apps/preview/`: the showcase page (`index.html`), the elements page (`elements.html`: every part on its own, live on one player, with the component and file that draw it), the Video.js workbench (`workbench.html`), and the demo media.
+- `apps/preview/`: the showcase page (`index.html`), the elements page (`elements.html`: every part on its own, live on one player, with the component and file that draw it), and the demo media. `src/frame/player.tsx` holds the films on Mux.
 
 The skin started from the Scaffold skin made by `videojs skin create`. Scaffold's layered CSS still supplies behavior (icon swaps, popup positioning, idle hiding), and Atelier's unlayered CSS styles on top.
 

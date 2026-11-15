@@ -19,6 +19,7 @@ import { VideoGestures } from './behaviors/gestures';
 import { VideoHotkeys } from './behaviors/hotkeys';
 import { VideoControls } from './controls';
 import { StartScreen } from './atelier/start-screen';
+import { useHasPlayed } from './atelier/use-has-played';
 import { useLayout } from './atelier/use-layout';
 import { ErrorDialog } from './shared/error-dialog';
 import { Indicators } from './shared/indicators';
@@ -47,7 +48,8 @@ export interface VideoSkinProps extends Omit<ContainerPrimitive.Props, 'children
  * Scaffold skin's behavior.
  */
 export function VideoSkin({ children, className, shop, renderPoster, ...props }: VideoSkinProps = {}) {
-  const [layout, measure] = useLayout();
+  const [{ layout, portrait }, measure] = useLayout();
+  const played = useHasPlayed();
 
   return (
     <ShopProvider shop={shop}>
@@ -58,6 +60,8 @@ export function VideoSkin({ children, className, shop, renderPoster, ...props }:
         data-preset="video"
         data-skin="atelier"
         data-layout={layout}
+        data-shape={portrait ? 'portrait' : 'landscape'}
+        data-played={played ? '' : undefined}
         {...props}
       >
         {children}

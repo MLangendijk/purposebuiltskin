@@ -56,7 +56,6 @@ export function Elements() {
       <header className="site-header">
         <nav className="site-nav" aria-label="Pages">
           <a href="./">Showcase</a>
-          <a href="./workbench.html">Workbench</a>
         </nav>
         <span className="site-logo">Atelier</span>
         <span className="el-header-tag">Elements</span>

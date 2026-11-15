@@ -542,6 +542,17 @@
     opacity var(--atelier-fast) ease;
 }
 
+/* Once the film has played, the controls stay available, even paused back at 0:00 (see use-has-played.ts). */
+.media-skin[data-skin="atelier"][data-played] {
+  --media-controls-before-start: visible;
+}
+
+/* …and the poster stays away: the paused frame is the picture. */
+.media-skin[data-skin="atelier"][data-played] .media-poster {
+  visibility: hidden;
+  opacity: 0;
+}
+
 /* Lift the tag clear of the control panel while it is up. */
 .media-skin[data-skin="atelier"][data-controls-visible] .atelier-tag-anchor {
   bottom: calc(var(--u) * 46);

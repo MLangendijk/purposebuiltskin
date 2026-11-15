@@ -6,16 +6,15 @@ import { useEffect, useRef } from 'react';
 import { GarmentIcon } from '../garments/garment-icons';
 import { useGarmentLabel } from '../garments/use-garment-label';
 import { useShop } from '../shop/shop-context';
-import { usePlaybackState } from '../shop/use-looks';
 import { PlayButton } from './buttons';
+import { useHasPlayed } from './use-has-played';
 
 /** The cover over the poster until playback starts: house, collection, the pieces in the film, and play. */
 export function StartScreen() {
   const { config, formatPrice } = useShop();
-  const playback = usePlaybackState();
   const t = useTranslator();
   const department = useGarmentLabel();
-  const started = playback?.started ?? false;
+  const started = useHasPlayed();
   // The container, remembered while the start button has focus, so focus can follow the shopper into the controls.
   const focusHome = useRef<HTMLElement | null>(null);
 

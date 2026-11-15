@@ -1,4 +1,4 @@
-// Deploy the workbench to a static host: `<package manager> run deploy`, or `deploy vercel` to skip the question.
+// Deploy the showcase (the built site) to a static host: `<package manager> run deploy`, or `deploy vercel` to skip the question.
 // Each host's own CLI signs you in and creates the project on the first run, then prints the URL.
 import { spawnSync } from 'node:child_process';
 import { stdin, stdout } from 'node:process';

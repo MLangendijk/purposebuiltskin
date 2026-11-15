@@ -52,9 +52,6 @@ export function Site() {
           <a className="site-header-link" href="./elements.html">
             Elements
           </a>
-          <a className="site-header-link" href="./workbench.html">
-            Workbench
-          </a>
         </span>
       </header>
 

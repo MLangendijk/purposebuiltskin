@@ -13,16 +13,23 @@ const COMPACT_HEIGHT = 480;
 /** Classes that name one control, the same in both layouts. */
 const CONTROL_CLASS = /^(media-(?!button$)[a-z-]+-button|atelier-skip-(prev|next)|atelier-bag-button|media-time-slider|dryer-slider)$/;
 
+/** The player's box: which control layout fits it, and whether it's taller than wide (a 9:16 film). */
+export interface Shape {
+  layout: Layout;
+  portrait: boolean;
+}
+
 /**
- * Watches the player's own box and reports which control layout fits it. Returns a ref callback for the container.
+ * Watches the player's own box and reports its shape. Returns a ref callback for the container.
  *
  * The two layouts are different control trees, so a switch (going fullscreen, rotating, zooming) unmounts the focused
  * control. Focus then moves to the same control in the new layout, found by its control class (`media-play-button`)
  * or else its accessible name, so keyboard users and the player's hotkeys keep their place.
  */
-export function useLayout(): [Layout, (element: HTMLElement | null) => void] {
+export function useLayout(): [Shape, (element: HTMLElement | null) => void] {
   const [element, setElement] = useState<HTMLElement | null>(null);
   const [layout, setLayout] = useState<Layout>('regular');
+  const [portrait, setPortrait] = useState(false);
   const focused = useRef<string | null>(null);
 
   useEffect(() => {
@@ -30,6 +37,7 @@ export function useLayout(): [Layout, (element: HTMLElement | null) => void] {
     const observer = new ResizeObserver(([entry]) => {
       const { width, height } = entry!.contentRect;
       setLayout(width < COMPACT_WIDTH || height < COMPACT_HEIGHT ? 'compact' : 'regular');
+      setPortrait(height > width);
     });
     const remember = (event: FocusEvent) => {
       const target = event.target as HTMLElement;
@@ -52,5 +60,5 @@ export function useLayout(): [Layout, (element: HTMLElement | null) => void] {
     element.querySelector<HTMLElement>(selector)?.focus();
   }, [element, layout]);
 
-  return [layout, useCallback((node: HTMLElement | null) => setElement(node), [])];
+  return [{ layout, portrait }, useCallback((node: HTMLElement | null) => setElement(node), [])];
 }

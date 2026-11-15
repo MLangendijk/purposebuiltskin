@@ -6,7 +6,6 @@ import { useMemo } from 'react';
 import { MuxChapters } from '@/video/mux/mux-chapters';
 import { type ShopConfig, VideoSkin } from '@/video/skin';
 
-import type { PlaybackProps } from '../shell/params';
 import { SPRING_EDIT, VERTICAL_CUT } from './spring-edit';
 
 /** A film on Mux, and the shop it sells from. The ids come from `scripts/films/*.conf` and the Mux scripts. */
@@ -53,10 +52,8 @@ export const VERTICAL: Film = {
  *
  * Mux Data reports each view under the film's title. The playback ID already ties views to the asset's environment, so
  * there's no `envKey`. Cookies stay off: the demo sets none, so it needs no consent banner.
- *
- * `media` carries the workbench's playback options: autoplay, muted, loop, and preload.
  */
-export function Player({ film = LOOKBOOK, media }: { film?: Film; media?: PlaybackProps }) {
+export function Player({ film = LOOKBOOK }: { film?: Film }) {
   const { playbackId, chaptersTrack, shop } = film;
   const local = !chaptersTrack;
   const muxData = useMemo(
@@ -67,7 +64,7 @@ export function Player({ film = LOOKBOOK, media }: { film?: Film; media?: Playba
   return (
     <VideoPlayer poster={`https://image.mux.com/${playbackId}/thumbnail.webp?time=${film.posterTime}&width=1280`}>
       <VideoSkin shop={shop}>
-        <MuxVideo {...media} src={`https://stream.mux.com/${playbackId}.m3u8`} playsInline crossOrigin="anonymous">
+        <MuxVideo src={`https://stream.mux.com/${playbackId}.m3u8`} playsInline crossOrigin="anonymous">
           {local && film.localChapters && (
             <track kind="chapters" label="Looks" srcLang="en" src={film.localChapters} default />
           )}

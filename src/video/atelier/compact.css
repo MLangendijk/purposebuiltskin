@@ -188,6 +188,25 @@
   bottom: calc(var(--u) * 2);
 }
 
+/*
+ * Portrait films (9:16): the tag hangs from the top left, as a swing tag does, clear of the garment and its hem. When
+ * focus brings it back over the controls, it drops below the top bar.
+ */
+.media-skin[data-skin="atelier"][data-shape="portrait"] .atelier-tag-anchor {
+  top: calc(var(--u) * 5);
+  bottom: auto;
+  inset-inline: calc(var(--u) * 3) auto;
+  transition:
+    top var(--atelier-slow) var(--atelier-ease),
+    opacity var(--atelier-fast) ease;
+}
+
+.media-skin[data-skin="atelier"][data-shape="portrait"][data-controls-visible] .atelier-tag-anchor,
+.media-skin[data-skin="atelier"][data-shape="portrait"] .atelier-tag-anchor:has(:focus) {
+  top: calc(var(--u) * 16);
+  bottom: auto;
+}
+
 .media-skin[data-skin="atelier"][data-layout="compact"] .atelier-start {
   padding: calc(var(--u) * 3);
 }

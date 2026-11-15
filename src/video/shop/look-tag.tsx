@@ -6,7 +6,8 @@ import { GarmentIcon } from '../garments/garment-icons';
 import { useGarmentLabel } from '../garments/use-garment-label';
 import { useShop } from './shop-context';
 import type { Look } from './types';
-import { useCurrentLook, usePlaybackState } from './use-looks';
+import { useHasPlayed } from '../atelier/use-has-played';
+import { useCurrentLook } from './use-looks';
 
 /**
  * A touch tap on the tag would reach the player's container first and call up the controls, and in compact players the
@@ -26,10 +27,10 @@ function keepTouchTap(button: HTMLButtonElement | null) {
 export function LookTag() {
   const { formatPrice, setOpenLook } = useShop();
   const t = useTranslator();
-  const playback = usePlaybackState();
+  const played = useHasPlayed();
   const { look, total } = useCurrentLook();
 
-  if (!look || !playback?.started) return null;
+  if (!look || !played) return null;
 
   return (
     <div className="atelier-tag-anchor">
