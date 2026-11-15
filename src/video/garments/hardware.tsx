@@ -48,9 +48,9 @@ const PARTS: Record<Garment, ReactNode> = {
       <rect x="13" y="5" width="2" height="6" rx="1" fill={INK} />
     </>
   ),
-  // A pressing iron, nose forward, pleats setting behind it.
+  // A pressing iron, nose forward, pleats setting behind it. Raised so its body, not body and handle, sits on the bar.
   skirt: (
-    <g transform="translate(28 0) scale(-1 1)">
+    <g transform="translate(28 -3.75) scale(-1 1)">
       <path d="M5 14h13a6.5 6.5 0 0 1 6.5 6.5V26H3l2-12z" fill={PEARL} stroke={INK} strokeWidth="1.5" strokeLinejoin="round" />
       <path d="M3 26h21.5v3.5H2.6z" fill={SILVER} stroke={INK} strokeWidth="1.5" strokeLinejoin="round" />
       <path d="M9 14c0-5 2-7.5 7-7.5h3" fill="none" stroke={INK} strokeWidth="2" strokeLinecap="round" />

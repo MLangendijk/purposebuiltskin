@@ -216,9 +216,15 @@
   cursor: grabbing;
 }
 
+/* The tool is taller than the thumb (28 × 36): centred on the bar, so the button, iron or pull sits on the seam. */
 .media-skin[data-skin="atelier"] .garment-hardware {
+  position: absolute;
+  inset-inline-start: 0;
+  top: 50%;
   width: 100%;
-  height: 100%;
+  height: auto;
+  aspect-ratio: 28 / 36;
+  translate: 0 -50%;
   overflow: visible;
   filter: drop-shadow(0 2px 3px rgb(42 40 38 / 0.3));
   transition: scale var(--atelier-fast) ease;

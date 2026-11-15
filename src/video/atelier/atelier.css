@@ -458,7 +458,20 @@
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  --media-tooltip-side-offset: calc(var(--u) * 14);
+  --media-tooltip-side-offset: var(--atelier-popup-gap);
+}
+
+/*
+ * How far popups (tooltips, the settings menu) stand off their button. In the regular layout the buttons sit in the
+ * panel's bottom row, so popups clear the whole panel: its padding and border, the garment strip, the department rail
+ * and their gaps, plus 2u of air. In compact layouts the buttons stand alone, so 2u is enough.
+ */
+.media-skin[data-skin="atelier"] {
+  --atelier-popup-gap: calc(var(--u) * 2);
+}
+
+.media-skin[data-skin="atelier"][data-layout="regular"] {
+  --atelier-popup-gap: calc(var(--u) * (2 + 11 + 0.5 + 5 + 1.5 + 2) + 1px);
 }
 
 .media-skin[data-skin="atelier"] .media-tooltip-shortcut {
@@ -476,7 +489,8 @@
   box-shadow: var(--atelier-shadow);
   font-family: var(--sans);
   font-size: calc(var(--u) * 3.25);
-  --media-popover-side-offset: calc(var(--u) * 14);
+  min-width: calc(var(--u) * 60);
+  --media-popover-side-offset: var(--atelier-popup-gap);
 }
 
 .media-skin[data-skin="atelier"] .media-menu-content {
