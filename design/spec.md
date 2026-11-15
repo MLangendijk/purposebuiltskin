@@ -30,10 +30,10 @@ centre; one bottom row of mute, the garment strip, time and fullscreen. The tag 
 | --- | --- | --- |
 | Seek bar | One swatch per chapter, finished as it plays | Knitted rows, buttons done up, a seam sewn, pleats pressed, a zip closed |
 | Playhead | The tool doing that finishing | Knitting needle, button, needle and thread, iron, zip pull |
-| Volume | Size run XS to XL, a fifth each | Turning it up is going up a size |
+| Volume | A hairdryer's airflow, reaching further as it gets louder | Stronger blowing is louder; nothing else uses air |
 | Time | Tailor's tape measure that pulls out as it plays | It measures the film's length |
 | Replay | The tape rewinding | Back to zero |
-| Mute | Open zip lets the sound out; closed zip shuts it in | "Zip it" |
+| Mute | The hairdryer itself, switched off (crossed out) when muted | Off is silent |
 | Pause | Two dressmaker's pins | The moment is pinned |
 | Previous / next look | Hangers along a rail | Moving along the rail |
 | Settings | Tailor's scissors | Alterations |
@@ -69,7 +69,8 @@ their materials with them.
 ## Slider
 
 - Seek: 6u swatch strip, pill segments, the active one outlined in charcoal, growing 1.5u on hover (**derived**).
-- Volume: five chips, each centred on its step so a click picks that size.
+- Volume: three streams of air fanning out from the dryer's nozzle; solid in the accent up to the level, a faint
+  dotted trace beyond it. The air drifts while playing, and rests when paused, muted or under reduced motion.
 
 ## Motion
 
@@ -77,7 +78,6 @@ Tokens `--drop-fast` 160ms and `--drop-slow` 420ms, both collapsed under reduced
 
 - The tag swings on its cord when the piece changes.
 - The playhead tool swaps in when the garment changes, never on first load.
-- The zip pull slides when you mute.
 - The tape slides with playback.
 - Controls fade and lift.
 

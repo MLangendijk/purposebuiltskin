@@ -6,7 +6,7 @@ import { FullscreenButton, MuteButton, PlayButton } from './drop/buttons';
 import { TopBar } from './drop/top-bar';
 import type { Layout } from './drop/use-layout';
 import { GarmentSeek } from './garments/garment-seek';
-import { SizeVolume } from './garments/size-volume';
+import { DryerVolume } from './garments/dryer-volume';
 import { TapeMeasure } from './garments/tape-measure';
 import { SettingsMenu } from './shared/settings-menu';
 import { VideoBufferingIndicator } from './shared/video-feedback';
@@ -45,7 +45,7 @@ function RegularControls() {
             <PlayButton className="drop-play" />
             <LookSkip direction="prev" />
             <LookSkip direction="next" />
-            <SizeVolume />
+            <DryerVolume />
             <TapeMeasure />
           </div>
           <div className="drop-group">

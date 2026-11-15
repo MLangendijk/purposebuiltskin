@@ -1,5 +1,5 @@
 /*
- * Garment materials for the seek bar, the playhead tools, the department rail, the size-run volume, and the
+ * Garment materials for the seek bar, the playhead tools, the department rail, the hairdryer volume, and the
  * tape-measure time.
  *
  * Every chapter of the strip has two layers of the same garment: "ahead" (unfinished: loose yarn, buttonholes, chalk
@@ -311,80 +311,91 @@
   font-weight: 500;
 }
 
-/* ---------------------------------------------------------------- Volume: a size run, XS to XL */
+/* ---------------------------------------------------------------- Volume: a hairdryer and its airflow */
 
-.media-skin[data-skin="drop"] {
-  --size-run: calc(var(--u) * 32);
-}
-
-.media-skin[data-skin="drop"] .size-volume {
+.media-skin[data-skin="drop"] .dryer {
   display: flex;
   align-items: center;
   height: var(--drop-control);
 }
 
-.media-skin[data-skin="drop"] .size-slider {
+.media-skin[data-skin="drop"] .dryer-slider {
   position: relative;
   display: flex;
   align-items: center;
-  width: var(--size-run);
+  width: calc(var(--u) * 26);
   height: 100%;
-  /* The chips sit a tenth to the right (see below), so leave them room before the next control. */
-  margin-inline: calc(var(--u) * 1) calc(var(--size-run) / 10 + var(--u) * 2);
+  margin-inline: calc(var(--u) * -1) calc(var(--u) * 2);
   cursor: pointer;
   touch-action: none;
 }
 
-/*
- * Each chip is centred on its volume step (XS at 20% ... XL at 100%), so the slider's round-to-nearest-step lands on
- * the chip that was clicked. That shifts the run a tenth to the right; the sliver before XS is "silent".
- */
-.media-skin[data-skin="drop"] .size-track {
+/* The air leaves the nozzle on the left and fans out to the right. */
+.media-skin[data-skin="drop"] .dryer-track {
   position: relative;
   width: 100%;
-  height: calc(var(--u) * 6.5);
+  height: calc(var(--u) * 7);
 }
 
-.media-skin[data-skin="drop"] .size-run {
+.media-skin[data-skin="drop"] .dryer-fill {
   position: absolute;
   inset-block: 0;
-  left: 10%;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 3px;
-  width: 100%;
+  inset-inline-start: 0;
+  width: var(--media-slider-fill, 0%);
+  overflow: hidden;
 }
 
-.media-skin[data-skin="drop"] .size-run span {
-  display: grid;
-  place-items: center;
-  border: 1px solid var(--hairline);
-  border-radius: 999px;
-  color: var(--taupe);
-  font-size: calc(var(--u) * 2.5);
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  transition:
-    background-color var(--drop-fast) ease,
-    color var(--drop-fast) ease;
+.media-skin[data-skin="drop"] .dryer-air {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: calc(var(--u) * 26);
+  height: 100%;
+  overflow: visible;
 }
 
-.media-skin[data-skin="drop"] .size-run span[data-on] {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: var(--accent-text);
+.media-skin[data-skin="drop"] .dryer-air path {
+  fill: none;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
 }
 
-/* Muted: no size is lit, and every size reads as sold out. */
-.media-skin[data-skin="drop"] .size-volume:has([data-muted]) .size-run span {
-  text-decoration: line-through;
+/* Where the air doesn't reach yet: a faint dotted trace of the full stream. */
+.media-skin[data-skin="drop"] .dryer-track > .dryer-air path {
+  stroke: var(--taupe);
+  stroke-width: 1.25px;
+  stroke-dasharray: 1 5;
+  opacity: 0.55;
 }
 
-/*
- * The sizes themselves show the level, so the thumb is an invisible handle; the whole 44px-tall run is the pointer
- * target, and keyboard focus rings the run.
- */
-.media-skin[data-skin="drop"] .size-thumb {
+/* The air it blows: solid, in the accent. */
+.media-skin[data-skin="drop"] .dryer-fill .dryer-air path {
+  stroke: var(--accent);
+  stroke-width: 2px;
+  stroke-dasharray: 14 6;
+}
+
+/* While the film plays, the air drifts out of the nozzle. */
+.media-skin[data-skin="drop"] .dryer[data-flowing] .dryer-fill .dryer-air path {
+  animation: dryer-flow 1.1s linear infinite;
+}
+
+.media-skin[data-skin="drop"] .dryer-fill .dryer-air path:nth-child(2) {
+  animation-delay: -0.35s;
+}
+
+.media-skin[data-skin="drop"] .dryer-fill .dryer-air path:nth-child(3) {
+  animation-delay: -0.7s;
+}
+
+@keyframes dryer-flow {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+/* The level itself is drawn by the air, so the thumb is an invisible handle; keyboard focus rings the airflow. */
+.media-skin[data-skin="drop"] .dryer-thumb {
   position: absolute;
   left: var(--media-slider-fill, 0%);
   width: 1px;
@@ -392,19 +403,19 @@
   opacity: 0;
 }
 
-.media-skin[data-skin="drop"] .size-thumb:focus-visible {
+.media-skin[data-skin="drop"] .dryer-thumb:focus-visible {
   outline: none;
   box-shadow: none;
 }
 
-.media-skin[data-skin="drop"] .size-slider:has(.size-thumb:focus-visible) .size-run {
+.media-skin[data-skin="drop"] .dryer-slider:has(.dryer-thumb:focus-visible) .dryer-track {
   border-radius: 999px;
   outline: var(--drop-focus-outline);
   box-shadow: var(--drop-focus-ring);
 }
 
 @media (pointer: coarse) {
-  .media-skin[data-skin="drop"] .size-slider {
+  .media-skin[data-skin="drop"] .dryer-slider {
     display: none;
   }
 }
@@ -481,7 +492,7 @@
 
 @container media-root (width < 40rem) {
   .media-skin[data-skin="drop"] .garment-rail-label,
-  .media-skin[data-skin="drop"] .size-slider {
+  .media-skin[data-skin="drop"] .dryer-slider {
     display: none;
   }
 }
@@ -495,8 +506,8 @@
 /* ---------------------------------------------------------------- Preferences */
 
 @media (prefers-reduced-motion: reduce) {
-  .media-skin[data-skin="drop"] .garment-hardware {
-    animation: none;
+  .media-skin[data-skin="drop"] :is(.garment-hardware, .dryer-air path) {
+    animation: none !important;
   }
 
   /* The readout still counts; the tape just stops sliding. */

@@ -135,8 +135,9 @@ export function Site() {
             <article>
               <h3>Every control has a job in the atelier</h3>
               <p>
-                Volume is a size run, so turning it up is going up a size. Time is a tailor's tape measure that pulls
-                out as the film plays, and replay rewinds it. Mute zips the sound shut. Pause pins the moment. Hangers
+                Volume is a salon hairdryer: its airflow reaches further the louder the film plays, and switching the
+                dryer off mutes it. Time is a tailor's tape measure that pulls out as the film plays, and replay rewinds
+                it. Pause pins the moment. Hangers
                 move along the rail to the next piece, and scissors open the alterations.
               </p>
             </article>

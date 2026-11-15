@@ -42,7 +42,7 @@ export interface VideoSkinProps extends Omit<ContainerPrimitive.Props, 'children
 /**
  * Drop: a skin for shoppable fashion video, built from the clothes themselves. The seek bar is cut from each garment's
  * material and finished as it plays, by the tool that does the job (button, needle, zip pull, safety pin, aglet, iron).
- * Volume is a size run, time a tape measure, mute a zipper, and the shop hangs off swing tags. It builds on the
+ * Volume is a hairdryer and its airflow, time a tape measure, and the shop hangs off swing tags. It builds on the
  * Scaffold skin's behavior.
  */
 export function VideoSkin({ children, className, shop, renderPoster, ...props }: VideoSkinProps = {}) {

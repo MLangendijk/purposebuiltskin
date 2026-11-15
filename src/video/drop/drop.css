@@ -99,35 +99,10 @@
 
 /* ---------------------------------------------------------------- State-change motion */
 
-/* Muting zips the sound shut, unmuting opens it. */
-.media-skin[data-skin="drop"] :is(.icon-zip-pull, .icon-teeth, .icon-spin) {
-  transform-box: fill-box;
-}
-
-.media-skin[data-skin="drop"] .media-mute-button-off-icon .icon-zip-pull {
-  animation: icon-zip 420ms var(--drop-ease) both;
-}
-
-.media-skin[data-skin="drop"] .media-mute-button-high-icon .icon-teeth {
-  transform-origin: 0 50%;
-  animation: icon-unzip 360ms var(--drop-ease) both;
-}
-
 .media-skin[data-skin="drop"] .icon-spin {
+  transform-box: fill-box;
   transform-origin: center;
   animation: icon-spin 1.8s linear infinite;
-}
-
-@keyframes icon-zip {
-  from {
-    translate: -9px 0;
-  }
-}
-
-@keyframes icon-unzip {
-  from {
-    scale: 1 0.1;
-  }
 }
 
 @keyframes icon-spin {
@@ -1285,7 +1260,7 @@
     --drop-slow: 0ms;
   }
 
-  .media-skin[data-skin="drop"] :is(.drop-tag-face, .drop-sheet, .icon-zip-pull, .icon-teeth) {
+  .media-skin[data-skin="drop"] :is(.drop-tag-face, .drop-sheet) {
     animation: none;
   }
 

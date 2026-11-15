@@ -3,9 +3,9 @@
 import type { SVGProps } from 'react';
 
 /**
- * Drop's icon set, in fine line. Where a garment has a real job that matches the control, the icon is that garment: pins hold the
- * moment (pause), a tape measure rewinds to zero (replay), a zipper shuts the sound in (mute), hangers move along the
- * rail (next look), scissors make alterations (settings), stitches sew while it loads. Play and fullscreen keep their
+ * Drop's icon set, in fine line. Where an atelier tool has a real job that matches the control, the icon is that tool:
+ * pins hold the moment (pause), a tape measure rewinds to zero (replay), a hairdryer switches the sound on and off
+ * (mute), hangers move along the rail (next look), scissors make alterations (settings), stitches sew while it loads. Play and fullscreen keep their
  * standard shapes, because no garment does those jobs better. Every icon is decorative; the button carries the label.
  * Parts that animate on a state change carry an `icon-*` class (see drop.css).
  */
@@ -55,24 +55,28 @@ export const RestartIcon = (p: IconProps) => (
   </Icon>
 );
 
-const SPEAKER = 'M2.5 8.5h4l5.5-4.5v16l-5.5-4.5h-4z';
+/** A hairdryer, nozzle forward: barrel, rear vent and handle. */
+const DRYER = (
+  <>
+    <path d="M5 5h9l5 1.75v4.5L14 13H5a4 4 0 0 1 0-8z" />
+    <circle cx="5.5" cy="9" r="1.6" />
+    <path d="M8 13l-1.5 7.5h3.25L11.5 13" />
+  </>
+);
 
-/** Unmuted: the zipper is open and the sound pours out between the teeth. */
+/** Sound on: the hairdryer, blowing. Its airflow is the volume slider beside it. */
 export const VolumeIcon = (p: IconProps) => (
   <Icon {...p}>
-    <path d={SPEAKER} fill="currentColor" stroke="none" />
-    <path className="icon-teeth" d="M14.5 11l7-6.5M14.5 13l7 6.5" strokeWidth="2.04" strokeDasharray="1.6 1.4" strokeLinecap="round" />
+    {DRYER}
+    <path d="M21.5 7.5h1M21.5 10.5h1" />
   </Icon>
 );
 
-/** Muted: the zipper is done up and the sound is shut in. The pull slides across when it mutes. */
+/** Muted: the hairdryer, switched off. */
 export const MutedIcon = (p: IconProps) => (
   <Icon {...p}>
-    <path d={SPEAKER} fill="currentColor" stroke="none" />
-    <path d="M14 10.5v3M16 9.5v3M18 10.5v3M20 9.5v3M22 10.5v3" strokeWidth="1.19" strokeLinecap="round" />
-    <g className="icon-zip-pull">
-      <path d="M19.5 13h4v3h-1.25v4h-1.5v-4H19.5z" fill="currentColor" stroke="none" />
-    </g>
+    {DRYER}
+    <path d="M2.5 2.5l19 19" strokeWidth="2" />
   </Icon>
 );
 
