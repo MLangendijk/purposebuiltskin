@@ -38,6 +38,8 @@ export function useLayout(): [Shape, (element: HTMLElement | null) => void] {
       const { width, height } = entry!.contentRect;
       setLayout(width < COMPACT_WIDTH || height < COMPACT_HEIGHT ? 'compact' : 'regular');
       setPortrait(height > width);
+      // CSS can only query the player's width, so its height goes in a property (the seek preview sizes by it).
+      element.style.setProperty('--atelier-player-height', `${height}px`);
     });
     const remember = (event: FocusEvent) => {
       const target = event.target as HTMLElement;

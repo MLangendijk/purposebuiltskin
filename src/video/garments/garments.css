@@ -345,6 +345,33 @@
 }
 
 /*
+ * Compact landscape players (a 16:9 film on a phone held upright) are short, so the label sits beside the frame, not
+ * under it, and the frame shrinks to the player's height. The narrowest show the label alone. The preview then always
+ * fits above the strip.
+ */
+.media-skin[data-skin="atelier"][data-layout="compact"][data-shape="landscape"] .garment-preview {
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  max-width: min(calc(var(--u) * 72), calc(100cqi - var(--u) * 26));
+}
+
+.media-skin[data-skin="atelier"][data-layout="compact"][data-shape="landscape"] .garment-preview-frame {
+  max-width: min(calc(var(--u) * 30), calc((var(--atelier-player-height, 100vh) - var(--u) * 30) * 16 / 9));
+}
+
+.media-skin[data-skin="atelier"][data-layout="compact"][data-shape="landscape"] .garment-preview-label {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(var(--u) * 0.5);
+}
+
+@container media-root (width < 22.5rem) {
+  .media-skin[data-skin="atelier"][data-layout="compact"][data-shape="landscape"] .garment-preview-frame {
+    display: none;
+  }
+}
+
+/*
  * Portrait players: the frame is portrait too, so it takes at most half the player's width, with the time over the
  * chapter title, and the tiniest show the label alone. The preview then always fits above the strip.
  */
