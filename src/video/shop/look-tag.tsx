@@ -8,6 +8,17 @@ import { useShop } from './shop-context';
 import { useCurrentLook, usePlaybackState } from './use-looks';
 
 /**
+ * A touch tap on the tag would reach the player's container first and call up the controls, and in compact players the
+ * tag steps aside for them before the click lands. A native listener (React's sit above the container) keeps the tap.
+ */
+function keepTouchTap(button: HTMLButtonElement | null) {
+  if (!button) return;
+  const stop = (event: PointerEvent) => event.pointerType === 'touch' && event.stopPropagation();
+  button.addEventListener('pointerup', stop);
+  return () => button.removeEventListener('pointerup', stop);
+}
+
+/**
  * A kraft swing tag for the piece on screen, hanging on its string. It stays up while the controls hide, because in a
  * shoppable video the product is the point.
  */
@@ -37,6 +48,7 @@ export function LookTag() {
         ]
           .filter(Boolean)
           .join(', ')}
+        ref={keepTouchTap}
         onClick={() => setOpenLook(look)}
       >
         {/* Only the face re-mounts per look, so a focused tag keeps focus when the piece changes. */}
