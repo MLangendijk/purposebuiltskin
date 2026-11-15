@@ -334,6 +334,23 @@
   clip-path: inset(50%);
 }
 
+/* Portrait players are tall: the product photo comes back, above the details, and fills the height they leave. */
+.media-skin[data-skin="atelier"][data-shape="portrait"] .atelier-sheet {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+}
+
+.media-skin[data-skin="atelier"][data-shape="portrait"] .atelier-sheet-media {
+  display: block;
+}
+
+/* The close button then sits over the photo, so it gets a solid surface to read on. */
+.media-skin[data-skin="atelier"][data-shape="portrait"] .atelier-sheet-close {
+  border-color: var(--hairline);
+  background: var(--ivory);
+  box-shadow: var(--atelier-shadow);
+}
+
 .media-skin[data-skin="atelier"][data-layout="compact"] .atelier-sizes-legend {
   margin-bottom: calc(var(--u) * 1);
 }

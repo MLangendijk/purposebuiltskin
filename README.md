@@ -58,7 +58,7 @@ Where the chapters come from:
   ```
 
 - **WebVTT:** a chapters `<track>`. The cue identifier is the look id; the title names the garment.
-- **Neither:** the skin builds the chapters from each look's `start` and `end`. Those timings also stand in while a chapters file loads, or if it fails, so the shop keeps working.
+- **Neither:** the skin builds the chapters from each look's `start` and `end`. Those timings also stand in while a chapters file loads, or if it fails, so the shop keeps working. With no chapters and no timings, the strip is cut whole from one garment, picked at random, with no seams.
 
 The rail drops its labels on short chapters and its icons on very short ones. In compact players the skin switches layout by measuring its own box, so portrait (9:16) and square players work too. Narrow players fold the bag to its icon with a count badge, so sound, time, captions, settings and bag still fit; only players under 280px drop the time.
 
@@ -127,11 +127,12 @@ Each film has a config in `scripts/films/` (`spring-edit`, `vertical`), and the 
 
 ```sh
 pnpm install
-pnpm dev        # showcase at /, elements at /elements.html, device simulator at /devices.html
+pnpm dev        # showcase at /, elements at /elements.html; dev only: device simulator at /devices.html, plain player at /plain.html
 pnpm run build
 ```
 
 - `src/video/skin.tsx`: the skin. `garments/` holds the seek strip, its pieces (`use-pieces.ts`), playhead tools, icons, hairdryer volume and tape-measure time; `atelier/` the other controls, layouts and styles; `shop/` the swing tag, product sheet, bag, look skipping and the looks-as-chapters fallback; `mux/` the Mux chapters loader.
+- `scripts/capture-media.mjs`: captures the entry's stills (4:3 PNG) and demo videos (1600×1200 MP4) from the live site in a headless Chrome, so your screen is left alone. Needs Chrome and ffmpeg; the plain-player shots need `pnpm dev` running.
 - `scripts/build-media.sh`: rebuilds the demo lookbook, poster, product shots, storyboard and chapters from Mixkit sources (`build-media.sh chapters` rewrites only the chapters). `scripts/build-vertical.sh` cuts the 9:16 film from the same clips.
 - `apps/preview/`: the showcase page (`index.html`), the elements page (`elements.html`: every part on its own, live on one player, with the component and file that draw it), and the demo media. `src/frame/player.tsx` holds the films on Mux.
 

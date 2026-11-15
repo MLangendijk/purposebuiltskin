@@ -2,10 +2,10 @@
 
 import { selectTime } from '@videojs/core/dom';
 import { Slider as SliderPrimitive, TimeSlider, usePlayer } from '@videojs/react';
-import { type CSSProperties, useEffect, useRef } from 'react';
+import { type CSSProperties, useEffect, useRef, useState } from 'react';
 
 import { GarmentIcon } from './garment-icons';
-import type { Garment } from './garments';
+import { type Garment, GARMENTS } from './garments';
 import { Hardware } from './hardware';
 import { SteadyThumb } from './steady-thumb';
 import { type Piece, pieceAt, usePieces } from './use-pieces';
@@ -17,13 +17,15 @@ import { type Piece, pieceAt, usePieces } from './use-pieces';
  *
  * The strip follows whatever chapters the film has, so any cut works: a 40-second lookbook or a runway show, five
  * looks or twenty. Each chapter names its garment in its metadata or title (see `use-pieces.ts`), so chapters served
- * by Mux carry their materials with them; a garment the skin doesn't draw is cut as a toile.
+ * by Mux carry their materials with them; a garment the skin doesn't draw is cut as a toile. A film with no chapters
+ * at all is cut whole from one garment, picked at random, with no seams.
  */
 export function GarmentSeek() {
   const pieces = usePieces();
   const time = usePlayer(selectTime)?.currentTime ?? 0;
   const current = pieceAt(pieces, time) ?? pieces[0];
-  const garment: Garment = current?.garment ?? 'other';
+  const [whole] = useState(pickGarment);
+  const garment: Garment = pieces.length ? (current?.garment ?? 'other') : whole;
   // The tool only swaps in with motion when the garment changes, never on first load.
   const previous = useRef(garment);
   const swapped = previous.current !== garment;
@@ -40,14 +42,14 @@ export function GarmentSeek() {
             <div
               {...props}
               className="garment-segment"
-              // Without chapters the strip is one toile. A stretch no chapter covers when there are chapters (a few frames of
-              // encoder rounding at the end) shows no garment.
+              // Without chapters the strip is one whole garment. A stretch no chapter covers when there are chapters (a few
+              // frames of encoder rounding at the end) shows no garment.
               data-garment={
                 state.cue
                   ? (pieces.find((piece) => piece.start === state.cue!.startTime)?.garment ?? 'other')
                   : pieces.length
                     ? 'none'
-                    : 'other'
+                    : whole
               }
               style={{ ...props.style, '--fill': `${state.fillPercent}%` } as CSSProperties}
             >
@@ -101,4 +103,10 @@ function GarmentRail({ pieces, current }: { pieces: Piece[]; current: Piece | un
       ))}
     </div>
   );
+}
+
+/** One of the garments the skin draws in full (not the toile), at random. */
+function pickGarment(): Garment {
+  const drawn = GARMENTS.filter((garment) => garment !== 'other');
+  return drawn[Math.floor(Math.random() * drawn.length)]!;
 }

@@ -1054,6 +1054,13 @@
   background: linear-gradient(to left, rgb(28 27 26 / 0.25), transparent 60%);
 }
 
+/* A plain player (no shop): the poster and one play button in the middle. */
+.media-skin[data-skin="atelier"] .atelier-start-plain {
+  justify-content: center;
+  align-items: center;
+  background: rgb(28 27 26 / 0.15);
+}
+
 /* The cover copy sits on a solid ivory card, so it reads at 7:1 whatever the frame behind it. */
 .media-skin[data-skin="atelier"] .atelier-start-card {
   display: flex;

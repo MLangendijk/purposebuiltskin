@@ -10,17 +10,19 @@ import { useShop } from '../shop/shop-context';
  * settings here, so the garment strip gets the bottom row to itself.
  */
 export function TopBar({ start, settings }: { start?: ReactNode; settings?: ReactNode } = {}) {
-  const { config } = useShop();
+  const { config, enabled } = useShop();
 
   return (
     <>
-      <span className="atelier-stamp" aria-hidden="true">
-        {config.brand}
-      </span>
+      {enabled && (
+        <span className="atelier-stamp" aria-hidden="true">
+          {config.brand}
+        </span>
+      )}
       {start && <span className="atelier-top-start">{start}</span>}
       <span className="atelier-top-actions">
         {settings}
-        <BagMenu />
+        {enabled && <BagMenu />}
       </span>
     </>
   );

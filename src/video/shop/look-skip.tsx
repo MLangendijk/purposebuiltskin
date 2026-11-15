@@ -4,11 +4,13 @@ import { useTranslator } from '@videojs/react';
 
 import { NextLookIcon, PrevLookIcon } from '../atelier/icons';
 import { ButtonTooltip } from '../shared/tooltip';
+import { useShop } from './shop-context';
 import { useCurrentLook, useLookSeek } from './use-looks';
 
 /** Jumps to the previous or next look, the way you move along a rail of hangers. */
 export function LookSkip({ direction }: { direction: 'prev' | 'next' }) {
   const t = useTranslator();
+  const { enabled } = useShop();
   const { prev, next, seekTo } = useLookSeek();
   const current = useCurrentLook().look;
   const target = direction === 'prev' ? prev : next;
@@ -34,6 +36,8 @@ export function LookSkip({ direction }: { direction: 'prev' | 'next' }) {
       ? t('atelier.previousLookShort', { id: look.id, default: 'Previous look {id}' })
       : t('atelier.nextLookShort', { id: look.id, default: 'Next look {id}' })
     : label;
+
+  if (!enabled) return null;
 
   return (
     <ButtonTooltip label={tooltip}>

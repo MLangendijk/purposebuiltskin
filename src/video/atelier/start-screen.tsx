@@ -1,7 +1,7 @@
 /** @jsxImportSource react */
 
 import { useTranslator } from '@videojs/react';
-import { useEffect, useRef } from 'react';
+import { type FocusEvent, useEffect, useRef } from 'react';
 
 import { GarmentIcon } from '../garments/garment-icons';
 import { useGarmentLabel } from '../garments/use-garment-label';
@@ -11,7 +11,7 @@ import { useHasPlayed } from './use-has-played';
 
 /** The cover over the poster until playback starts: house, collection, the pieces in the film, and play. */
 export function StartScreen() {
-  const { config, formatPrice } = useShop();
+  const { config, enabled, formatPrice } = useShop();
   const t = useTranslator();
   const department = useGarmentLabel();
   const started = useHasPlayed();
@@ -29,11 +29,21 @@ export function StartScreen() {
   if (started) return null;
 
   const from = config.looks.length ? Math.min(...config.looks.map((look) => look.price)) : 0;
+  const onFocus = (event: FocusEvent<HTMLElement>) => (focusHome.current = event.currentTarget.closest('.media-container'));
+
+  // A plain player (no shop) starts from the poster with a play button alone.
+  if (!enabled) {
+    return (
+      <div className="atelier-start atelier-start-plain" onFocus={onFocus} onBlur={() => (focusHome.current = null)}>
+        <PlayButton className="atelier-start-play" label={t('atelier.play', { default: 'Play' })} tooltip={false} />
+      </div>
+    );
+  }
 
   return (
     <div
       className="atelier-start"
-      onFocus={(event) => (focusHome.current = event.currentTarget.closest('.media-container'))}
+      onFocus={onFocus}
       onBlur={() => (focusHome.current = null)}
     >
       <div className="atelier-start-card">

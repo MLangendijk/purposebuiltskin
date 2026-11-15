@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Atelier — plain player (dev only)</title>
+    <style>
+      /* Dev-only: the skin with no shop and a film with no chapters. Not part of the build. */
+      html, body { margin: 0; min-height: 100%; background: #fbf8f3; }
+      body { display: grid; place-items: center; min-height: 100vh; }
+      #root { width: min(1168px, 92vw); border-radius: 20px; overflow: hidden; box-shadow: 0 30px 80px rgb(42 40 38 / 0.18); }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="./src/plain/main.tsx"></script>
+  </body>
+</html>

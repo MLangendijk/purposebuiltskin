@@ -5,6 +5,8 @@ import { createContext, type ReactNode, useCallback, useContext, useMemo, useSta
 import type { BagItem, Look, ShopConfig } from './types';
 
 interface ShopContextValue {
+  /** Whether the skin was given a shop. Without one it's a plain player: no wordmark, bag, hangers or tags. */
+  enabled: boolean;
   config: Required<Omit<ShopConfig, 'onAddToBag' | 'onCheckout'>> & Pick<ShopConfig, 'onAddToBag' | 'onCheckout'>;
   formatPrice: (value: number) => string;
   bag: BagItem[];
@@ -19,7 +21,8 @@ const ShopContext = createContext<ShopContextValue | null>(null);
 
 const EMPTY: ShopConfig = { looks: [] };
 
-export function ShopProvider({ shop = EMPTY, children }: { shop?: ShopConfig | undefined; children: ReactNode }) {
+export function ShopProvider({ shop, children }: { shop?: ShopConfig | undefined; children: ReactNode }) {
+  const enabled = shop !== undefined;
   const [bag, setBag] = useState<BagItem[]>([]);
   const [openLook, setOpenLook] = useState<Look | null>(null);
 
@@ -31,7 +34,7 @@ export function ShopProvider({ shop = EMPTY, children }: { shop?: ShopConfig | u
       seasonName: 'Spring/Summer 2027',
       currency: 'EUR',
       locale: 'en-IE',
-      ...shop,
+      ...(shop ?? EMPTY),
     }),
     [shop]
   );
@@ -58,8 +61,8 @@ export function ShopProvider({ shop = EMPTY, children }: { shop?: ShopConfig | u
   }, []);
 
   const value = useMemo(
-    () => ({ config, formatPrice, bag, addToBag, removeFromBag, openLook, setOpenLook }),
-    [config, formatPrice, bag, addToBag, removeFromBag, openLook]
+    () => ({ enabled, config, formatPrice, bag, addToBag, removeFromBag, openLook, setOpenLook }),
+    [enabled, config, formatPrice, bag, addToBag, removeFromBag, openLook]
   );
 
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
