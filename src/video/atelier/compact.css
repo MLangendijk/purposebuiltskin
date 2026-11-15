@@ -169,8 +169,10 @@
 }
 
 .media-skin[data-skin="atelier"][data-layout="compact"] .atelier-start-play.media-button {
-  height: calc(var(--u) * 12);
-  font-size: calc(var(--u) * 5.5);
+  min-height: calc(var(--u) * 12);
+  padding-inline: calc(var(--u) * 5);
+  font-size: calc(var(--u) * 4);
+  letter-spacing: 0.12em;
 }
 
 @media (pointer: coarse) {

@@ -1118,13 +1118,17 @@
   letter-spacing: 0.04em;
 }
 
+/* A minimum height, not a fixed one: if the label wraps (large text, a narrow card), the button grows with it. */
 .media-skin[data-skin="atelier"] .atelier-start-play.media-button {
   width: auto;
-  height: calc(var(--u) * 13);
+  height: auto;
+  min-height: calc(var(--u) * 13);
   display: inline-flex;
   gap: calc(var(--u) * 3);
   margin-top: calc(var(--u) * 2);
-  padding: 0 calc(var(--u) * 7) 0 calc(var(--u) * 6);
+  padding: calc(var(--u) * 2) calc(var(--u) * 7) calc(var(--u) * 2) calc(var(--u) * 6);
+  line-height: 1.25;
+  text-wrap: balance;
   border-color: var(--accent);
   background: var(--accent);
   color: var(--accent-text);
