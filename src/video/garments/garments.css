@@ -344,6 +344,26 @@
   font-variant-numeric: tabular-nums;
 }
 
+/*
+ * Portrait players: the frame is portrait too, so it takes at most half the player's width, with the time over the
+ * chapter title, and the tiniest show the label alone. The preview then always fits above the strip.
+ */
+.media-skin[data-skin="atelier"][data-shape="portrait"] :is(.garment-preview, .garment-preview-frame) {
+  max-width: min(calc(var(--u) * 48), 50cqi);
+}
+
+.media-skin[data-skin="atelier"][data-shape="portrait"] .garment-preview-label {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(var(--u) * 0.5);
+}
+
+@container media-root (width < 12.5rem) {
+  .media-skin[data-skin="atelier"][data-shape="portrait"] .garment-preview-frame {
+    display: none;
+  }
+}
+
 .media-skin[data-skin="atelier"] .garment-preview-label .media-time-slider-value {
   white-space: nowrap;
 }

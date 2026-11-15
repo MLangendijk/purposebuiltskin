@@ -109,7 +109,7 @@
 
 /*
  * Narrow players (a 9:16 film in a side column): the bag folds to its icon with the count as a badge, so sound, time,
- * captions, settings and bag all still fit. Only the narrowest drop the time.
+ * captions, settings and bag all still fit. Only the narrowest drop the time, and then the captions button.
  */
 @container media-root (width < 21rem) {
   .media-skin[data-skin="atelier"] .atelier-top-actions .atelier-bag-button {
@@ -133,6 +133,13 @@
 
 @container media-root (width < 17.5rem) {
   .media-skin[data-skin="atelier"] .atelier-top-start .tape-measure {
+    display: none;
+  }
+}
+
+/* Tiny players: the captions button steps out too; captions stay in settings and on the C key. */
+@container media-root (width < 14rem) {
+  .media-skin[data-skin="atelier"] .atelier-top-actions .media-captions-button {
     display: none;
   }
 }
