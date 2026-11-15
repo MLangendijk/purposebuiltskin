@@ -170,7 +170,8 @@ export function SettingsMenu({ side = 'top' }: { side?: 'top' | 'bottom' } = {})
           </TextPrimitive>
         </Menu.Trigger>
       </ButtonTooltip>
-      <Menu.Popup keepMounted className={cn('media-popup', 'media-popup-safe-area', 'media-menu-popup')}>
+      {/* No hover bridge (`media-popup-safe-area`): the menu opens on click, and the bridge can make it flip sides in a loop. See tooltip.tsx. */}
+      <Menu.Popup keepMounted className={cn('media-popup', 'media-menu-popup')}>
         <Menu.Content className={'media-menu-content'}>
           <QualityMenu />
           <AudioTrackMenu />
