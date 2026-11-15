@@ -44,7 +44,7 @@ The strip follows the film's chapters, so it fits any video: a 40-second lookboo
 - **Its garment:** from the chapter's metadata, else its title (`Knitwear · Cable-Knit Jumper`), else the look it sells. A garment the skin doesn't draw (`Outerwear`, `Footwear`) is cut as a toile, and the department rail shows the title's own word for it.
 - **Its look:** the look the chapter's metadata or cue id names, else the one its title names (`… · Linen Maxi Dress`), else the look in the same position when there's one per chapter. Chapters without a look (an intro, a finale) have no swing tag, and the hangers skip them.
 
-The showcase proves it with two films on Mux: the 16:9 lookbook (five looks of eight seconds), and a 30-second 9:16 vertical cut. The vertical cut opens on the rail with nothing to buy, then shows the same pieces in a new order and at different lengths. The skin and products are the same, and the strip, tags and hangers follow each film's chapters.
+The showcase proves it with two films on Mux: the 16:9 lookbook (five looks of eight seconds), and a 30-second 9:16 vertical cut. The vertical cut opens on the rail with nothing to buy, then shows three of the pieces in a new order and at different lengths. The skin and products are the same, and the strip, tags and hangers follow each film's chapters.
 
 Where the chapters come from:
 
