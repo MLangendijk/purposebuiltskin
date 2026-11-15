@@ -1,6 +1,5 @@
 [
-  {"chapter": 1, "start-time": 0, "titles": [{"language": "en", "title": "Atelier · Opening"}], "metadata": [{"key": "garment", "value": "other"}]},
-  {"chapter": 2, "start-time": 3, "titles": [{"language": "en", "title": "Dresses · Linen Maxi Dress"}], "metadata": [{"key": "garment", "value": "dress"}, {"key": "look", "value": "05"}]},
-  {"chapter": 3, "start-time": 11, "titles": [{"language": "en", "title": "Tailoring · Single-Breasted Wool Blazer"}], "metadata": [{"key": "garment", "value": "tailoring"}, {"key": "look", "value": "03"}]},
-  {"chapter": 4, "start-time": 19, "titles": [{"language": "en", "title": "Skirts · Pleated Midi Skirt"}], "metadata": [{"key": "garment", "value": "skirt"}, {"key": "look", "value": "04"}]}
+  {"chapter": 1, "start-time": 0, "titles": [{"language": "en", "title": "Dresses · Linen Maxi Dress"}], "metadata": [{"key": "garment", "value": "dress"}, {"key": "look", "value": "05"}]},
+  {"chapter": 2, "start-time": 8, "titles": [{"language": "en", "title": "Tailoring · Single-Breasted Wool Blazer"}], "metadata": [{"key": "garment", "value": "tailoring"}, {"key": "look", "value": "03"}]},
+  {"chapter": 3, "start-time": 18, "titles": [{"language": "en", "title": "Skirts · Pleated Midi Skirt"}], "metadata": [{"key": "garment", "value": "skirt"}, {"key": "look", "value": "04"}]}
 ]

@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 # Builds the vertical (9:16) cut for the showcase: 30 seconds from the same Mixkit clips as the lookbook, cropped
 # around each garment. It's cut differently on purpose, to show the seek bar follows whatever chapters a film has:
-# an opening with nothing to buy, then three of the five looks in a new order, at different lengths. Four chapters is
-# about as many as a phone-width seek bar holds comfortably.
+# three of the five looks, in a new order and at different lengths. A few long chapters suit a phone-width seek bar.
 #
 # Usage: scripts/build-vertical.sh [work-dir]
 #        scripts/build-vertical.sh chapters    (only rewrite the chapters and captions)
@@ -21,10 +20,9 @@ HEIGHT=960
 # One row per chapter, in film order:
 # Mixkit clip id | start offset (s) | length (s) | crop centre x in the 1280x720 frame | chapter title | garment | look
 CHAPTERS=(
-  "33167|7|3|640|Atelier · Opening|other|"
   "33527|0|8|480|Dresses · Linen Maxi Dress|dress|05"
-  "52194|2|8|770|Tailoring · Single-Breasted Wool Blazer|tailoring|03"
-  "14842|3|11|520|Skirts · Pleated Midi Skirt|skirt|04"
+  "52194|0|10|770|Tailoring · Single-Breasted Wool Blazer|tailoring|03"
+  "14842|2|12|520|Skirts · Pleated Midi Skirt|skirt|04"
 )
 
 log() { printf '\033[1m›\033[0m %s\n' "$*"; }
